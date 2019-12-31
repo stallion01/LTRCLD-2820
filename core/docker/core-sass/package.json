@@ -1,0 +1,17 @@
+{
+    "name": "sass",
+    "version": "1.0.0",
+    "description": "SASS module for LTR compiles",
+    "scripts": {
+        "start": "npm-run-all -p compland compcore",
+        "compland": "node-sass --source-map true -w /sites/core/static/sass/landing.scss --output /sites/core/static/css/",
+        "compcore": "node-sass --source-map true -w /sites/core/static/sass/ciscolive.scss --output /sites/core/static/css/"
+    },
+    "dependencies": {
+        "node-sass": "^4.12.0"
+    },
+    "main": "index.js",
+    "devDependencies": {},
+    "author": "",
+    "license": "ISC"
+}

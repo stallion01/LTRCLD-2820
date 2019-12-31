@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/7974771/flask-blueprint-template-folder

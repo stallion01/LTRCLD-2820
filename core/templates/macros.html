@@ -1,0 +1,187 @@
+{% macro info(text) %}
+<div class="alert">
+    <div class="alert__icon icon-warning-outline"></div>
+    <div class="alert__message">{{text}}</div>
+</div>
+{% endmacro %}
+
+{% macro warn(text) %}
+<div class="alert alert--warning">
+    <div class="alert__icon icon-exclamation-triangle"></div>
+    <div class="alert__message">{{text}}</div>
+</div>
+{% endmacro %}
+
+{% macro error(text) %}
+<div class="alert alert--danger">
+    <div class="alert__icon icon-error-outline"></div>
+    <div class="alert__message">{{text}}</div>
+</div>
+{% endmacro %}
+
+{% macro file(text, file) %}
+<div class="bs-callout bs-callout-success">
+    <img src="/core/static/images/symbols/logfileicon.png" style="float:left;margin:10px;">
+    <h3>{{ file }}</h3>
+    <p> {{ text }}</p>
+</div>
+{% endmacro %}
+
+
+{% macro copythis(text) %}
+<div class="btn-group" style="margin-top:20px;">
+    <button class="btn btn--small btn--primary-ghost monospace copyme" style="max-width:none;" data-clipboard-text="{{text}}">
+        {{text}}
+    </button>
+    <button class="btn btn--small btn--primary-ghost selected copyme" data-clipboard-text="{{text}}">
+        Copy
+    </button>
+</div>
+{% endmacro %}
+
+
+
+
+
+{% macro cmd_blk_start(innerstep, progress) %}
+<div class="commandblock">
+    <div class="copyseqnumber">
+        {{innerstep}}
+        <button class="btn btn-xs btn--small btn-danger copybutton" data-clipboard-target="#copy-{{innerstep}}">Copy</button>
+    </div>
+    <div class="ciscohl2" id="copy-{{innerstep}}" {% for copynumber in progress  %} {% if copynumber == innerstep %} style="background-color: #64bbe3;"
+        {% endif %} {% endfor %}><span style="font-size:.7em; color:#ffffff;"># this is the copy group: {{innerstep}}</span></br>
+        <pre>
+{% endmacro %}
+
+{% macro cmd_blk_start_no_copy_group(innerstep, progress) %}
+<div class="commandblock">
+    <div class="copyseqnumber">
+        {{innerstep}}
+        <button class="btn btn-xs btn-danger copybutton" data-clipboard-target="#copy-{{innerstep}}" >Copy</button>
+    </div>
+<div class="ciscohl2" id="copy-{{innerstep}}"
+    {% for copynumber in progress  %}
+        {% if copynumber == innerstep %} style="background-color: #e0ffcb;" {% endif %}
+    {% endfor %}
+>
+<pre>
+{% endmacro %}
+
+{% macro cmd_blk_end(innerstep, progress) %}
+</pre>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro topxterm(pod) %}
+<div class='topbar'>
+    <div class='topbartitle' style="font-size:.8em;"><i class="fa fa-server" style="margin-right:10px;display:inline;"></i>xterm POD{{ pod }}</div>
+    <div class='topbarbutton'></div>
+</div>
+{% endmacro %}
+
+
+{% macro term_start() %}
+<div class="commandblock">
+    <pre>
+{% endmacro %}
+
+{% macro term_end() %}
+</pre>
+</div>
+{% endmacro %}
+
+{% macro top_instance( vm ) %}
+<div class="topbar">
+    <div class="topbartitle"><i class="fa fa-desktop" style="margin-right:5px;"></i>{{ vm }}</div>
+    <div class='topbarbutton'></div>
+</div>
+{% endmacro %}
+
+{% macro end_of_page(page_position,data) %}
+<div class='nextsection'>
+    <div style="float:left; font-size: .9em;">
+        {% if page_position[0].exists == True %}
+        <div class="btn-group">
+            <button type="button" class="btn btn-md btn-success"
+                onclick="window.location.href='/lab/pod{{ data.pod_id }}/{{ page_position[0].section }}/{{ page_position[0].weburl }}'">
+                <span class="fa fa-arrow-left" style="color:white;" aria-hidden="true"></span>
+            </button>
+            <button type="button" class="btn btn-md btn-success"
+                onclick="window.location.href='/lab/pod{{ data.pod_id }}/{{ page_position[0].section }}/{{ page_position[0].weburl }}'"><span
+                    class="button-text">{{ page_position[0].title }}</span></button>
+        </div>
+        {%  endif  %}
+    </div>
+    <div style="float:right; font-size: .9em;">
+        {% if page_position[2].exists == True %}
+        <div class="btn-group">
+            <button type="button" class="btn btn-md btn-success"
+                onclick="window.location.href='/lab/pod{{ data.pod_id }}/{{ page_position[2].section }}/{{ page_position[2].weburl }}'"><span
+                    class="button-text">{{ page_position[2].title }}</span></button>
+            <button type="button" class="btn btn-md btn-success"
+                onclick="window.location.href='/lab/pod{{ data.pod_id }}/{{ page_position[2].section }}/{{ page_position[2].weburl }}'">
+                <span class="fa fa-arrow-right" style="color:white;" aria-hidden="true"></span>
+            </button>
+        </div>
+        {%  endif  %}
+    </div>
+</div>
+<div style="clear:both;"></div>
+{% endmacro %}
+
+{% macro postman_image(postman_id, data) %}
+
+<div>
+    <img src="/lab/imgman/postman/top/?method={{ data['postman_data'][postman_id]['method'] }}&url={{ data['postman_data'][postman_id]['url'] }}&tab_name={{ data['postman_data'][postman_id]['tab_name'] }}&bulk={{ data['postman_data'][postman_id]['bulk'] }}" class="img-responsive img-indent">
+</div>
+
+{% if data['postman_data'][postman_id]['method'] == 'GET' %}
+    {% if data['postman_data'][postman_id]['auth'] == True %}
+    <div>
+        <img src="/lab/static/images/cms/api-2postman-get-auth.png" class="img-responsive img-indent">
+    </div>
+    {% else %}
+
+    {% endif %}
+
+    <div>
+        <img src="/lab/static/images/cms/api-3postman-get.png" class="img-responsive img-indent">
+    </div>
+
+{% else %}
+    {% if data['postman_data'][postman_id]['bulk'] == True %}
+        <div>
+            <img src="/lab/imgman/pod/{{ data.pn }}/postman/be/{{ postman_id }}" class="img-responsive img-indent">
+        </div>
+        <div>
+            <img src="/lab/static/images/cms/api-3postman-putpost-response-be.png" class="img-responsive img-indent">
+        </div>
+
+
+    {% else %}
+
+        {% for row in data['postman_data'][postman_id]['rows'] %}
+            <div>
+                <img src="/lab/imgman/postman/param_row/?key={{ row.key }}&value={{ row.value }}" class="img-responsive img-indent">
+            </div>
+        {% endfor %}
+
+        <div>
+            <img src="/lab/static/images/cms/api-3postman-putpost-response.png" class="img-responsive img-indent">
+        </div>
+
+    {% endif %}
+
+{% endif %}
+
+<div>
+    <img src="/lab/imgman/pod/{{ data.pn }}/postman/bottom/{{ postman_id }}" class="img-responsive img-indent">
+</div>
+
+
+<div>
+    <img src="/lab/static/images/cms/api-5postman-putpost-response-bottom.png" class="img-responsive img-indent">
+</div>
+{% endmacro %}

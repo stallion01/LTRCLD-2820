@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  flask:
+    container_name: ${LTRLAB_ID}_flask
+    build: ./docker/flask
+    expose:
+      - ${FLASK_PORT}
+    ports:
+      - ${FLASK_PORT}:${FLASK_PORT}
+    volumes:
+      - ../:/usr/src/app
+    environment:
+      - conf_gunicorn=gunicorn-dev.py
+    command: /usr/bin/gunicorn -b :${FLASK_PORT} -c core/gunicorn-dev.py --chdir /usr/src/app dev:app
+  core-sass:
+    container_name: ${LTRLAB_ID}_core_sass
+    build: ./docker/core-sass
+    volumes:
+      - ../:/sites
+  lab-sass:
+    container_name: ${LTRLAB_ID}_lab_sass
+    build: ./docker/lab-sass
+    volumes:
+      - ../:/sites

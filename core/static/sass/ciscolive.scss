@@ -1,0 +1,1169 @@
+/*
+Variables:
+ */
+
+$light-grey: #f0f0f0;
+$dark-grey1: #696969;
+$menu-line-height: 40px;
+$sub-menu-line-height: 30px;
+$term-emu-bg-color: #fafafa;
+
+
+$front-page-bottom-color: #00263A;
+
+$ciscolive-very-dark-blue: #005073;
+$ciscolive-dark-blue: #017cad;
+$ciscolive-light-blue: #00bceb;
+$ciscolive-light-green: #6EBE4A;
+$ciscolive-light-yellow: #FBAB18;
+$ciscolive-light-red: #E2231A;
+
+$cisco-indigo-blue: #005073;
+$cisco-vibrante-blue: #017cad;
+$cisco-blue: #00bceb;
+$cisco-status-blue: #64bbe3;
+$cisco-light-blue: #f2fbfd;
+
+$cisco-grey-light2: #c6c7ca;
+$cisco-grey-light3: #dfdfdf;
+$cisco-grey-light2: #f2f2f2;
+$cisco-grey-medium2: #9e9ea2;
+$cisco-grey-medium4: #b6b9bb;
+$cisco-grey-dark1: #39393b;
+$cisco-grey-dark2: #58585b;
+$cisco-grey-dark3: #626469;
+$cisco-grey-dark4: #7f7f86;
+
+
+/*
+Changes using the new CUI body HTML css tag
+ */
+
+
+
+/*
+  Primary body modifications
+ */
+html.cui body {
+  overflow: visible;
+  overflow-x: hidden;
+  font-weight: 400;
+  font-size: 12pt;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: 0.015em;
+  word-spacing: 0.001em;
+  color: $dark-grey1;
+  z-index: 1;
+  font-family: "Roboto", sans-serif;
+
+
+  pre[class*="language-"] {
+    font-family: "Inconsolata", monospace;
+    font-weight: bold;
+    font-size: .7em;
+    letter-spacing: 0em;
+    word-spacing: 0em;
+
+    @media (min-width: 576px) {
+      font-size: .8em;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      font-size: .9em;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      font-size: 1.0em;
+    }
+
+    // Extra large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      font-size: 1.1em;
+    }
+  }
+
+  code[class*="language-"] {
+    font-family: "Inconsolata", monospace;
+    font-weight: 600;
+    font-size: .7em;
+    color: $cisco-grey-dark1;
+    letter-spacing: 0em;
+    word-spacing: 0em;
+
+    @media (min-width: 576px) {
+      font-size: .8em;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      font-size: .9em;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      font-size: 1.0em;
+    }
+
+    // Extra large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      font-size: 1.1em;
+    }
+  }
+
+  #block-content {
+    padding-top: 120px;
+    padding-bottom: 100px;
+  }
+}
+
+
+
+
+html.cui img {
+  margin-top: 20px;
+}
+
+strong {
+  color: $ciscolive-dark-blue;
+}
+
+b {
+  color: $ciscolive-dark-blue
+}
+
+code {
+  background: none;
+}
+
+ul.no_bullet {
+  list-style-type: none;
+}
+
+
+ol {
+  margin: 20px 0px 20px 30px;
+  font-weight: 400;
+}
+
+html.cui ul,
+html.cui ol {
+  margin: 0px 20px;
+  font-weight: 400;
+}
+
+html.cui ul.fix_ul {
+  margin: 20px 0px 20px 50px;
+  font-weight: 400;
+}
+
+html.cui ol.fix_ol {
+  margin: 20px 0px 20px 50px;
+  font-weight: 400;
+}
+
+
+html.cui body #block-content {
+  padding-top: 120px;
+  padding-bottom: 100px;
+  z-index: 1;
+}
+
+html.cui p {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+/*
+Fonts for header fields
+ */
+html.cui h3 {
+  font-family: 'Roboto Bold', sans-serif;
+  font-size: 1.2em;
+  padding-top: 20px;
+
+  @media(min-width:768px) {
+    font-size: 2em;
+  }
+}
+
+html.cui h2 {
+  font-family: 'Roboto Bold', sans-serif;
+  font-size: 1.3em;
+  padding-top: 20px;
+
+  @media(min-width:768px) {
+    font-size: 2.2em;
+  }
+}
+
+html.cui h1 {
+  font-family: 'Roboto Black', sans-serif;
+  font-size: 1.4em;
+  padding-top: 20px;
+
+  @media(min-width:768px) {
+    font-size: 2.5em;
+  }
+}
+
+html.cui .table td {
+  white-space: normal;
+}
+
+html.cui .table td.nowrap {
+  white-space: nowrap;
+}
+
+
+/*
+Section Header
+ */
+
+.section_header {
+  .title {
+    font-family: "LatoHairline", sans-serif;
+    /* font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;*/
+    /* font-weight: 100; */
+    text-align: right;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    line-height: 0.8;
+    font-size: 30px;
+
+    @media(min-width:768px) {
+      font-size: 50px;
+    }
+
+    @media(min-width:992px) {
+      font-size: 100px;
+    }
+
+    @media(min-width:1200px) {
+      font-size: 150px;
+    }
+  }
+
+  .title_section {
+    font-family: "LatoLight", sans-serif;
+    text-align: right;
+    line-height: 0.8;
+    margin-bottom: 50px;
+    font-size: 12px;
+    letter-spacing: 3px;
+
+    @media(min-width:768px) {
+      font-size: 14px;
+      letter-spacing: 5px;
+    }
+
+    @media(min-width:992px) {
+      font-size: 20px;
+      letter-spacing: 10px;
+    }
+
+    @media(min-width:1200px) {
+      font-size: 30px;
+      letter-spacing: 20px;
+    }
+  }
+}
+
+@media(min-width:768px) {
+  .front_page_clid {
+    font-size: 32px;
+  }
+}
+
+/*
+Progress step section
+ */
+
+.progress_step {
+  display: none;
+}
+
+@media(min-width:768px) {
+  .progress_step {
+    display: block;
+    margin: 20px 10px 20px 10px;
+    /*overflow:hidden;*/
+
+    .step_title {
+      font-size: 16px;
+      font-family: "LatoLight", sans-serif;
+      text-align: right;
+      line-height: 0.8;
+      letter-spacing: 20px;
+      /* transform-origin left bottom 0; */
+    }
+
+    .step_list {
+      float: right;
+    }
+  }
+}
+
+
+/*
+Cisco Live APP specific CSS entities
+ */
+
+.copyseqnumber {
+  float: right;
+  color: $cisco-grey-light2;
+  margin-right: 5px;
+  margin-top: 6px;
+  font-size: .7em;
+}
+
+.commandblock {
+  margin: 0px 20px 14px 20px;
+  display: block;
+}
+
+
+.ciscohl2 {
+  background-color: $term-emu-bg-color;
+  border: 1px solid #e1e1e8;
+  border-radius: 0px 0px 4px 4px;
+  padding: 9px 14px;
+
+  button {
+    float: right;
+  }
+
+  pre {
+    background-color: $term-emu-bg-color;
+    border: 0 none;
+    margin-bottom: 0;
+    margin-top: 0;
+    padding: 0;
+    white-space: nowrap;
+    word-break: normal;
+
+    code {
+      background-color: $term-emu-bg-color;
+      font-size: inherit;
+    }
+
+    code:first-child {
+      display: inline-block;
+      padding-right: 45px;
+    }
+  }
+}
+
+html.cui .modal {
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+
+
+/*
+Heading style modifications for the lab.
+ */
+
+html.cui h1 {
+  page-break-before: always;
+}
+
+html.cui h2 {
+  margin-top: 50px;
+  border-bottom: 2px solid $light-grey;
+  margin-bottom: 20px;
+}
+
+html.cui h3 {
+  /*border-bottom: 1px solid #e0e0e0;*/
+  margin-bottom: 5px;
+  margin-top: 20px;
+}
+
+
+/*
+Header modifications from Atlantic UI interface
+ */
+html.cui .header {
+  position: fixed;
+  width: 100%;
+  background-color: $ciscolive-dark-blue;
+  border: none;
+
+  @media(min-width:768px) {
+    .header_inside_image {
+      /* background: no-repeat url("/static/images/market/CL-action-figure-3-to-left.png"); */
+      /*background: no-repeat url("/static/images/market/CL-EU-header-trans.png"); */
+      background: no-repeat url("/core/static/images/logo/clus-2019-ciscologo-trans.png");
+      background-position: right center;
+      margin-right: 20px;
+      background-size: 255px;
+    }
+  }
+
+  .icon-cisco {
+    color: white;
+  }
+
+  .icon-list-menu {
+    color: $ciscolive-dark-blue;
+  }
+
+  .breadcrumb {
+    background-color: $ciscolive-dark-blue;
+    color: white;
+    padding: 0;
+
+    a {
+      color: white;
+    }
+  }
+}
+
+html.cui .header-heading .page-title {
+  font-size: 1.2em;
+  color: white;
+}
+
+
+@media(min-width:768px) {
+  html.cui .header-bar {
+    height: 80px;
+  }
+
+  html.cui .header-heading .page-title {
+    padding-top: 15px;
+    font-size: 2.0em;
+  }
+
+  html.cui .header-breadcrumbs {
+    margin: 15px 0px 0px 0px;
+  }
+
+  html.cui .header-breadcrumbs ul {
+    margin: 0px 0px 0px 2px;
+  }
+}
+
+
+html.cui.btn {
+  min-width: 0px;
+  padding: 0 20px;
+}
+
+/*
+Sidebar toggle
+ */
+
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+  padding-left: 300px;
+
+  #sidebar-wrapper {
+    width: 300px;
+  }
+
+  #page-content-wrapper {
+    position: absolute;
+    margin-right: -300px;
+  }
+}
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+}
+
+#sidebar-wrapper {
+  z-index: 2;
+  position: fixed;
+  left: 300px;
+  width: 0;
+  height: 100%;
+  margin-left: -300px;
+  overflow-y: auto;
+  background: #049fd9;
+  -webkit-box-shadow: inset -10px 0px 10px 0px rgba(50, 50, 50, 0.4);
+  -moz-box-shadow: inset -10px 0px 10px 0px rgba(50, 50, 50, 0.4);
+  box-shadow: inset -10px 0px 10px 0px rgba(50, 50, 50, 0.4);
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+
+/*
+Sidebar
+ */
+
+html.cui .sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 320px;
+  margin: 0;
+  padding: 0;
+
+  li {
+    clear: both;
+    text-indent: 10px;
+    line-height: $menu-line-height;
+    list-style: none;
+    margin-bottom: 5px;
+
+    ul.sub-menu {
+      font-size: .8em;
+      line-height: $sub-menu-line-height;
+
+      li {
+        line-height: $sub-menu-line-height;
+        margin-left: 10px;
+        margin-bottom: 0px;
+        text-indent: 0;
+        padding-left: 0;
+        list-style: none;
+        border-bottom: none;
+
+        i.fas {
+          line-height: $sub-menu-line-height;
+          float: left;
+          margin: 0px 4px 0px 4px;
+        }
+
+        a {
+          border-bottom: none;
+        }
+
+        a:hover {
+          /* color:$dark-grey1; */
+          /*background-color: $light-grey; */
+          color: white;
+          background: none;
+        }
+
+        a:hover:after {
+          float: right;
+          /* font-family: Font Awesome\ 5 Free;*/
+          margin-right: 20px;
+          content: ">";
+          /*content: "\f0a9";*/
+          font-size: 1.4em;
+          line-height: $sub-menu-line-height;
+        }
+      }
+
+      li:hover {
+        background-color: unset;
+
+      }
+
+      li.at_this_location {
+        a {
+          background: white;
+          font-weight: 600;
+          color: $dark-grey1;
+          padding-top: 5px;
+          padding-bottom: 5px;
+          margin-right: 0px;
+          -webkit-border-radius: 4px 0px 0px 4px;
+          -moz-border-radius: 4px 0px 0px 4px;
+          border-radius: 4px 0px 0px 4px;
+          -webkit-box-shadow: -7px 7px 10px 0px rgba(50, 50, 50, 0.4);
+          -moz-box-shadow: -7px 7px 10px 0px rgba(50, 50, 50, 0.4);
+          box-shadow: -7px 7px 10px 0px rgba(50, 50, 50, 0.4);
+        }
+      }
+    }
+
+    a {
+      display: block;
+      text-decoration: none;
+      color: white;
+      margin-left: 0;
+    }
+
+    a:hover {
+      text-decoration: none;
+      color: white;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    a:active {
+      text-decoration: none;
+    }
+
+    a:focus {
+      text-decoration: none;
+      color: white;
+    }
+
+    i.fas {
+      line-height: $menu-line-height;
+      float: left;
+      opacity: 0.5;
+    }
+  }
+
+  .menudivisor {
+    margin-left: 37px;
+    margin-right: 45px;
+    border-bottom: 1px solid white;
+    opacity: 0.5;
+  }
+
+}
+
+.sidebar-header__divisor {
+  padding: 20px 20px 0px 20px;
+  border-bottom: 1px solid white;
+  opacity: 0.5;
+}
+
+/*
+Bootstrap callouts. These are cool boxes that bootstrap had in it's site years back.
+ */
+
+.bs-callout {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: #eee;
+  border-image: none;
+  border-radius: 3px;
+  border-style: solid;
+  border-width: 1px 1px 1px 5px;
+  margin: 20px 20px 20px 20px;
+  padding: 5px 15px 15px 15px;
+
+  .bs-callout-info {
+    border-left-color: $cisco-indigo-blue;
+  }
+
+  .bs-callout-success {
+    border-left-color: $cisco-status-blue;
+  }
+
+  .bs-callout-warn {
+    border-left-color: $ciscolive-light-red;
+  }
+}
+
+
+
+/*
+Terminal window type window for Unix CLI commands.
+ */
+
+
+/*
+File indicator for code:
+ */
+html.cui .code_file_indicator {
+  font-size: 14px;
+  background: #a0a0a0;
+  font-family: "Inconsolata", monospace;
+  border-radius: 6px 6px 0px 0px;
+  background-image: linear-gradient(#e0e0e0 0, #ccc 25px, #ccc 35px);
+
+  p {
+    color: #393939;
+    padding: 10px;
+    margin: 0px 0px;
+  }
+
+  p:before {
+    color: #ff7300;
+    font-size: 1.2em;
+    font-family: Font Awesome\ 5 Free;
+    content: attr(data-value);
+    margin-right: 10px;
+  }
+
+  nav {
+    position: relative;
+    z-index: 1;
+    white-space: nowrap;
+  }
+
+  nav p {
+    position: relative;
+    display: inline-block;
+    padding: 1.0em 1.5em 1em 3em;
+    color: inherit;
+    text-decoration: none;
+    margin: 0 20px 0px 20px;
+  }
+
+
+  nav p::before {
+    content: attr(data-value);
+    /* To generate the box */
+    font-size: 1.5em;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    border-bottom: none;
+    border-radius: 10px 10px 0 0;
+    background: #eee;
+    box-shadow: 0 2px hsla(0, 0%, 100%, .5) inset;
+    transform: perspective(5px) rotateX(0.5deg);
+    transform-origin: bottom;
+    padding: 10px 10px;
+  }
+
+  nav.left p {
+    padding: 1.5em 2em 1em 1em;
+  }
+
+  nav.left p::before {
+    transform-origin: bottom left;
+  }
+
+  nav.right p {
+    padding: 1.5em 1em 1em 2em;
+  }
+
+  nav.right p::before {
+    transform-origin: bottom right;
+  }
+
+  nav p.selected {
+    z-index: 2;
+  }
+
+  nav p.selected::before {
+    margin-bottom: -1px;
+    border-top-width: 1px;
+  }
+}
+
+
+
+/*
+Better terminal
+ */
+
+html.cui .fancy-terminal {
+  margin: 20px 0;
+  padding: 30px 10px 10px;
+  background: #333;
+  font-family: "Inconsolata", monospace;
+  border-radius: 6px;
+  background-image: linear-gradient(#ddd 0, #aaa 20px, #333 20px);
+  box-shadow: 0 4px 10px -4px;
+  display: block;
+  position: relative;
+
+
+
+  .copy-button {
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    background: orange;
+    padding: 5px;
+    color: white;
+    border: none;
+    min-height: 30px;
+    min-width: 60px;
+    background-image: url("/core/static/images/symbols/copy-button-text.png");
+    background-size: 54px 24px;
+    background-repeat: no-repeat;
+    background-position: center;
+    display: inline;
+  }
+
+  .copy-button:active {
+    -webkit-box-shadow: inset 1px 1px 10px #333;
+    -moz-box-shadow: inset 1px 1px 10px #333;
+    box-shadow: inset 1px 1px 10px #333;
+  }
+
+
+  p {
+    color: #FFB42C;
+    font-weight: bold;
+    font-size: 10px;
+    animation-fill-mode: forward;
+    margin: 0px 10px 1px 10px;
+    animation: fadeIn 1s;
+    overflow-x: auto;
+
+    @media (min-width: 576px) {
+      font-size: .6em;
+    }
+
+    // Medium devices (tablets, 768px and up)
+    @media (min-width: 768px) {
+      font-size: .8em;
+    }
+
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      font-size: 1.0em;
+    }
+
+    // Extra large devices (large desktops, 1200px and up)
+    @media (min-width: 1200px) {
+      font-size: 1.2em;
+    }
+  }
+
+  pre[class*="language-"] {
+    border: none;
+    background-color: #333;
+    border-left: none;
+    box-shadow: none;
+    font-family: "Inconsolata", monospace;
+  }
+
+  code[class*="language-"] {
+    background-color: #333;
+    font-family: "Inconsolata", monospace;
+    border: none;
+    box-shadow: none;
+
+    .command-line-prompt span {
+      color: cyan;
+    }
+
+    .operator {
+      color: white;
+      background: none;
+    }
+
+    .token {
+      color: rgb(251, 255, 0);
+      background: none;
+    }
+
+  }
+
+  pre code {
+    color: #FFB42C;
+    font-family: "Inconsolata", monospace;
+    background-color: #333;
+    background-image: none;
+    border: none;
+    box-shadow: none;
+    font-weight: bold;
+    margin: 5px;
+    animation-fill-mode: forward;
+    animation: fadeIn 1s;
+    overflow-x: auto;
+
+
+    .command-line-prompt span:before {
+      color: cyan;
+      letter-spacing: 0px;
+    }
+  }
+
+  p:before {
+    content: attr(data-value);
+    color: cyan;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
+  .copy-complete {
+    position: absolute;
+    top: 20px;
+    right: 60px;
+    min-height: 30px;
+    min-width: 30px;
+    border: none;
+    background-color: #333;
+    background-image: url("/core/static/images/symbols/copy-ok.png");
+    background-size: 30px 30px;
+    background-position: bottom right;
+    background-repeat: no-repeat;
+  }
+}
+
+
+
+
+
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+
+/*
+Image manipulation variables
+ */
+html.cui .img-indent {
+  padding-left: 20px;
+}
+
+/*
+  UL for command list
+ */
+
+html.cui ul.command_list {
+  margin-left: 10px;
+  border: 1px solid $light-grey;
+  border-left: 50px solid $light-grey;
+
+  li {
+    list-style-type: none;
+    margin: 10px 0px 10px 0px;
+    font-family: "Inconsolata", monospace;
+  }
+}
+
+/*
+Additions to the atlantic UI
+ */
+
+.step__icon--raf {
+  clear: both;
+  padding-left: 25px;
+}
+
+/*
+Footer modifications
+*/
+
+//html.cui .footer{
+//  padding:10px;
+//  /*background: no-repeat url("/static/images/market/CL-EU-header-trans.png"); */
+//  background-position: right bottom;
+//  background-size: 250px;
+//  background-color: #f2f2f2;
+//  position: relative;
+//  width:100%;
+//  bottom: 0px;
+//  z-index: 1000;
+//  font-size: .8rem;
+//}
+//
+/*
+Media side adjustments
+ */
+
+@media(min-width:768px) {
+  #wrapper {
+    padding-left: 0;
+  }
+
+  #wrapper.toggled {
+    padding-left: 300px;
+  }
+
+  #sidebar-wrapper {
+    width: 0;
+  }
+
+  #wrapper.toggled #sidebar-wrapper {
+    width: 300px;
+  }
+
+  #page-content-wrapper {
+    padding: 20px;
+    position: relative;
+  }
+
+  #wrapper.toggled #page-content-wrapper {
+    position: relative;
+    margin-right: 0;
+  }
+
+
+}
+
+/*
+Some modifications to the Prism CSS to highlight things better
+ */
+
+pre .line-highlight {
+  background: rgba(241, 231, 103, .2);
+  border: 3px solid rgba(255, 0, 0, .2);
+}
+
+
+html.cui .nextsection {
+  padding-top: 20px;
+
+  .button-text {
+    display: none;
+  }
+}
+
+@media (min-width: 576px) {
+  html.cui .nextsection .button-text {
+    display: block;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  html.cui .nextsection .button-text {
+    font-size: .7em;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  html.cui .nextsection .button-text {
+    font-size: 1.0em;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+  html.cui .nextsection .button-text {
+    font-size: 1.0em;
+  }
+}
+
+
+/*
+Fix Popover's from bootstrap inside Cisco UI toolkit
+*/
+
+html.cui body .popover {
+  min-width: 330px;
+  background-color: white;
+
+  h3 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 2.0em;
+    color: #696969;
+  }
+
+  h4 {
+    background-color: #f7f7f7;
+    margin-top: 5px;
+    padding: 5px 0px 5px 5px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .popover-content {
+    max-height: none;
+    max-width: none;
+    min-width: 325px;
+    color: #696969;
+    margin: none;
+    padding: 0px 0px 0px 0px;
+
+    li {
+      list-style-type: none;
+      color: #393939;
+      font-family: "Inconsolata", monospace;
+      font-size: 1.2em;
+    }
+
+    i {
+      color: #2fa4e7;
+      font-size: .6em;
+    }
+  }
+}
+
+
+html.cui body .credentials {
+  position: fixed;
+  padding: 80px 0px 0px 120px;
+  z-index: 1020;
+
+
+  .btn {
+    border-radius: 0px 0px 5px 5px;
+    border-color: $ciscolive-light-yellow;
+    background-color: $ciscolive-light-yellow;
+    font-weight: 600;
+
+    i {
+      color: $ciscolive-light-red;
+    }
+  }
+
+  .btn :hover {
+    background-color: $ciscolive-very-dark-blue;
+  }
+}
+
+.popover-body {
+  li {
+    display: block;
+    font-size: 16px;
+    font-family: "Inconsolata", monospace;
+    height: 25px;
+    line-height: 25px;
+
+    a img {
+      margin-top: 0px;
+      height: 25px;
+      vertical-align: middle;
+    }
+  }
+
+  h4 {
+    height: 50px;
+    line-height: 50px;
+
+    a img {
+      margin-top: 0px;
+      height: 25px;
+      line-height: 25px;
+      vertical-align: middle;
+    }
+  }
+}
+
+
+/*
+Adding borders and shadows to images to better represent in doc 
+*/
+
+.cui .img-shadow {
+  box-shadow: 0 15px 10px -10px #c0c0c0;
+  border: 1px solid #e0e0e0;
+}
+
+/*
+ fix button for nice copy 
+*/
+
+.cui .nice-copy {
+  .input-group-button {
+    .btn--small {
+      background-color: #e0e0e0;
+      border-radius: 1px;
+    }
+  }
+}
+
+.cui .footer {
+  background-color: $ciscolive-dark-blue;
+  color: white;
+}

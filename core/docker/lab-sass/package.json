@@ -1,0 +1,15 @@
+{
+    "name": "sass",
+    "version": "1.0.0",
+    "description": "SASS module for LTR Lab to compile scss",
+    "scripts": {
+        "start": "node-sass --source-map true -w /sites/lab/static/sass/ -o /sites/lab/static/css"
+    },
+    "dependencies": {
+        "node-sass": "^4.9.0"
+    },
+    "main": "index.js",
+    "devDependencies": {},
+    "author": "",
+    "license": "ISC"
+}

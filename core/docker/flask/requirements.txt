@@ -1,0 +1,10 @@
+beautifulsoup4
+Flask
+Flask-WTF
+Jinja2
+jinja2-highlight
+Pillow
+PTable
+requests
+Werkzeug
+PyYAML

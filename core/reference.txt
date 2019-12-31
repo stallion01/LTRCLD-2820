@@ -1,0 +1,21 @@
+GIT related:
+https://medium.com/@v/git-subtrees-a-tutorial-6ff568381844
+https://lostechies.com/johnteague/2014/04/04/using-git-subtrees-to-split-a-repository/
+
+Markdown related:
+https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+Bootstrap related
+https://www.jqueryscript.net/other/Nice-File-Tree-View-Plugin-with-jQuery-Bootstrap-File-Tree.html
+
+CSS related:
+https://codyhouse.co/gem/animated-intro-section
+https://webdesign.tutsplus.com/articles/quickly-build-a-swish-teaser-page-with-css3--webdesign-6532
+https://codepen.io/wifeo/pen/ukzLD
+http://animista.net/
+https://envato.com/blog/pure-css-animation-snippets/
+https://www.html.am/html-codes/marquees/css-slide-in-text.cfm
+
+Minio related:
+https://rclone.org/docs/
+https://github.com/minio/cookbook/blob/master/docs/rclone-with-minio.md

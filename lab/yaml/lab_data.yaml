@@ -1,0 +1,12 @@
+cl_id: "LTRCOL-2250"
+cl_title: "Kubernetes, Hyperflex, ACI OH MY!"
+cl_abstract: "You have heard all the hype, now come and see the power of Cisco Container Platform (CCP).  CCP can help developers gain access to a production-ready, on-prem (or cloud supported) Kubernetes Platform in minutes.  In this lab, we will deep dive into Cisco integrations with CCP components including networking (ACI), persistent volumes (Hyperflex) and the other open-source tools that CCP leverages to bring the flexibility of the cloud to your on-prem datacenter.  Students will deploy a CCP control plane and a tenant cluster integrated with ACI.  Next, they will launch a multi-tiered application and explore the native logging and monitoring capabilities within CCP.  Finally, students will explore the power of persistent volumes on Cisco Container Platform.  You won't want to miss the surprise bonus content on what Cisco is doing with AI/ML."
+cl_lab_proctors:
+  - "Raj Chacko"
+  - "Justin Barksdale"
+cl_lab_proctor_emails:
+  - "rajchack@cisco.com"
+  - "jusbaks@cisco.com"
+cl_lab_proctor_titles:
+  - "Technical Solutions Architect, Commercial Sales"
+  - "Technical Solutions Architect, Enterprise Sales"

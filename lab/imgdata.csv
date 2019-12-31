@@ -1,0 +1,6 @@
+Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,BoxColor,BoxFill,Font,Align,Text
+1,PNG,PLEFT,/example1.png,240,50,0,24,white,green,green,/CiscoSans/CiscoSansTTRegular.woff,left,Click
+1,PNG,PDOWN,/example1.png,240,100,0,24,white,green,green,/CiscoSans/CiscoSansTTRegular.woff,left,Click
+1,PNG,TXT,/example1.png,240,150,0,24,red,green,green,/CiscoSans/CiscoSansTTRegular.woff,left,Some Text
+1,PNG,TXT,/example1.png,640,150,0,16,#343434,green,green,/inconsolata/inconsolata-v18-latin-700.woff,left,00:00:0c:12:34:56
+1,PNG,TXT,/example1.png,640,170,0,16,#343434,green,green,/inconsolata/inconsolata-v18-latin-700.woff,left,10.1.1.1/24

@@ -1,0 +1,129 @@
+{% extends "core_base.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+
+
+
+<div class="section_header">
+    <div class="title">Topic1</div>
+    <div class="title_section">Topic1 Subtopic</div>
+</div>
+
+<p>
+    The steps are important for giving the attendee a reference point as they
+    go through the lab. There are two variables in the jinja template step and innerstep that
+    need to be set at the top of the document.
+</p>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - My first step</h3>
+
+The following is what a code block could look like.
+<div class="code_file_indicator">
+    <nav>
+        <p data-value="&#xf15c;">filename.py</p>
+    </nav>
+</div>
+<pre class="line-numbers"><code class="language-python" >
+import acitoolkit.acitoolkit as aci
+</code></pre>
+<p>
+    You can also indicate line number values for changes to emphasize what the
+    attendee is working on.
+</p>
+<div class="code_file_indicator">
+    <nav>
+        <p data-value="&#xf15c;">filename.py</p>
+    </nav>
+</div>
+<pre data-line="3-6" class="line-numbers"><code class="language-python" >
+import acitoolkit.acitoolkit as aci
+
+apic_ip = '{{ data.apic4pod }}'
+apic_username = '{{ data.apic_stdnt_uname }}'
+apic_password = '{{ data.apic_stdnt_pwd }}'
+apic_url = 'https://' + apic_ip
+</code></pre>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Terminal w/copy</h3>
+<p>
+    The following simulates a terminal. The data-value will be the prompt that the user would see.
+    This makes it easy for them to know they are in the right place when doing commands. With this
+    mechanism the COPY button doesn't actually copy the prompt.
+</p>
+<div class="fancy-terminal">
+    <p data-value="$ ">cd ~/script</p>
+    <p data-value="~/script $ ">python3 myscript.py</p>
+</div>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Tree representation</h3>
+<p>
+    If you need to represent a tree structure you can use this javascript library to get
+    it done easily. Just need to provide the object structure as data and the JS code
+    builds the rest.
+</p>
+<div id='tree_example'></div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var example = [{
+            id: 'dir-1',
+            name: 'Top',
+            type: 'dir',
+            children: [{
+                    id: 'file-1',
+                    name: 'file-1',
+                    type: 'zip',
+                    url: ''
+                },
+                {
+                    id: 'file-2',
+                    name: 'file-2',
+                    type: 'zip',
+                    url: ''
+                },
+
+            ]
+        }]
+
+        $('#tree_example').fileTree({
+            data: example,
+            sortable: false,
+            selectable: false
+        })
+    })
+</script>
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Image Manipulation</h3>
+<p>
+    A important capability is to create screen captures that are tailored to each individual
+    POD so that the student has no confusion to the task they have.
+</p>
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/1" class="img-fluid img-shadow">
+
+
+{{ end_of_page(page_position,data) }}
+{% endblock %}
