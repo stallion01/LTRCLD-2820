@@ -10,7 +10,7 @@
 </h1>
 <p>
     Cisco Container Platform is a turnkey, production grade, extensible platform to deploy and manage multiple Kubernetes clusters.
-    It runs on 00% upstream Kubernetes. Cisco Container Platform offers seamless container networking, enterprise-grade
+    It runs on 100% upstream Kubernetes. Cisco Container Platform offers seamless container networking, enterprise-grade
     persistent storage, built-in production-grade security, integrated logging, monitoring and load balancing
 </p>
 <div class="row">
@@ -29,7 +29,11 @@
           The next layer up is the Cisco Container Platform Control Plane and Data Plane.
           In the preceeding figure, Cisco Container Platform Control Plane runs on the four VMs on the left.
           </p>
-
+          <p>
+          Kubernetes tenant clusters are preconfigured to support Persistent Volumes using vSphere
+          Cloud Provider and Container Storage Interface (CSI) plugin. Both implementations
+          use the underlying replicated, highly available HyperFlex data platform for storage.
+        </p>
     </div>
     <div class="col-md-6 col-sm-12">
         <img src="/lab/static/images/ccp/ccp.png" class="img-responsive ">
@@ -75,10 +79,6 @@
         <TD>ACI</TD>
      </TR>
      <TR ALIGN="LEFT">
-        <TD>Data </TD>
-        <TD>Data</TD>
-     </TR>
-     <TR ALIGN="LEFT">
         <TD>Container Storage</TD>
         <TD>HyperFlex CSI plugin</TD>
      </TR>
@@ -101,24 +101,27 @@
   </TABLE>
 </div>
 <div class="col-md-6 col-sm-12">
-  <p>
-  Kubernetes tenant clusters are preconfigured to support Persistent Volumes using vSphere
-  Cloud Provider and Container Storage Interface (CSI) plugin. Both implementations
-  use the underlying replicated, highly available HyperFlex data platform for storage.
+
+  <p><h4>Installing Cisco Container Platform is a three-step process:</h4>
 </p>
-    <p> In the past, people had different processes running on single servers. Then these
-    evolved into running across networks through network RPCs. Complexity and lack
-    of standards made these hard to manage. Then standard protocols where developed
-    like ReST to be able to send data between network services. Different
-    programmatic tooling to simplify creation of API's made it possible to now
-    easily break applications into much smaller chunks.
-</p>
+  <p>Importing CCP Tenant base VM</p>
 <p>
-    With that in mind, containers have evolved from the original LXC concepts
-    to what they are today. A mechanism for developers to create services
-    that are easy to deploy and manage, that can be orchestrated and managed
-    in such a way that they are small, nimble and fast. Hence the term
-    <strong>micro-services</strong> was coined.
+  The Cisco Container Platform tenant base VM contains the container image and the
+  files that are necessary to create the tenant Kubernetes clusters
+  that are used for configuring monitoring, logging, container network interfaces (CNI),
+   and persistent volumes.
+</p>
+  <p>Deploying Installer VM</p>
+<p>
+  The Installer VM contains the VM image and the files for installing other components
+  such as Kubernetes and the Cisco Container Platform application.
+</p>
+  <p>Deploying Cisco Container Platform</p>
+<p>
+  The Cisco Container Platform Control Plane is set up using an installer UI.
+  After the installer VM is switched on, the URL of the installer
+  appears on the vCenter <strong>Web console</strong>.
+
 </p>
 </div>
 </div>
