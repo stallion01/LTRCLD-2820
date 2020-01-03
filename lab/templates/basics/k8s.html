@@ -2,7 +2,7 @@
 {% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
 {% block content %}
 <div class="section_header">
-    <div class="title">Introduction</div>
+    <div class="title">Kubernetes</div>
     <div class="title_section">Why Containers?</div>
 </div>
 <h1>
@@ -34,16 +34,17 @@
             function to a programmer, the ability to change and modify part of an application
             without having to impact and rebuild the whole application.
         </p>
+        <p>
+            Achieving this goal requires writing applications in such a way that they
+            can communicate with each other through programmatic tools like RPC (remote
+            procedure calls) or the newer term, API (application programing interface).
+        </p>
     </div>
     <div class="col-md-6 col-sm-12">
         <img src="/lab/static/images/guide/container-vm.png" class="img-responsive ">
     </div>
 </div>
-<p>
-    Achieving this goal requires writing applications in such a way that they
-    can communicate with each other through programmatic tools like RPC (remote
-    procedure calls) or the newer term, API (application programing interface).
-</p>
+
 <p>
     In the past, people had different processes running on single servers. Then these
     evolved into running across networks through network RPCs. Complexity and lack
