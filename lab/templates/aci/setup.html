@@ -2,11 +2,11 @@
 {% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
 {% block content %}
 <div class="section_header">
-    <div class="title">Introduction</div>
-    <div class="title_section">Why Containers?</div>
+    <div class="title">Lab Access</div>
+    <div class="title_section">vpn setup</div>
 </div>
 <h1>
-    Understanding Containers
+    Getting connected to the Lab
 </h1>
 <p>
     You would have to live under a rock today to not have heard about containers and Docker. They
@@ -119,73 +119,7 @@
 <p>
     Which leads us as to why you are here with us today.
 </p>
-<h1>
-    About this Lab!
-</h1>
-<img src="/core/static/images/landscapes/hero-bg-2.jpg" class="img-responsive">
-<p>
-    When we embarked on developing this lab we realized that understanding kubernetes
-    without having some basis of containers didn't make sense. So we developed in the lab a
-    structure that goes through showing some of the container basics and the network components
-    of containers on a single host. From there we move to how kubernetes network integration
-    with ACI makes sense from the network administrator perspective in providing visibility to the
-    administrator of what is happening inside of that kubernetes cluster.
-</p>
-<p>
-    We requested some information from the engineering team and other feedback on how to
-    struture this lab. One area that we heard clearly is that most users where interested in
-    the integration over VMware workloads instead of bare-metal servers. We designed the
-    lab to show how you can configure and build them this way.
-</p>
-<p>
-    The lab from a high level has the following steps:
-</p>
-{{ html_for_step_status|safe }}
-<p>
-    We take the student through the following flow of learning:
-</p>
-<ul>
-    <li>Installing and understanding Docker</li>
-    <ul>
-        <li>Here we wanted to show you how to pull docker images, how to run them and how to modify
-            and store them for your personal use.
-        </li>
-    </ul>
-    <li>ACI/VMware policy builds</li>
-    <ul>
-        <li>The first steps build the basic ACI access-policies and ACI VMware VMM domain policies. </li>
-    </ul>
-    <li>Linux setup for Kubernetes</li>
-    <ul>
-        <li>In this section we show all linux steps to setup your linux box to integrate
-            with ACI properly. In this case we are using CentOS 7 that is the closest to
-            RedHat Enterprise Linux.
-        </li>
-    </ul>
-    <li>ACI Kubernetes config</li>
-    <ul>
-        <li>The integration configuration between ACI and Kubernetes is done mostly
-            using the same declarative model as is used in containers. A single YAML file
-            contains all these parameters, and a single execution command automates
-            the process of putting this all together.
-        </li>
-        <li>
-            Afterward you patch things up in VMware and initialize the kubernetes fabric.
-        </li>
-    </ul>
-    <li>Deploy Application</li>
-    <ul>
-        Here you get to play with the integration by deploying various applications
-        in the ACI/Kubernetes fabric. We show you the details of what happens under the
-        hood and how ACI helps the network administrator in running the network with
-        visibility between these different components.
-    </ul>
-</ul>
-<p>
-    Any questions please reach out to the proctors. We are here to help and provide
-    answers to any questions you may have. If we don't know, we will gladly find out
-    a solution for you.
-</p>
+
 
 
 

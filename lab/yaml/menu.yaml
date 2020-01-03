@@ -32,15 +32,15 @@
       weburl: "head"
       file: None
       title: "Baseline Topics"
-    Kubernetes:
+    kubernetes:
       line: 'data'
       step: 1
       pos: 11
       ls: True
-      weburl: "k8s"
+      weburl: "kubernetes"
       file: "basics/k8s.html"
       title: "Kubernetes"
-    CCP:
+    ccp:
       line: 'data'
       step: 2
       pos: 12
@@ -48,44 +48,45 @@
       weburl: "ccp"
       file: "basics/ccp.html"
       title: "Cisco Container Platform"
-    ACI:
+    hx:
       line: 'data'
-      step: 2
+      step: 3
       pos: 13
-      ls: True
-      weburl: "aci"
-      file: "basics/aci.html"
-      title: "Cisco ACI"
-    HX:
-      line: 'data'
-      step: 2
-      pos: 14
       ls: True
       weburl: "hx"
       file: "basics/hx.html"
       title: "Cisco Hyperflex"
-- chapter2:
+    aci:
+      line: 'data'
+      step: 4
+      pos: 14
+      ls: True
+      weburl: "aci"
+      file: "basics/aci.html"
+      title: "Cisco ACI"
+
+- aci:
     head:
       line: 'head'
       step: 0
-      pos: 10
+      pos: 20
       ls: True
       weburl: "head"
       file: None
-      title: "Chapter 2"
-    topic1:
+      title: "Configuring ACI"
+    apic:
       line: 'data'
       step: 1
-      pos: 11
+      pos: 21
       ls: True
-      weburl: "topic1"
-      file: "chapter2/topic1.html"
-      title: "Topic 1"
-    topic2:
+      weburl: "apic"
+      file: "aci/setup.html"
+      title: "Tenant Configuration"
+    clwall:
       line: 'data'
       step: 2
-      pos: 12
+      pos: 22
       ls: True
-      weburl: "topic2"
-      file: "chapter2/topic2.html"
-      title: "Topic 2"
+      weburl: "clwall"
+      file: "aci/wall.html"
+      title: "Deploying App Profile"
