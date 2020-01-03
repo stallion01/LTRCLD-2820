@@ -194,6 +194,7 @@ def get_pod_data(pod):
     apic_prompt = ["apic1#", "apic2#", "apic3#"]
     vcenter_dns = "req-vcsa.csc.richfield.cisco.com"
     vcenter_ip = "10.101.128.100"
+    ccp_ip = "10.139.13.50"
     hyperflex_ip = "10.139.11.10"
 
     pod_numstr = "%02d" % pod
@@ -250,6 +251,13 @@ def get_pod_data(pod):
                                     </a>
                         </h4>
                         <ul><li>Username: %(vmware_stdnt_uname)s</li><li>Password: %(vmware_stdnt_pass)s</li></ul>
+                        <h4>CCP Control Plane
+                                    <a target='_blank' href='%(ccp_url)s'>
+                                    <img src="/core/static/images/symbols/http_pointer.png" style="height:25px;" >
+                                    </a>
+                        </h4>
+                        <ul><li>Username: admin </li><li>Password: admin </li></ul>
+
                          <h4>Jumphost VM</h4>
                          <ul><li>Address: %(master_ip)s
                          <a target="_blank" href="chrome-extension://pnhechapfaindjhompbnflcldabbghjo/html/nassh.html#%(centos_uname)s@%(master_ip)s:22">
@@ -262,6 +270,7 @@ def get_pod_data(pod):
                             "apic_url": "http://"+random.choice(apic_controllers),
                             "apic_ip": apic_controllers[int(pod_numstr[:1])],
                             "vmw_url": "http://"+vcenter_ip+"/ui",
+                            "ccp_url": "http://"+ccp_ip+"/ver/3/clusters",
                             "apic_stdnt_uname": apic_stdnt_uname,
                             "apic_stdnt_pass": apic_stdnt_pass,
                             "vmware_stdnt_uname": vmware_stdnt_uname,

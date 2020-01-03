@@ -64,7 +64,6 @@
       weburl: "aci"
       file: "basics/aci.html"
       title: "Cisco ACI"
-
 - aci:
     head:
       line: 'head'
@@ -89,7 +88,7 @@
       ls: True
       weburl: "clwall"
       file: "aci/wall.html"
-      title: "Deploying App Profile"
+      title: "Deploy App Profile"
 - ccp:
     head:
       line: 'head'
