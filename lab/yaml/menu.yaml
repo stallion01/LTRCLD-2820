@@ -47,7 +47,7 @@
       ls: True
       weburl: "ccp"
       file: "basics/ccp.html"
-      title: "Cisco Container Platform"
+      title: "CCP Overview"
     hx:
       line: 'data'
       step: 3
@@ -90,3 +90,28 @@
       weburl: "clwall"
       file: "aci/wall.html"
       title: "Deploying App Profile"
+- ccp:
+    head:
+      line: 'head'
+      step: 0
+      pos: 30
+      ls: True
+      weburl: "head"
+      file: None
+      title: "Configuring CCP"
+    tenant:
+      line: 'data'
+      step: 1
+      pos: 31
+      ls: True
+      weburl: "tenant"
+      file: "ccp/setup.html"
+      title: "Setup CCP Cluster"
+    vcenter:
+      line: 'data'
+      step: 2
+      pos: 32
+      ls: True
+      weburl: "vcenter"
+      file: "ccp/vcenter.html"
+      title: "Monitor CCP Cluster Progress "
