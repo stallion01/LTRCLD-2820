@@ -6,7 +6,7 @@
       ls: True
       weburl: 'head'
       file: None,
-      title: "Introduction"
+      title: "Lab Access & Layout"
     landing:
       line: data
       step: 1
@@ -14,7 +14,15 @@
       ls: True
       weburl: landing
       file: podlanding.html
-      title: "Introduction"
+      title: "Lab Objectives"
+    landing2:
+      line: data
+      step: 2
+      pos: 2
+      ls: True
+      weburl: landing2
+      file: podaccess.html
+      title: "Lab Access"
 - Containers:
     head:
       line: 'head'

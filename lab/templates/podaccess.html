@@ -1,0 +1,86 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, copythis, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+
+
+<div class="section_header">
+    <div class="title">Lab Access</div>
+    <div class="title_section">vpn setup</div>
+</div>
+{{ html_for_step_status|safe }}
+<h1>
+    Getting connected to the Lab
+</h1>
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Launch Cisco VPN mobility client</h3>
+<p>
+    The Lab pods are only accessible via vpn due it's location with the DMZ
+    <br>Type in "vpn.reqdemo.com" and click connect
+</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/1" class="img-responsive img-shadow"><br />
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Invalid Cert Warning</h3>
+
+<p>
+    Please ignore the Cert warning and click on 'Connect Anyway' button
+</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/2" class="img-responsive img-shadow"><br />
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Connect using REQLAB-ADMIN group</h3>
+
+<p>
+    Chose 'REQLAB-ADMIN' in the group from the drop down menu
+    <br>Type in your username as shown
+    <br>Type in your password as shown
+</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/3" class="img-responsive img-shadow"><br />
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<p>
+    <h2>EVERYTHING BELOW TO BE DELETED LATER</h2>
+</p>
+
+<img src="/lab/static/images/aci/create_vmware_domain_2.png" class="img-responsive img-shadow"><br />
+{{copythis(data.vmware_cont_pname)}}<br />
+{{copythis(data.vmware_cont_ip)}}<br />
+
+
+
+
+
+
+
+
+
+
+
+{{ end_of_page(page_position,data) }}
+{% endblock %}
