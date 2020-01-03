@@ -2,128 +2,85 @@
 {% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
 {% block content %}
 <div class="section_header">
-    <div class="title">Lab Access</div>
-    <div class="title_section">vpn setup</div>
+    <div class="title">Applicaton Centric Infrastructure</div>
+    <div class="title_section">Why SDN?</div>
 </div>
 <h1>
-    Getting connected to the Lab
+    A better approach to networking
 </h1>
 <p>
-    You would have to live under a rock today to not have heard about containers and Docker. They
-    have taken over the techie world by storm. Originally known in Linux circles and mostly
-    focused around application programing, containers are a new architectural method of
-    collecting what is needed to provide a service. Instead of having long installation
-    instructions with information of packages that are needed to get a service operational,
-    containers can be written to contain all that is needed for the service to run.
+  Cisco® Application Centric Infrastructure (Cisco ACI™) is an industry-leading secure,
+  open, and comprehensive Software-Defined Networking (SDN) solution.
+  It radically simplifies, optimizes, and accelerates infrastructure deployment
+  and governance and expedites the application deployment lifecycle.
+</p>
+<p>
+Cisco ACI delivers an intent-based networking framework to enable agility
+in the data center. It captures higher-level business and user intent in
+the form of a policy and translates this intent into the network constructs
+necessary to dynamically provision the network, security, and infrastructure
+services. It uses a holistic systems-based approach, with tight integration
+between hardware and software and physical and virtual elements, an open
+ecosystem model, and innovative Cisco customer Application-Specific Integrated
+Circuits (ASICs) to enable unique business value for modern data centers.
+This unique approach uses a common policy-based operating model across the network,
+drastically reducing the cost and complexity of operating your network.
 </p>
 <div class="row">
-    <div class="col-md-6 col-sm-12">
+    <div class="col-md-6 col-sm-10">
+      <h1>
+          How Cisco ACI Works
+      </h1>
         <p>
-            Containers differ from normal Virtual Machines (VM's) in the fact that containers
-            running on the same host share the underlying kernel amongst them. This variation
-            means that the operating system doesn't need to be "reproduced". This provides two
-            separate important things: you can start containers very quickly to
-            provide the service, and they can be made to be extremely small in
-            size.
+            Cisco ACI is a tightly coupled policy-driven solution that
+             integrates software and hardware. The hardware for Cisco
+              ACI is based on the Cisco Nexus 9000 family of switches.
+               The software and integration points for ACI include a
+                few components, including Additional Data Center Pod,
+                 Data Center Policy Engine, and Non-Directly Attached
+                  Virtual and Physical Leaf Switches
         </p>
         <p>
-            Yet, what are these services we keep talking about? Since the days of
-            application development on mainframe computers, developers
-            have been working to "compartmentalize" the applications they
-            developed into smaller, more manageable, processes. This provides an important
-            function to a programmer, the ability to change and modify part of an application
-            without having to impact and rebuild the whole application.
+            To a large extent, the network for Cisco ACI is no different than what
+             has been deployed over the past several years in enterprise data
+             centers. What is different, however, is the management and policy
+             framework, along with the protocols used in the underlying fabric.
         </p>
+
     </div>
-    <div class="col-md-6 col-sm-12">
-        <img src="/lab/static/images/guide/container-vm.png" class="img-responsive ">
+    <div class="col-md-6 col-sm-14">
+        <img src="/lab/static/images/aci1/aci1.png" class="img-responsive ">
     </div>
 </div>
-<p>
-    Achieving this goal requires writing applications in such a way that they
-    can communicate with each other through programmatic tools like RPC (remote
-    procedure calls) or the newer term, API (application programing interface).
-</p>
-<p>
-    In the past, people had different processes running on single servers. Then these
-    evolved into running across networks through network RPCs. Complexity and lack
-    of standards made these hard to manage. Then standard protocols where developed
-    like ReST to be able to send data between network services. Different
-    programmatic tooling to simplify creation of API's made it possible to now
-    easily break applications into much smaller chunks.
-</p>
-<p>
-    With that in mind, containers have evolved from the original LXC concepts
-    to what they are today. A mechanism for developers to create services
-    that are easy to deploy and manage, that can be orchestrated and managed
-    in such a way that they are small, nimble and fast. Hence the term
-    <strong>micro-services</strong> was coined.
-</p>
+<p>In a leaf-spine ACI fabric, Cisco is provisioning a native Layer 3
+  IP fabric that supports equal-cost multi-path (ECMP) routing between
+  any two endpoints in the network, but uses overlay protocols, such
+  as virtual extensible local area network (VXLAN) under the covers
+  to allow any workload to exist anywhere in the network. Supporting
+  overlay protocols is what will give the fabric the ability to have
+  machines, either physical or virtual, in the same logical network
+  (Layer 2 domain), even while running Layer 3 routing down to the
+  top of each rack. Cisco ACI supports VLAN, VXLAN, and network
+  virtualization using generic routing encapsulation (NV-GRE), which
+  can be combined and bridged together to create a logical
+  network/domain as needed.</p>
+<p>From a management perspective, the central SDN Controller of the
+  ACI solution, the Application Policy Infrastructure Controller (APIC)
+   manages and configures the policy on each of the switches in the ACI
+    fabric. Hardware becomes stateless with Cisco ACI, much like it is
+     with Cisco’s UCS Computing Platform. This means no configuration
+     is tied to the device. The APIC acts as a central repository for
+     all policies and has the ability to rapidly deploy and re-deploy
+     hardware, as needed, by using this stateless computing model.</p>
 
-<h1>
-    Container orchestration
-</h1>
-<p>
-    The process of orchestration of containers involved the development of tools that
-    would make it possible to manage the lifecycle of the application through
-    automation. These involves aspects like placement, scheduling, resource
-    management, updates and monitoring.
-</p>
-<p>
-    One of the key components of orchestration of containers is the declarative
-    configuration model that is used throughout the eco-system. DEVOPS teams
-    write the proper declarative configuration such that the automation uses this
-    configuration throughout the architecture. This declarative configuration,
-    usually accomplished with YAML or JSON contains all the crucial elements
-    required by this application component to function. These might include
-    network ports, storage, volumes and other parameters.
-</p>
-<p>
-    It is also the job of the orchestrator to insure proper placement of
-    workloads based on system activity, load and policy. For example,
-    provisioning an application that has some sort of high availability
-    requirement and placing all the components in the same physical compute
-    node makes no sense.
-</p>
-<p>
-    It is also the job of the orchestrator for monitoring health of the
-    all the containers that compromise the application component and make sure
-    that they are active and functional.
-</p>
-<p>
-    There are many container orchestrators in the market. Three of the
-    popular ones are: Kubernetes, Docker Swarm and Apache Mesos. Over the
-    past years Kubernetes has been gaining traction in the industry as a
-    leader in the orchestration space of containers and the reason why
-    Cisco has developed this integration model, based on Cisco ACI user
-    feedback.
-</p>
-<h1>
-    Kubernetes
-</h1>
-<p>
-    Kubernetes originated as an open source project in google loosely
-    based on Google's own Borg architecture for managing their datacenter
-    workloads ( Borg remains internal google only ). Kubernetes birth
-    date is in the year 2014 and has been adopted and extended by the
-    community since with many extensions added by other corporations and
-    open-source advocates.
-</p>
-<p>
-    From that birth in 2014 kubernetes continues to garner interest in the
-    market. Different platforms utilize kubernetes as the basis for
-    managing containers ( Rancher, OpenShift ). The internet can't
-    stop asking questions about Kubernetes:
-</p>
-<img src="/lab/static/images/kubernetes-trends.png" class="img-responsive img-shadow">
-<p>
-    Which leads us as to why you are here with us today.
-</p>
-
-
-
-
-
+<p>Cisco ACI also serves as a platform for other services that are required
+ within the data center or cloud environment. Through the use of the APIC,
+  third-party services can be integrated for advanced security, load
+  balancing, and monitoring. Vendors and products, such as SourceFire,
+  Embrane, F5, Cisco ASA, and Citrix can integrate natively into the
+  ACI fabric and be part of the policy defined by the admin. Through
+  the use of northbound APIs on the APIC, ACI can also integrate with
+  different types of cloud environments.</p>
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}
