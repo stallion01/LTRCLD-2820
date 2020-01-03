@@ -1,5 +1,6 @@
 from flask import session
 from datetime import datetime
+import random
 
 def get_lab_data():
     """
@@ -243,7 +244,7 @@ def get_pod_data(pod):
                                     </a>
                          </h4>
                         <ul><li>Username: %(apic_stdnt_uname)s</li><li>Password: %(apic_stdnt_pass)s</li></ul>
-                        <h4>VMware vSphere
+                        <h4>VMware vCenter
                                     <a target='_blank' href='%(vmw_url)s'>
                                     <img src="/core/static/images/symbols/http_pointer.png" style="height:25px;" >
                                     </a>
@@ -258,7 +259,7 @@ def get_pod_data(pod):
                          <hr/>
                         <ul><li>Username: %(centos_uname)s</li><li>Password: %(centos_pass)s</li></ul>
                         """ % {
-                            "apic_url": "http://"+apic_controllers[int(pod_numstr[:1])],
+                            "apic_url": "http://"+random.choice(apic_controllers),
                             "apic_ip": apic_controllers[int(pod_numstr[:1])],
                             "vmw_url": "http://"+vcenter_ip+"/ui",
                             "apic_stdnt_uname": apic_stdnt_uname,
