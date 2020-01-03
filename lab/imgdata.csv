@@ -4,3 +4,4 @@ Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,B
 2,PNG,PDOWN,/vpn/vpn2.png,250,250,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 3,PNG,TXT,/vpn/vpn3.png,149,109,0,14,blue,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.vmware_cred_username}}
 3,PNG,TXT,/vpn/vpn3.png,149,136,0,14,blue,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.vmware_cred_password}}
+3,PNG,TXT,/vpn/vpn3.png,75,193,0,14,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,right,Click OK
