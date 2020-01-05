@@ -232,12 +232,12 @@ def get_pod_data(pod):
     pod_node2_ip = pod_vm_info(pod)['node2']
 
     # Need to define credentials here as placed in various places.
-    apic_stdnt_uname = "student%02d" % pod
-    apic_stdnt_pass = "C1sco12345!"
-    vmware_stdnt_uname = "student%02d" % pod
-    vmware_stdnt_pass = "C1sco12345!"
-    centos_uname = "root"
-    centos_pass = "C1sco12345!"
+    apic_stdnt_uname = "pod%02d" % pod
+    apic_stdnt_pass = "C1sco123"
+    vmware_stdnt_uname = "pod%02d" % pod
+    vmware_stdnt_pass = "C1sco123"
+    centos_uname = "ccpuser"
+    centos_pass = "C1sco123"
 
     credential_popover = """<h4>APIC
 
