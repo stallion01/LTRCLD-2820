@@ -1,0 +1,38 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance, copythis %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+
+
+<div class="section_header">
+    <div class="title">Cleanup ACI</div>
+    <div class="title_section"></div>
+</div>
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Removing the tenant you created </h3>
+
+    <p>Click on 'Tenants', and then 'ALL Tenants'
+</p>
+<p>Click to higlight the tenant you created - '{{data.apic_stdnt_uname}}' </p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/7" class="img-responsive img-shadow ">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Click on the 'hammer & wrench' icon</h3>
+
+<p>Click Delete <b>making sure that you are deleting your own tenant</b></p>
+<img src="/lab/static/images/aci1/step6.png" class="img-responsive img-shadow">
+
+
+{{ end_of_page(page_position,data) }}
+{% endblock %}

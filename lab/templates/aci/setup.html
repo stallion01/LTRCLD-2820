@@ -6,10 +6,23 @@
 
 
 <div class="section_header">
-    <div class="title">Exploring ACI</div>
-    <div class="title_section">Tenants</div>
+    <div class="title">Exploring ACI Tenants</div>
+    <div class="title_section">VMM integrations</div>
 </div>
 {{ html_for_step_status|safe }}
+
+<h1>Lab Toplogy</h1>
+<p>
+    For this lab you will have admin access to the APIC. <b>Excercise caution</b>
+    as you navigate and make changes. Each pod has access to the common CCP control plane
+    cluster which will be used to deploy the tenant clusters. Each pod also has ssh access
+    to a linux jumpbox. Each pod also has a dedicated mySQL server running on centos7.
+</p>
+<div class="row">
+    <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+        <img src="/lab/static/images/labtopo.png" class="img-responsive center-block ">
+    </div>
+</div>
 
 <h1>Creating ACI Tenant manually</h1>
 <p>
@@ -27,16 +40,6 @@
     </div>
 </div>
 
-<h1>Lab Toplogy</h1>
-<p>
-    For this lab you will have one physical server connected to a real ACI fabric. Each physical
-    server will be connected as link aggregated BOND interface for redundancy.
-</p>
-<div class="row">
-    <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
-        <img src="/lab/static/images/labtopo.png" class="img-responsive center-block ">
-    </div>
-</div>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
@@ -77,9 +80,11 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' tenant</h3>
+<h3>Step {{ step }} - Adding a new tenant</h3>
 <p>
-    Click on 'Tenants', and ten 'Add Tenant'
+    Take note of the existing Tenants
+    </p>
+    <p>Click on 'Tenants', and then 'Add Tenant'
 </p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/4" class="img-responsive img-shadow ">
 
@@ -88,13 +93,26 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Enter Tenant details as shown below</h3>
+<h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' tenant</h3>
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/5" class="img-responsive img-shadow">
 
 <p>
-    The Tenant must be named:
-    {{copythis(data.vmware_cred_username)}}
+    The Tenant should be named: {{copythis(data.vmware_cred_username)}}
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Explore any esisting VMM integration</h3>
+<p>
+    Click on 'Virtual Networking' and open 'Container Domains'
+</p>
+<p>Take note of any existing Kubernetes integrations</p>
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/6" class="img-responsive img-shadow">
+
 
 
 {{ end_of_page(page_position,data) }}
