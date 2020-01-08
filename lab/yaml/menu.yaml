@@ -80,15 +80,15 @@
       ls: True
       weburl: "apic"
       file: "aci/setup.html"
-      title: "Tenant Configuration"
-    clwall:
+      title: "Explore ACI"
+    clean:
       line: 'data'
       step: 2
       pos: 22
       ls: True
-      weburl: "clwall"
-      file: "aci/wall.html"
-      title: "Deploy App Profile"
+      weburl: "clean"
+      file: "aci/clean.html"
+      title: "Cleanup ACI"
 - ccp:
     head:
       line: 'head'

@@ -1,128 +1,100 @@
 {% extends "base_cisco.html" %}
-{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance, copythis %}
 {% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+
+
 <div class="section_header">
-    <div class="title">Lab Access</div>
-    <div class="title_section">vpn setup</div>
+    <div class="title">Exploring ACI</div>
+    <div class="title_section">Tenants</div>
 </div>
-<h1>
-    Getting connected to the Lab
-</h1>
+{{ html_for_step_status|safe }}
+
+<h1>Creating ACI Tenant manually</h1>
 <p>
-    You would have to live under a rock today to not have heard about containers and Docker. They
-    have taken over the techie world by storm. Originally known in Linux circles and mostly
-    focused around application programing, containers are a new architectural method of
-    collecting what is needed to provide a service. Instead of having long installation
-    instructions with information of packages that are needed to get a service operational,
-    containers can be written to contain all that is needed for the service to run.
+    Cisco Cloud Platform  <code>(CCP)</code> using the CNI plugin is able to automatically build
+    a tenant and configure the Kubernetes application profile. In this section, we'll manually build a
+    tenant and expore the Kubernetes integration components. We'll in a later step remove
+    this configuration and monitor how CCP automates this process.
+</p>
+
+<div class="alert alert--warning">
+    <div class="alert__icon icon-exclamation-triangle"></div>
+    <div class="alert__message">
+        For this lab we ask you to be cautious when working with Tenants to ensure
+        you don't affect other student labs.
+    </div>
+</div>
+
+<h1>Lab Toplogy</h1>
+<p>
+    For this lab you will have one physical server connected to a real ACI fabric. Each physical
+    server will be connected as link aggregated BOND interface for redundancy.
 </p>
 <div class="row">
-    <div class="col-md-6 col-sm-12">
-        <p>
-            Containers differ from normal Virtual Machines (VM's) in the fact that containers
-            running on the same host share the underlying kernel amongst them. This variation
-            means that the operating system doesn't need to be "reproduced". This provides two
-            separate important things: you can start containers very quickly to
-            provide the service, and they can be made to be extremely small in
-            size.
-        </p>
-        <p>
-            Yet, what are these services we keep talking about? Since the days of
-            application development on mainframe computers, developers
-            have been working to "compartmentalize" the applications they
-            developed into smaller, more manageable, processes. This provides an important
-            function to a programmer, the ability to change and modify part of an application
-            without having to impact and rebuild the whole application.
-        </p>
-    </div>
-    <div class="col-md-6 col-sm-12">
-        <img src="/lab/static/images/guide/container-vm.png" class="img-responsive ">
+    <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+        <img src="/lab/static/images/labtopo.png" class="img-responsive center-block ">
     </div>
 </div>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Connect to ACI fabric</h3>
 <p>
-    Achieving this goal requires writing applications in such a way that they
-    can communicate with each other through programmatic tools like RPC (remote
-    procedure calls) or the newer term, API (application programing interface).
+    You will need to point the browser on your lab laptop  to the APIC in this lab. Using the same
+    Chrome browser that you are using to read this guide, go to the URL: <a target="_blank" href="http://{{data.apic4pod}}">Your POD APIC at
+        {{data.apic4pod}}</a>.
 </p>
+<p>The credentials for this APIC are:</p>
+<ul>
+    <li>
+        User ID: {{data.apic_stdnt_uname}}
+    </li>
+    <li>
+        Password: {{data.apic_stdnt_pass}}
+    </li>
+    <li>Domain: acs</li>
+</ul>
+<br>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Feature update splash screen</h3>
 <p>
-    In the past, people had different processes running on single servers. Then these
-    evolved into running across networks through network RPCs. Complexity and lack
-    of standards made these hard to manage. Then standard protocols where developed
-    like ReST to be able to send data between network services. Different
-    programmatic tooling to simplify creation of API's made it possible to now
-    easily break applications into much smaller chunks.
+    Select 'Get Started' if the splash screen appears
 </p>
-<p>
-    With that in mind, containers have evolved from the original LXC concepts
-    to what they are today. A mechanism for developers to create services
-    that are easy to deploy and manage, that can be orchestrated and managed
-    in such a way that they are small, nimble and fast. Hence the term
-    <strong>micro-services</strong> was coined.
-</p>
-
-<h1>
-    Container orchestration
-</h1>
-<p>
-    The process of orchestration of containers involved the development of tools that
-    would make it possible to manage the lifecycle of the application through
-    automation. These involves aspects like placement, scheduling, resource
-    management, updates and monitoring.
-</p>
-<p>
-    One of the key components of orchestration of containers is the declarative
-    configuration model that is used throughout the eco-system. DEVOPS teams
-    write the proper declarative configuration such that the automation uses this
-    configuration throughout the architecture. This declarative configuration,
-    usually accomplished with YAML or JSON contains all the crucial elements
-    required by this application component to function. These might include
-    network ports, storage, volumes and other parameters.
-</p>
-<p>
-    It is also the job of the orchestrator to insure proper placement of
-    workloads based on system activity, load and policy. For example,
-    provisioning an application that has some sort of high availability
-    requirement and placing all the components in the same physical compute
-    node makes no sense.
-</p>
-<p>
-    It is also the job of the orchestrator for monitoring health of the
-    all the containers that compromise the application component and make sure
-    that they are active and functional.
-</p>
-<p>
-    There are many container orchestrators in the market. Three of the
-    popular ones are: Kubernetes, Docker Swarm and Apache Mesos. Over the
-    past years Kubernetes has been gaining traction in the industry as a
-    leader in the orchestration space of containers and the reason why
-    Cisco has developed this integration model, based on Cisco ACI user
-    feedback.
-</p>
-<h1>
-    Kubernetes
-</h1>
-<p>
-    Kubernetes originated as an open source project in google loosely
-    based on Google's own Borg architecture for managing their datacenter
-    workloads ( Borg remains internal google only ). Kubernetes birth
-    date is in the year 2014 and has been adopted and extended by the
-    community since with many extensions added by other corporations and
-    open-source advocates.
-</p>
-<p>
-    From that birth in 2014 kubernetes continues to garner interest in the
-    market. Different platforms utilize kubernetes as the basis for
-    managing containers ( Rancher, OpenShift ). The internet can't
-    stop asking questions about Kubernetes:
-</p>
-<img src="/lab/static/images/kubernetes-trends.png" class="img-responsive img-shadow">
-<p>
-    Which leads us as to why you are here with us today.
-</p>
+<img src="/lab/static/images/aci1/apicSplash.jpg" class="img-responsive img-shadow">
 
 
 
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' tenant</h3>
+<p>
+    Click on 'Tenants', and ten 'Add Tenant'
+</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/4" class="img-responsive img-shadow ">
 
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Enter Tenant details as shown below</h3>
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/5" class="img-responsive img-shadow">
+
+<p>
+    The Tenant must be named:
+    {{copythis(data.vmware_cred_username)}}
 
 
 {{ end_of_page(page_position,data) }}
