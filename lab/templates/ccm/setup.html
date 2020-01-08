@@ -11,22 +11,14 @@
 </div>
 {{ html_for_step_status|safe }}
 
-<h1>CCP Lab Toplogy</h1>
+<h1>CCP Control Plane Build</h1>
 <p>
-    For this lab each pod has admin access to the common CCP control plane
-    cluster which will be used to deploy the tenant clusters.
+    This portion of the lab Excercise is common to all students and is already setup. We have added
+    this section for your reference to show the steps necessary to stand up CCP
 </p>
 <div class="row">
     <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
-        <img src="/lab/static/images/labtopo.png" class="img-responsive center-block ">
-    </div>
-</div>
-
-<div class="alert alert--warning">
-    <div class="alert__icon icon-exclamation-triangle"></div>
-    <div class="alert__message">
-        For this lab we ask you to be cautious when working with Tenants to ensure
-        you don't affect other student labs.
+        <img src="/lab/static/images/ccp/ccmlab.png" class="img-responsive center-block ">
     </div>
 </div>
 
@@ -35,34 +27,25 @@
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Connect to CCP admin console</h3>
-<p>
-    You will need to point the browser on your lab laptop  to the CCP admin website in this lab. Using the same
-    Chrome browser that you are using to read this guide, go to the URL:
-     <a href="http://10.139.13.50/ver/3/clusters" target="blank">CCP Admin</a>
+<h3>Step {{ step }} - Download and deploy the OVF templates from Cisco.com</h3>
+  <div class="row">
+      <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+          <img src="/lab/static/images/ccp/ccmlab2.png" class="img-responsive center-block ">
+      </div>
+  </div>
 
-</p>
-<p>The credentials for CCP are:</p>
-<ul>
-    <li>
-        User ID: admin
-    </li>
-    <li>
-        Password: admin
-    </li>
-
-</ul>
-<p>Ignore the invalid SSL certificate</p>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Feature update splash screen</h3>
-<p>
-    Select 'Get Started' if the splash screen appears
-</p>
-<img src="/lab/static/images/aci1/apicSplash.jpg" class="img-responsive img-shadow">
+<h3>Step {{ step }} - Power on the installer OVA (kcp-vm-5.1.0)</h3>
+<p>Point your browser to the Installer UI address that the VM picked up from DHCP</p>
+  <div class="row">
+      <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+          <img src="/lab/static/images/ccp/ccmlab3.png" class="img-responsive center-block ">
+      </div>
+  </div>
 
 
 
@@ -71,40 +54,38 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Adding a new tenant</h3>
-<p>
-    Take note of the existing Tenants
-    </p>
-    <p>Click on 'Tenants', and then 'Add Tenant'
-</p>
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/4" class="img-responsive img-shadow ">
+<h3>Step {{ step }} - Click on 'INSTALL' button for new installation</h3>
+<p>You are also able to upgrade an existing cluster from this VM</p>
+  <div class="row">
+      <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+          <img src="/lab/static/images/ccp/ccmlab4.png" class="img-responsive center-block ">
+      </div>
+  </div>
 
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' tenant</h3>
-
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/5" class="img-responsive img-shadow">
-
-<p>
-    The Tenant should be named: {{copythis(data.vmware_cred_username)}}
+<h3>Step {{ step }} - Provide vCenter credentials and IP Addresses</h3>
+<p>This is where you would provide cluster placement & configuration details</p>
+  <div class="row">
+      <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+          <img src="/lab/static/images/ccp/ccmlab5.png" class="img-responsive center-block ">
+      </div>
+  </div>
 
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Explore any existing VMM integration</h3>
-<p>
-    Click on 'Virtual Networking' and open 'Container Domains'
-</p>
-<p>Take note of any existing Kubernetes integrations</p>
-
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/6" class="img-responsive img-shadow">
-
-
+<h3>Step {{ step }} - Click on the Launch button (or point to the IP address)</h3>
+  <div class="row">
+      <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
+          <img src="/lab/static/images/ccp/ccmlab6.png" class="img-responsive center-block ">
+      </div>
+  </div>
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}
