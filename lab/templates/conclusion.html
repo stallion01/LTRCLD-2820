@@ -1,0 +1,54 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+<div class="section_header">
+    <div class="title">Conclusion</div>
+    <div class="title_section">It's a wrap</div>
+</div>
+{{ html_for_step_status|safe }}
+
+<h1>Final thoughts!</h1>
+<p>
+    One thing you can say about containers is that they are a major change in how
+    we view network components. When servers started as bare-metal entities in the data-center
+    it was a physical box with a cable attached to it that had a specific IP address
+    and it pretty much never moved!
+</p>
+<p>
+    Then Virtualization kicked into full gear and now those big metal boxes became
+    virtualized machines that sat on those same big metal boxes but now there where
+    many of them, and then they moved around the network like crazy. To adapt
+    that world network equipment makersmade faster switches, provided the
+    ability to be able to observe the virtual devices from the network perspective.
+    Orchestrators kicked into action also helping both the network administrator
+    and then the application teams manage the explosion of virtualized resources that
+    made consumption of expensive compute hardware more efficient.
+</p>
+<p>
+    Then came cloud. And with cloud we learned that velocity of deploying
+    resources was a critical factor. Developer teams in companies wanted to be
+    able to use compute resources faster than what data-center teams could deliver. In that
+    mix containers and orchestration provided a way to quickly develop
+    micro-services on-premise. This makes it possible to
+    develop quicker, repeatable without errors and in a way that
+    makes it possible to use the same deployment provisioning code in different
+    platforms, like googles own cloud.
+</p>
+<p>
+    The hard part comes how do you manage policy in a network that has entities that
+    are stateless and are created or deleted in seconds. You can adopt a policy of
+    laissez-faire but that can lead to dangerous consequences in the security space.
+</p>
+<p>
+    We in Cisco believe in the following:
+</p>
+<img src="/lab/static/images/aci_value/aci_value_1.png" class="img-responsive" style="margin:0 auto; margin-top:40px; margin-bottom:40px;">
+<p>
+    ACI provides you with the right tooling and visibility to give your kubernetes cluster an edge
+    in operational control, visibility and security. The combination of both platforms provides you
+    the ability to create a private cloud for micro-services that uses the same technology as google
+    uses to run the biggest cloud in the world.
+</p>
+
+{{ end_of_page(page_position,data) }}
+{% endblock %}

@@ -6,31 +6,21 @@
 
 
 <div class="section_header">
-    <div class="title">Exploring ACI Tenants</div>
-    <div class="title_section">VMM integrations</div>
+    <div class="title">Initial CCP Install</div>
+    <div class="title_section">MGMT Cluster</div>
 </div>
 {{ html_for_step_status|safe }}
 
-<h1>Lab Toplogy</h1>
+<h1>CCP Lab Toplogy</h1>
 <p>
-    For this lab you will have admin access to the APIC. <b>Excercise caution</b>
-    as you navigate and make changes. Each pod has access to the common CCP control plane
-    cluster which will be used to deploy the tenant clusters. Each pod also has ssh access
-    to a linux jumpbox. Each pod also has a dedicated mySQL server running on centos7.
+    For this lab each pod has admin access to the common CCP control plane
+    cluster which will be used to deploy the tenant clusters.
 </p>
 <div class="row">
     <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
         <img src="/lab/static/images/labtopo.png" class="img-responsive center-block ">
     </div>
 </div>
-
-<h1>Creating ACI Tenant manually</h1>
-<p>
-    Cisco Cloud Platform  <code>(CCP)</code> using the CNI plugin is able to automatically build
-    a tenant and configure the Kubernetes application profile. In this section, we'll manually build a
-    tenant and expore the Kubernetes integration components. We'll in a later step remove
-    this configuration and monitor how CCP automates this process.
-</p>
 
 <div class="alert alert--warning">
     <div class="alert__icon icon-exclamation-triangle"></div>
@@ -45,23 +35,24 @@
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Connect to ACI fabric</h3>
+<h3>Step {{ step }} - Connect to CCP admin console</h3>
 <p>
-    You will need to point the browser on your lab laptop  to the APIC in this lab. Using the same
-    Chrome browser that you are using to read this guide, go to the URL: <a target="_blank" href="http://{{data.apic4pod}}">Your POD APIC at
-        {{data.apic4pod}}</a>.
+    You will need to point the browser on your lab laptop  to the CCP admin website in this lab. Using the same
+    Chrome browser that you are using to read this guide, go to the URL:
+     <a href="http://10.139.13.50/ver/3/clusters" target="blank">CCP Admin</a>
+
 </p>
-<p>The credentials for this APIC are:</p>
+<p>The credentials for CCP are:</p>
 <ul>
     <li>
-        User ID: {{data.apic_stdnt_uname}}
+        User ID: admin
     </li>
     <li>
-        Password: {{data.apic_stdnt_pass}}
+        Password: admin
     </li>
-    <li>Domain: acs</li>
+
 </ul>
-<br>
+<p>Ignore the invalid SSL certificate</p>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}

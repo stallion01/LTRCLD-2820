@@ -89,7 +89,7 @@
       weburl: "clean"
       file: "aci/clean.html"
       title: "Cleanup ACI"
-- ccp:
+- ccm:
     head:
       line: 'head'
       step: 0
@@ -97,11 +97,36 @@
       ls: True
       weburl: "head"
       file: None
-      title: "Configuring CCP"
+      title: "Installing CCP"
     tenant:
       line: 'data'
       step: 1
       pos: 31
+      ls: True
+      weburl: "tenant"
+      file: "ccm/setup.html"
+      title: "Deploying Mmgt cluster"
+    vcenter:
+      line: 'data'
+      step: 2
+      pos: 32
+      ls: True
+      weburl: "vcenter"
+      file: "ccm/vcenter.html"
+      title: "CCP Control plane"
+- ccp:
+    head:
+      line: 'head'
+      step: 0
+      pos: 40
+      ls: True
+      weburl: "head"
+      file: None
+      title: "Configuring CCP Tenants"
+    tenant:
+      line: 'data'
+      step: 1
+      pos: 41
       ls: True
       weburl: "tenant"
       file: "ccp/setup.html"
@@ -109,8 +134,117 @@
     vcenter:
       line: 'data'
       step: 2
-      pos: 32
+      pos: 42
       ls: True
       weburl: "vcenter"
       file: "ccp/vcenter.html"
-      title: "Monitor CCP Cluster Progress "
+      title: "Monitor CCP Cluster Progress"
+    lwapp:
+      line: 'data'
+      step: 3
+      pos: 43
+      ls: True
+      weburl: "lwapp"
+      file: "ccp/lwall.html"
+      title: "Deploy Livewall App Profile"
+    aci:
+      line: 'data'
+      step: 4
+      pos: 44
+      ls: True
+      weburl: "aci"
+      file: "ccp/apic.html"
+      title: "ACI livewall App Profile"
+- app:
+    head:
+      line: 'head'
+      step: 0
+      pos: 50
+      ls: True
+      weburl: "head"
+      file: None
+      title: "Deploy Hybrid Applicaton"
+    lwall:
+      line: 'data'
+      step: 1
+      pos: 51
+      ls: True
+      weburl: "lwall"
+      file: "app/setup.html"
+      title: "K8s Livewall App"
+    mysql:
+      line: 'data'
+      step: 2
+      pos: 52
+      ls: True
+      weburl: "lwall"
+      file: "app/setup.html"
+      title: "ACI for K8s Policy"
+- hx:
+    head:
+      line: 'head'
+      step: 0
+      pos: 60
+      ls: True
+      weburl: "head"
+      file: None
+      title: "Hyperflex Storage"
+    pers:
+      line: 'data'
+      step: 1
+      pos: 61
+      ls: True
+      weburl: "pers"
+      file: "hx/setup.html"
+      title: "HX Persistent Storage"
+    mb:
+      line: 'data'
+      step: 2
+      pos: 62
+      ls: True
+      weburl: "mb"
+      file: "hx/setup.html"
+      title: "Persistant App"
+
+- conclusion:
+    head:
+      line: 'head'
+      step: 0
+      pos: 90
+      ls: True
+      weburl: "head"
+      file: None
+      title: "Conclusion"
+    conclusion:
+      line: 'data'
+      step: 1
+      pos: 91
+      ls: True
+      weburl: "conclusion"
+      file: "conclusion.html"
+      title: "Conclusion"
+    finished:
+      line: 'data'
+      step: 1
+      pos: 92
+      ls: True
+      weburl: "finished"
+      file: "finished.html"
+      title: "Finished"
+- reference:
+    head:
+      line: 'head'
+      step: 0
+      pos: 100
+      ls: True
+      weburl: "head"
+      file: None
+      title: "Reference"
+    troubleshooting:
+      line: 'data'
+      step: 1
+      pos: 101
+      ls: True
+      weburl: "troubleshooting"
+      file: "Reference/troubleshooting.html"
+      title: "Troubleshooting tips"

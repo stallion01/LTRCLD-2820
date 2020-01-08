@@ -1,0 +1,434 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+
+
+<p>
+    It is important to acknowledge the Data Center Business Unit and TAC for their help in providing feedback to this document
+</p>
+<P>
+    Throughout this lab, we have shown some show commands from the ACI and Kubernets point of view that will be very useful when diagnosting an issue. 
+    But now, we would like to take you a little deeper on how to leverage a troubleshooting methodology in case you ever need to use it in
+    your production environment.    
+</P>
+<p>
+    We will be using the CLI during this section in order to show the flexibility of ACI. Where users can choose either method, depending 
+    of their confort level.   
+</p>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check Routing Protocol</h3>
+<p>
+Since we are running OSPF in the fabric, the first thing I would like to check our OSPF configuration. Once you get this 
+information you could perform your typical NXOS commands in order to check routing tables.
+</p>
+
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.apic_prompt}}"  data-output="2-4">
+    <code class="language-bash">
+        show tenant common vrf k8s_vrf external-l3 ospf detail 
+    </code>
+    </pre>
+    </div>
+
+<pre >
+Area Id     : 0.0.0.3
+Tenant      : common
+Vrf         : k8s_vrf
+User Config : 
+        
+Node ID  Area Properties                                                        
+----     ---------------------------------------------------------------------- 
+209      Type: regular, Cost: 1, Control: redistribute,summary                  
+210      Type: regular, Cost: 1, Control: redistribute,summary                  
+        
+ Configuration :          Operational
+        
+Node ID  Router ID        Route Map         Area Oper. Props                    
+----     ---------------  ----------------  ----------------------------------- 
+209      10.0.238.15      k8s_out           Type: regular, Cost: 1, Control:    
+                                            redistribute,summary, AreaId:       
+                                            0.0.0.3                             
+210      10.0.10.13       k8s_out           Type: regular, Cost: 1, Control:    
+                                            redistribute,summary, AreaId:       
+                                            0.0.0.3                             
+Interfaces : 
+        
+Configuration :          Operational
+        
+Node ID  L3Out             Interface     IP Address       Oper. Intf  Oper. State 
+----     ----------------  ------------  ---------------  --------    --------    
+209      uni/tn-common     eth1/48       10.15.3.1/30     eth1/48     bdr         
+        /out-k8s                                                                 
+        
+210      uni/tn-common     eth1/48       10.13.3.1/30     eth1/48     dr          
+        /out-k8s   
+</pre>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check for the VXLAN encap and the Policy TAG</h3>
+<p>
+In order to be able to troubleshoot we need to identify the VXLAN encap that the VRF is using and the Policy TAG. These outputs will 
+be use as a reference for future commands.
+
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.apic_prompt}}"  data-output="2-4">
+    <code class="language-bash">
+        show tenant common vrf k8s_vrf detail 
+    </code>
+    </pre>
+    </div>
+
+<pre >
+VRF Information:
+Tenant      VRF         VXLAN Encap  Policy Enforced  Policy Tag  Consumed Contracts    Provided Contracts    Description                              
+----------  ----------  ----------   ----------       ----------  --------------------  --------------------  ---------------------------------------- 
+common      k8s_vrf     <span style="color:green">2555909 </span>     enforced         <span style="color:green">49153</span>       -                     -                                                              
+    
+per-Node Information:
+Node        Admin State  Oper State  Oper State Reason  Creation Time                   Modification Time              
+----------  ----------   ----------  ---------------    ------------------------------  ------------------------------ 
+204         admin-up     up                             2018-04-23T21:03:42.072+00:00   2018-04-23T21:03:42.072+00:00  
+207         admin-up     up                             2018-04-23T21:12:55.372+00:00   2018-04-23T21:12:55.372+00:00  
+208         admin-up     up                             2018-04-23T21:19:34.191+00:00   2018-04-23T21:19:34.191+00:00  
+209         admin-up     up                             2018-05-04T13:14:23.886+00:00   2018-05-04T13:14:23.886+00:00  
+210         admin-up     up                             2018-05-03T18:54:45.534+00:00   2018-05-03T18:54:45.534+00:00  
+</pre> 
+
+<p>
+    In this particular case my VXLAN encap is <b> 255909</b> and my Policy TAG is <b>49153</b>.
+</p>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check the IP address of the External IP</h3>
+
+<p> 
+If you recall we leveraged the following command a lot throughout this lab guide in order to get the External IP address of the service.   
+</p>
+
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-999" >
+<code class="language-bash">
+kubectl get svc -o wide --namespace {{data.pod_mylabapp_namespace}}
+</code>
+</pre>
+</div>
+<pre>
+NAME       TYPE           CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE       SELECTOR
+mylabapp   LoadBalancer   10.96.81.15   <span style="color:green">{{data.pod_mylabapp_service_ip}}</span>   80:30563/TCP   1d        app=mylabapp
+</pre>
+
+<p>
+Now we need to verify that ACI has installed the correct EXTERNAL-IP {{data.pod_mylabapp_service_ip}} 
+</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.apic_prompt}}"  data-output="2-4">
+<code class="language-bash">
+show tenant common vrf k8s_vrf external-l3 epg k8s_pod{{data.pod_numstr}}_svc_mylabapp_mylabapp detail
+</code>
+</pre>
+</div>
+<p>
+
+<pre>
+ Name            Flags                      Match               Node        Entry               Oper State 
+ --------------  -------------------------  ------------------  ----------  ------------------  ---------- 
+ common:         vxlan: 2555909             <span style="color:green">{{data.pod_mylabapp_service_ip}}/32</span>      node-208     {{data.pod_mylabapp_service_ip}}/32      enabled    
+ <span style="color:green">k8s_pod{{data.pod_numstr}}_svc_</span>  vrf: k8s_vrf                                   node-209    {{data.pod_mylabapp_service_ip}}/32      enabled    
+ <span style="color:green">mylabapp_mylab</span>  Target dscp: unspecified                       node-207    {{data.pod_mylabapp_service_ip}}/32      enabled    
+ <span style="color:green">app </span>            qosclass: unspecified                          node-210    {{data.pod_mylabapp_service_ip}}/32      enabled    
+                 Contracts                                                                                 
+                 ---------                                                                                 
+                 Provided: k8s_pod{{data.pod_numstr}}_svc_m                                                                 
+                 ylabapp_mylabapp                                                                          
+                 Consumed:   
+ </pre>   
+</p>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check the Service Graph</h3>
+
+<p>
+The next step is to verify the correct Service Graph has been implemented. If you recall from the lab guide, this is 
+one of the many benefits ACI has when integrating with Kubernetes. Because ACI automates the creation of this 
+Service Graph.    
+</p>
+<p>
+We covered this portion in the lab guide. Therefore this may look famliar.     
+</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.apic_prompt}}" data-output="2-999" >
+<code class="language-bash">
+show l4l7-graph tenant common graph k8s_pod{{data.pod_numstr}}_svc_global
+</code>
+</pre>
+</div>
+<pre>
+Graph           : common-k8s_pod{{data.pod_numstr}}_svc_global
+Graph Instances : 1                          
+
+Consumer EPg  : common-k8s-epg                       
+Provider EPg  : <span style="color:green">common-k8s_pod{{data.pod_numstr}}_svc_default_mylabapp</span>
+Contract Name : <span style="color:green">common-k8s_pod{{data.pod_numstr}}_svc_default_mylabapp</span>
+Config status : applied                              
+
+Function Node Name : <span style="color:green">loadbalancer</span>
+Service Redirect   : <span style="color:green">enabled</span>
+Connector   Encap       Bridge-Domain  Device Interface      Service Redirect Policy        
+----------  ----------  ----------     --------------------  ------------------------------ 
+provider    vlan-32{{data.pod_numstr}}   common-k8s_po  interface             k8s_pod{{data.pod_numstr}}_svc_default_mylabapp 
+                        d{{data.pod_numstr}}_bd_kubern                                                       
+                        etes-service                                                        
+consumer    vlan-32{{data.pod_numstr}}   common-k8s_po  interface             k8s_pod{{data.pod_numstr}}_svc_default_mylabapp 
+                        d{{data.pod_numstr}}_bd_kubern                                                       
+                        etes-service                                                          
+</pre>
+
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.apic_prompt}}" data-output="2-999" >
+<code class="language-bash">
+show tenant common contract k8s_pod{{data.pod_numstr}}_svc_default_mylabapp
+</code>
+</pre>
+</div>
+<pre>
+    Tenant      Contract    Type        Qos Class     Scope       Subject     Access-group  Dir   Description 
+    ----------  ----------  ----------  ------------  ----------  ----------  ----------    ----  ----------  
+    common      k8s_pod{{data.pod_numstr}}_  permit      unspecified   vrf         loadbalanc  <span style="color:green">k8s_pod{{data.pod_numstr}}_sv</span>  both              
+                svc_defaul                                        edservice   <span style="color:green">c_default_my </span>                   
+                t_mylabapp                                                    <span style="color:green">labapp  </span>         
+</pre>
+
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.apic_prompt}}" data-output="2-999" >
+<code class="language-bash">
+show tenant common access-list k8s_pod{{data.pod_numstr}}_svc_default_mylabapp  </code>
+</pre>
+</div>
+<pre>
+Tenant      : common
+Access-List : k8s_pod{{data.pod_numstr}}_svc_default_mylabapp
+              <span style="color:green">match tcp dest 80</span>
+</pre>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check Contract in the Switches</h3>
+
+<p>
+It is time to understand how the switches in the fabric are configured. From the above output, we know that the Border Leafs are 209 and 210.
+Therefore we need to check their information. The first thing we will do is to check how the Contracts are configured.
+</p>
+<p>
+ACI has a feature where allows you to query any device in the fabric from the APIC. You could leverage this feature
+during your troubleshooting. In the previous step that we looked at the VRF of common for the VXLAN number. The following 
+will extract it in one line from the APIC CLI:
+</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.apic_prompt}}"  data-output="2-4">
+<code class="language-bash">
+show tenant common vrf k8s_vrf detail | grep common |  tr -s ' ' | cut -d" " -f 4
+</code>
+</pre>
+</div>
+<p>
+    The returned number is the VXLAN identifier for the VRF of common. Save that, you are going to need it soon. 
+We also need to get the PcTag for the L3 EPG 
+<span style="color:green">k8s_pod{{data.pod_numstr}}_svc_mylabapp_mylabapp</span>.  In order to get value of the PcTag you need to query the APIC. 
+The easiest way to do it is by leveraging a tool called "moquery". 
+</p>
+
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.apic_prompt}}"  data-output="2-4">
+<code class="language-bash">
+moquery -c l3extInstP | grep -B 3 k8s_pod{{data.pod_numstr}}_svc_mylabapp_mylabapp | grep pcTag
+</code>
+</pre>
+</div>
+
+<pre>   
+<span style="color:green">pcTag        : [TAG VALUE]</span>
+</pre>
+
+<p>
+    Now that we have the VXLAN Encap and PcTag, we can query the switches in the fabric to see their contract information. You are 
+    going to have to build the next command based on the VXLAN value and the pcTag value.
+</p>
+<code style="font-size:1.2em; padding:20px; ">fabric 210 show zoning-rule | grep [VXLAN VALUE]| grep redir | grep [TAG VALUE]</code>
+
+<pre>
+----------------------------------------------------------------
+ Node 210 (L10)
+----------------------------------------------------------------
+Rule ID         SrcEPG          DstEPG          FilterID        operSt          Scope           Action                              Priority       
+=======         ======          ======          ========        ======          =====           ======                              ========  
+4117            49153           32807           <span style="color:green">1713 </span>           enabled         2555909         <span style="color:green">redir(destgrp-5457) </span>                fully_qual(7)  
+4120            32807           15              <span style="color:green">1797  </span>          enabled         2555909         <span style="color:green">redir(destgrp-5457)  </span>               fully_qual(7)  
+</pre>
+
+<p>
+    Here we are getting the FilterID and redirediction. In this case the FilterID are 1713 and 1797, and the redir destination group is 5457.
+</p>
+
+<p>
+Now we identify if the correct filter has been configured in the switch. 
+</p>
+<code style="font-size:1.2em; padding:20px; ">fabric 210 show zoning-filter filter [First Filter ID Value]</code>
+<pre>
+----------------------------------------------------------------
+ Node 210 (L10)
+----------------------------------------------------------------
+FilterId  Name          EtherT      ArpOpc      Prot        MatchOnlyFrag Stateful SFromPort   SToPort     DFromPort   DToPort     Prio        Icmpv4T     Icmpv6T     TcpRules   
+========  ===========   ======      =========   =======     ======        =======  =======     ====        ====        ====        =========   =======     ========    ========   
+1713      1713_0        ip          unspecified tcp         no            no       unspecified unspecified <span style="color:green">http        http </span>       dport       unspecified unspecified  
+</pre>
+
+<p>
+    As you can see this is the Destination HTTP filter that ACI has created because Kubernetes has been configured to use that services.
+</p>
+<p>
+    Now let's check the second filter <span style="color:green">1797</span>. 
+</p>
+<p>Again, you are going to have to build the command based on the returned value out the cli outupt.</p>
+<code style="font-size:1.2em; padding:20px; ">fabric 210 show zoning-filter filter [Second Filter ID Value]</code>
+<pre>
+----------------------------------------------------------------
+ Node 210 (L10)
+----------------------------------------------------------------
+FilterId  Name          EtherT      ArpOpc      Prot        MatchOnlyFrag Stateful SFromPort   SToPort     DFromPort   DToPort     Prio        Icmpv4T     Icmpv6T     TcpRules   
+========  ===========   ======      =========   =======     ======        =======  =======     ====        ====        ====        =========   =======     ========    ========   
+1797      1797_0        ip          unspecified tcp         no            no       <span style="color:green">http        http </span>       unspecified unspecified sport       unspecified unspecified            
+
+</pre>
+
+<p>
+    Now this is the Source Port. As you can see ACI has configured these filters for you. 
+</p>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check the Service Redirediction in the Switches</h3>
+
+<p>
+    The next step is to find out where Node 210 is going to send the packets after the Service Graph. Therefore, we need to check 
+the Service Redirediction Policy in Node 210. We will be using the redir destination group we gathered from the above command (Filter command) 
+which returned <span style="color:green">5457</span>.
+</p>
+
+<code style="font-size:1.2em; padding:20px; ">fabric 210 show service redir info group [redir destgrp Value]</code>
+<pre>
+----------------------------------------------------------------
+    Node 210 (L10)
+----------------------------------------------------------------
+============================================================================================
+LEGEND
+TL: Threshold(Low)   |     TH: Threshold(High)   |   HP: HashProfile     |     HG: HealthGrp
+============================================================================================
+GrpID Name            destination                              HG-name         operSt     operStQual      TL   TH    HP         Tracking
+===== ====            ===========                              ==============  =======    ============    ===  ====  ========   ========
+5457  destgrp-5457    <span style="color:green">dest-[10.107.2.4]-[vxlan-2555909]</span>        Not attached    enabled    no-oper-grp     0    0     symmetric  no      
+                      <span style="color:green">dest-[10.107.2.2]-[vxlan-2555909]</span>        Not attached   
+</pre>
+
+
+<p>
+As you can see the Service Redirediction Policy is pointing to the two nodes in your Kubernetes cluster. The next step is to find out VNID
+in order for Node 210 to be sent the packets. In this particular case we are leveraging vnid 2555909
+</p>
+<p>
+    Let's take the first node as an example <span style="color:green">10.107.2.4</span>
+</p>
+
+<code style="font-size:1.2em; padding:20px; ">fabric 210 show service redir info destination [IP from previous cmd] vnid [VRF VXLAN VNID]</code>
+<pre>
+----------------------------------------------------------------
+    Node 210 (L10)
+----------------------------------------------------------------
+============================================================================================
+LEGEND
+TL: Threshold(Low)   |     TH: Threshold(High)   |   HP: HashProfile     |     HG: HealthGrp
+============================================================================================
+Name                                     bdVnid          vMac                 vrf             operSt     operStQual      HG-name        
+====                                     ======          ====                 ====            =====      =========       =======        
+dest-[10.107.2.4]-[vxlan-2555909]        <span style="color:green">vxlan-15138766</span>  0A:ED:2C:3B:22:EB    common:k8s_vrf  enabled    no-oper-dest    Not attached   
+</pre>
+
+<p>
+    Now we are able to gather the VNID where the packets are going to be destined to <span style="color:green">vxlan-15138766</span> 
+</p>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check the Local Kubernetes Nodes Connection</h3>
+
+<p>
+We understand that the nodes are located in Node 207 and Node 208. The next step is to find out connection ports. We leverage
+the VNID we located from the above output.
+</p> 
+
+<code style="font-size:1.2em; padding:20px; ">fabric 207 show vlan extended | grep [bdVnid Value]</code>
+<pre>
+52   common:k8s_pod{{data.pod_numstr}}_bd_kubernetes-  vxlan-15138766   Eth1/7  
+</pre>
+
+<code style="font-size:1.2em; padding:20px; ">fabric 208 show vlan extended | grep [bdVnid Value]</code>
+<pre>
+40   common:k8s_pod{{data.pod_numstr}}_bd_kubernetes-  vxlan-15138766   Eth1/7  
+</pre>
+
+<p>
+   As you can see both hosts are located in port 1/7 
+</p>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check the Service EndPoint in the node(s)</h3>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.node1_prompt}}"  data-output="2-4">
+    <code class="language-bash">
+        kubectl describe node pod{{data.pod_numstr}}-node1 | grep opflex
+</code>
+</pre>
+</div>
+
+<pre>
+opflex.cisco.com/pod-network-ranges={"V4":[{"start":"10.207.1.2","end":"10.207.1.129"}]}
+opflex.cisco.com/service-endpoint={"mac":"0a:ed:2c:3b:22:eb","ipv4":<span style="color:green">"10.107.2.4"</span>}
+</pre>
+
+<p>
+    As you can see <span style="color:green">10.107.2.4</span> matches the output of the Service Redirediction Policy.  You have
+    succesfully traced the path from the Border Leaf all of the way to the Node(s).
+</p>
+
+{{  end_of_page(page_position,data) }}
+{% endblock %}

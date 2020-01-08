@@ -1,0 +1,146 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+
+
+<div class="section_header">
+    <div class="title">Gluster</div>
+    <div class="title_section">File Store</div>
+</div>
+
+<img src="/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+
+<h3>Step {{ step }} - </h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" >
+<code class="language-bash">
+mkfs.xfs /dev/sdb
+</code>
+</pre>
+</div>
+
+<h3>Step {{ step }} - </h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" >
+<code class="language-bash">
+mkdir /gluster/bricks/master -p
+</code>
+</pre>
+</div>
+
+<h3>Step {{ step }} - </h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" >
+<code class="language-bash">
+cat &lt;&lt; EOF &gt;&gt; /etc/fstab
+/dev/sdb /gluster/bricks/master        xfs             defaults 0 0
+EOF
+mount -a
+</code>
+</pre>
+</div>
+
+<h3>Step {{ step }} - </h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" >
+<code class="language-bash">
+mkdir /gluster/bricks/master/brick
+</code>
+</pre>
+</div>
+
+<h3>Step {{ step }} - </h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" >
+<code class="language-bash">
+yum -y install xfsprogs attr centos-release-gluster40 glusterfs-api glusterfs-cli glusterfs-libs glusterfs
+yum -y install glusterfs-server
+</code>
+</pre>
+</div>
+
+<h3>Step {{ step }} - </h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" >
+<code class="language-bash">
+systemctl enable glusterd
+systemctl start glusterd
+systemctl status glusterd
+</code>
+</pre>
+</div>
+
+
+{{ warn("Have to repeat that on the other nodes")}}
+
+<img src="/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+
+<h3>Step {{ step }} - </h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" >
+<code class="language-bash">
+gluster peer probe {{data.nodenet_node1_ip}}
+gluster peer probe {{data.nodenet_node2_ip}}
+</code>
+</pre>
+</div>
+
+<h3>Step {{ step }} - </h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" >
+<code class="language-bash">
+gluster pool list
+</code>
+</pre>
+</div>
+<img src="/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+
+<h3>Step {{ step }} - </h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" >
+<code class="language-bash">
+gluster volume create gfs \
+  replica 3 \
+  {{data.nodenet_master_ip}}:/gluster/bricks/master/brick \
+  {{data.nodenet_node1_ip}}:/gluster/bricks/node1/brick \
+  {{data.nodenet_node22ip}}:/gluster/bricks/node2/brick \
+  force
+</code>
+</pre>
+</div>
+
+<h3>Step {{ step }} - </h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" >
+<code class="language-bash">
+gluster volume list
+gluster volume start gfs
+gluster volume status gfs
+gluster volume info gfs
+</code>
+</pre>
+</div>
+
+
+{{  end_of_page(page_position,data) }}
+{% endblock %}
