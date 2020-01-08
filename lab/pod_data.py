@@ -40,7 +40,10 @@ def get_uplnk_if_mac(pod, interface):
         14: {1: "B8:38:61:46:89:16", 2: "B8:38:61:46:89:17"},
         15: {1: "B8:38:61:AF:19:04", 2: "B8:38:61:AF:19:05"},
         16: {1: "3C:08:F6:16:2E:4A", 2: "3C:08:F6:16:2E:4B"},
-
+        17: {1: "B8:38:61:46:92:F8", 2: "B8:38:61:46:92:F9"},
+        18: {1: "B8:38:61:46:89:16", 2: "B8:38:61:46:89:17"},
+        19: {1: "B8:38:61:AF:19:04", 2: "B8:38:61:AF:19:05"},
+        20: {1: "3C:08:F6:16:2E:4A", 2: "3C:08:F6:16:2E:4B"},
     }
     return data[pod][interface].upper()
 
@@ -65,7 +68,11 @@ def public_subnet_info(pod,subnet_select):
         14: {"subnet": "10.0.%d.104" % subnet, "mask": "29", "lm":"255.255.255.248", "dg": "10.0.%d.105" % subnet, "n1": "10.0.%d.107" % subnet, "n2": "10.0.%d.108" % subnet, "n3": "10.0.%d.109" % subnet  },
         15: {"subnet": "10.0.%d.112" % subnet, "mask": "29", "lm":"255.255.255.248", "dg": "10.0.%d.113" % subnet, "n1": "10.0.%d.115" % subnet, "n2": "10.0.%d.116" % subnet, "n3": "10.0.%d.117" % subnet  },
         16: {"subnet": "10.0.%d.120" % subnet, "mask": "29", "lm":"255.255.255.248", "dg": "10.0.%d.121" % subnet, "n1": "10.0.%d.123" % subnet, "n2": "10.0.%d.124" % subnet, "n3": "10.0.%d.125" % subnet  },
-}
+        17: {"subnet": "10.0.%d.96" % subnet,  "mask": "29", "lm":"255.255.255.248", "dg": "10.0.%d.97" % subnet,  "n1": "10.0.%d.99" % subnet, "n2": "10.0.%d.100" % subnet, "n3": "10.0.%d.101" % subnet   },
+        18: {"subnet": "10.0.%d.104" % subnet, "mask": "29", "lm":"255.255.255.248", "dg": "10.0.%d.105" % subnet, "n1": "10.0.%d.107" % subnet, "n2": "10.0.%d.108" % subnet, "n3": "10.0.%d.109" % subnet  },
+        19: {"subnet": "10.0.%d.112" % subnet, "mask": "29", "lm":"255.255.255.248", "dg": "10.0.%d.113" % subnet, "n1": "10.0.%d.115" % subnet, "n2": "10.0.%d.116" % subnet, "n3": "10.0.%d.117" % subnet  },
+        20: {"subnet": "10.0.%d.120" % subnet, "mask": "29", "lm":"255.255.255.248", "dg": "10.0.%d.121" % subnet, "n1": "10.0.%d.123" % subnet, "n2": "10.0.%d.124" % subnet, "n3": "10.0.%d.125" % subnet  },
+    }
     return data[pod]
 
 def public_subnet_service_ip(pod, type ):
@@ -88,6 +95,11 @@ def public_subnet_service_ip(pod, type ):
         14: { "dg": "10.0.%d.105" % subnet, "mylabapp": "10.0.%d.107" % subnet,"gbapp":"10.0.%d.108" % subnet, "gbapp-proxy": "10.0.%d.109" % subnet, "gbapp_url": "gbapp-pod%02d" % pod },
         15: { "dg": "10.0.%d.113" % subnet, "mylabapp": "10.0.%d.115" % subnet,"gbapp":"10.0.%d.116" % subnet, "gbapp-proxy": "10.0.%d.117" % subnet, "gbapp_url": "gbapp-pod%02d" % pod },
         16: { "dg": "10.0.%d.121" % subnet, "mylabapp": "10.0.%d.123" % subnet,"gbapp":"10.0.%d.124" % subnet, "gbapp-proxy": "10.0.%d.125" % subnet, "gbapp_url": "gbapp-pod%02d" % pod },
+        17: { "dg": "10.0.%d.97" % subnet,  "mylabapp": "10.0.%d.99" % subnet, "gbapp":"10.0.%d.100" % subnet, "gbapp-proxy": "10.0.%d.101" % subnet, "gbapp_url": "gbapp-pod%02d" % pod },
+        18: { "dg": "10.0.%d.105" % subnet, "mylabapp": "10.0.%d.107" % subnet,"gbapp":"10.0.%d.108" % subnet, "gbapp-proxy": "10.0.%d.109" % subnet, "gbapp_url": "gbapp-pod%02d" % pod },
+        19: { "dg": "10.0.%d.113" % subnet, "mylabapp": "10.0.%d.115" % subnet,"gbapp":"10.0.%d.116" % subnet, "gbapp-proxy": "10.0.%d.117" % subnet, "gbapp_url": "gbapp-pod%02d" % pod },
+        20: { "dg": "10.0.%d.121" % subnet, "mylabapp": "10.0.%d.123" % subnet,"gbapp":"10.0.%d.124" % subnet, "gbapp-proxy": "10.0.%d.125" % subnet, "gbapp_url": "gbapp-pod%02d" % pod },
+
 }
     return data[pod]
 
@@ -126,6 +138,11 @@ def floatpool(pod):
         14: {"subnet": "10.0.239.104", "mask": "/29", "dg": "10.0.239.105",  "dhcps": "10.0.239.106", "dhcpe": "10.0.239.110" },
         15: {"subnet": "10.0.239.112", "mask": "/29", "dg": "10.0.239.113",  "dhcps": "10.0.239.114", "dhcpe": "10.0.239.118" },
         16: {"subnet": "10.0.239.120", "mask": "/29", "dg": "10.0.239.121",  "dhcps": "10.0.239.122", "dhcpe": "10.0.239.126" },
+        17: {"subnet": "10.0.239.96",  "mask": "/29", "dg": "10.0.239.97",  "dhcps": "10.0.239.98", "dhcpe": "10.0.239.102" },
+        18: {"subnet": "10.0.239.104", "mask": "/29", "dg": "10.0.239.105",  "dhcps": "10.0.239.106", "dhcpe": "10.0.239.110" },
+        19: {"subnet": "10.0.239.112", "mask": "/29", "dg": "10.0.239.113",  "dhcps": "10.0.239.114", "dhcpe": "10.0.239.118" },
+        20: {"subnet": "10.0.239.120", "mask": "/29", "dg": "10.0.239.121",  "dhcps": "10.0.239.122", "dhcpe": "10.0.239.126" },
+
 }
     return data[pod]
 
@@ -160,6 +177,10 @@ def pod_vm_info(pod):
          14:{"node1":"10.0.222.50", "node2":"10.0.222.51","master":"10.0.222.52"},
          15:{"node1":"10.0.222.53", "node2":"10.0.222.54","master":"10.0.222.55"},
          16:{"node1":"10.0.222.56", "node2":"10.0.222.57","master":"10.0.222.58"},
+         17:{"node1":"10.0.222.47", "node2":"10.0.222.48","master":"10.0.222.49"},
+         18:{"node1":"10.0.222.50", "node2":"10.0.222.51","master":"10.0.222.52"},
+         19:{"node1":"10.0.222.53", "node2":"10.0.222.54","master":"10.0.222.55"},
+         20:{"node1":"10.0.222.56", "node2":"10.0.222.57","master":"10.0.222.58"},
     }
     return data[pod]
 
