@@ -112,7 +112,7 @@
       pos: 32
       ls: True
       weburl: "vcenter"
-      file: "ccm/vcenter.html"
+      file: "ccm/ccp1.html"
       title: "CCP Control plane"
 - ccp:
     head:
@@ -177,8 +177,8 @@
       step: 2
       pos: 52
       ls: True
-      weburl: "lwall"
-      file: "app/setup.html"
+      weburl: "mysql"
+      file: "app/k8s.html"
       title: "ACI for K8s Policy"
 - hx:
     head:
@@ -203,7 +203,7 @@
       pos: 62
       ls: True
       weburl: "mb"
-      file: "hx/setup.html"
+      file: "hx/mb.html"
       title: "Persistant App"
 
 - conclusion:
