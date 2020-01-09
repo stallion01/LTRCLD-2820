@@ -21,6 +21,8 @@ Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,B
 9,PNG,TXT,/ccp/ccp4.png,178,948,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Add 10.101.128.101
 9,PNG,TXT,/ccp/ccp4.png,178,1130,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Add 10.139.12.210
 9,PNG,TXT,/ccp/ccp4.png,52,436,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Use SSH key from Step 1
+10,PNG,TXT,/ccp/vmw1.png,132,122,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}
+10,PNG,TXT,/ccp/vmw1.png,132,169,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,C1sco123
 900,PNG,TXT,/k8s_net/k8s_net_1.png,159,116,0,14,#303030,#white,white,/inconsolata/inconsolata-v18-latin-700.woff,left,10.2{{data.pod_numstr}}.5.187/32
 900,PNG,TXT,/k8s_net/k8s_net_1.png,220,226,0,14,#303030,#white,white,/inconsolata/inconsolata-v18-latin-700.woff,left,10.2{{data.pod_numstr}}.154.21/32
 991,PNG,TXT,/ccp/ccp-master.png,615,190,0,24,#FFFFFF,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.pname}}-0-master-0

@@ -33,11 +33,11 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-ssh-keygen -t ecdsa
+ssh-keygen -t ecdsa -N '' -f ~/.ssh/id_rsa <<< y
 </code>
 </pre>
 </div>
-<p>Hit enter a few times till you see the key's randomart image as shown in the image below</p>
+<p>The output you see should be similar to the image as shown below</p>
 <img src="/lab/static/images/ccp/ccp5.png" class="img-responsive img-shadow">
 <p>Display the public key using 'cat'</p>
 <div class="fancy-terminal">
@@ -59,7 +59,7 @@ Step {% set step = step +  1 %}
 <p>
     You will need to point the browser on your lab laptop  to the CCP admin website in this lab. Using the same
     Chrome browser that you are using to read this guide, go to the URL:
-     <a href="http://10.139.13.50/ver/3/clusters" target="blank">CCP Admin</a>
+     <a href="http://10.139.13.50/ver/3/clusters" target="_blank">CCP Admin</a>
 </p>
 <p>Ignore/accept the invalid SSL certificate</p>
 <img src="/lab/static/images/ccp/ccp_01.png" class="img-responsive img-shadow">
@@ -121,7 +121,9 @@ Please chose only 1 Master and 1 Workers in order to reduce load on the lab equi
 <p>Use the ssh key from Step 1</p>
 <p>We will use a local Harbor registry to expedite App installaton</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/9" class="img-responsive">
-
+<p>
+{{copythis(data.pod_cidr)}} {{copythis('10.101.128.101')}} {{copythis('10.139.12.210')}}
+</p>
 <p>Click NEXT</p>
 
 {{ end_of_page(page_position,data) }}
