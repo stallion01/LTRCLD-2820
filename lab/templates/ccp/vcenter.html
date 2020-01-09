@@ -76,8 +76,12 @@ Step {% set step = step +  1 %}
 </ul>
 <br>
 <p>
-Make sure that you are using 'VERSION3' and are using vSphere</p>
-<img src="/lab/static/images/ccp/ccp1.png" class="img-responsive img-shadow">
+
+  <p>
+      Notice that CCP has created a new {{data.vmware_cred_username}} tenant
+      ; click on 'Tenants', and then click on {{data.vmware_cred_username}}
+  </p>
+  <img src="/lab/imgman/pod/{{ data.pod_id }}/id/11" class="img-responsive img-shadow ">
 
 
 
@@ -86,23 +90,24 @@ Make sure that you are using 'VERSION3' and are using vSphere</p>
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' Cluster</h3>
+<h3>Step {{ step }} - Explore the '{{data.apic_stdnt_uname}}' tenant details</h3>
 <p>
-    Infrastructure provider - vCenter; in poduction env, you might have several.
+    Expand Applciation Profiles and Applicaton EPGs.
     </p>
-    <p>Kubernetes Cluster Name - '{{data.apic_stdnt_uname}}' (user defined)</p>
-    <p>ACI CNI profile - 'cloud-aci' which contains ACI specific settings</p>
+    <p>Click on the Topology view that shows the EPGs and Contracts</p>
+    <p>Exlore the relationship between the EGPs by clicking on 'kube-default' in the image</p>
 
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/8" class="img-responsive">
-<p>Click 'NEXT'</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/12" class="img-responsive">
+
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Fill in the provider details</h3>
-<p>This page is for vCenter specific details as shown.</p>
-<img src="/lab/static/images/ccp/ccp3.png" class="img-responsive img-shadow">
+<h3>Step {{ step }} - Check to see if ACI sees the Nodes</h3>
+<p>Click on kube-nodes, and Operational</p>
+<p>Examine the IP addresses that ACI has detected from the data plane</p>
+<img src="/lab/static/images/ccp/aci02.png" class="img-responsive img-shadow">
 
 <!--
 ##############################################################################################################################
