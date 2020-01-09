@@ -251,7 +251,7 @@ def get_pod_data(pod):
     pod_master_ip = pod_jump_host(pod)['jumphost']
     pod_node1_ip = pod_vm_info(pod)['node1']
     pod_node2_ip = pod_vm_info(pod)['node2']
-
+    pod_cidr_net = pod_jump_host(pod)['cidr']
     # Need to define credentials here as placed in various places.
     apic_stdnt_uname = "pod%02d" % pod
     apic_stdnt_pass = "C1sco123"
@@ -426,6 +426,7 @@ def get_pod_data(pod):
         "pod_user":                     "userpod" + str(pod),
         "date":                         "{:%m/%d/%Y}".format(datetime.now()),
         #subnets for k8s
+        "pod_cidr":                     pod_cidr_net,
         "nodenet_subnet":               public_subnet_info(pod,"node")["subnet"],
         "nodenet_subnet_dg":            public_subnet_info(pod,"node")["dg"],
         "nodenet_subnet_mask":          public_subnet_info(pod,"node")["mask"],

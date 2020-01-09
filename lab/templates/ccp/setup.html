@@ -80,7 +80,7 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Create New cluter by clicking on 'NEW CLUSTER'</h3>
+<h3>Step {{ step }} - Create new clsuter by clicking on 'NEW CLUSTER'</h3>
 <p>
 Make sure that you are using 'VERSION3' and are using vSphere</p>
 <img src="/lab/static/images/ccp/ccp1.png" class="img-responsive img-shadow">
@@ -99,7 +99,7 @@ Step {% set step = step +  1 %}
     <p>Kubernetes Cluster Name - '{{data.apic_stdnt_uname}}' (user defined)</p>
     <p>ACI CNI profile - 'cloud-aci' which contains ACI specific settings</p>
 
-<<img src="/lab/static/images/ccp/ccp2.png" class="img-responsive img-shadow">
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/8" class="img-responsive">
 <p>Click 'NEXT'</p>
 <!--
 ##############################################################################################################################
@@ -107,9 +107,8 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Fill in the provider details</h3>
-<p>This page is for vCenter specific details.</p>
-<<img src="/lab/static/images/ccp/ccp3.png" class="img-responsive img-shadow">
-<p>Fill in the details as shown</p>
+<p>This page is for vCenter specific details as shown.</p>
+<img src="/lab/static/images/ccp/ccp3.png" class="img-responsive img-shadow">
 
 <!--
 ##############################################################################################################################
@@ -118,12 +117,12 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Fill in your Master/Node specific details</h3>
 <p>
-Please chose only 1 Master and 1 Worker in order to reduce load on the lab</p>
+Please chose only 1 Master and 1 Workers in order to reduce load on the lab equipment</p>
 <p>Use the ssh key from Step 1</p>
 <p>We will use a local Harbor registry to expedite App installaton</p>
-<<img src="/lab/static/images/ccp/ccp4.png" class="img-responsive img-shadow">
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/9" class="img-responsive">
 
-
+<p>Click NEXT</p>
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}
