@@ -16,19 +16,39 @@
     For this lab each pod has admin access to the common CCP control plane
     cluster which will be used to deploy the tenant clusters.
 </p>
-<div class="row">
-    <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
-        <img src="/lab/static/images/labtopo.png" class="img-responsive center-block ">
-    </div>
-</div>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
 
-<div class="alert alert--warning">
-    <div class="alert__icon icon-exclamation-triangle"></div>
-    <div class="alert__message">
-        For this lab we ask you to be cautious when working with Tenants to ensure
-        you don't affect other student labs.
-    </div>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Copy your public key from the jumphost</h3>
+<p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}} or click here -
+<a target="_blank" href="chrome-extension://pnhechapfaindjhompbnflcldabbghjo/html/nassh.html#ccpuser@{{data.pod_master_ip}}:22">
+<img src="/core/static/images/symbols/ssh_pointer.png" style="height:20px;" >
+</a>
+</p>
+<p>Click 'Copy' on the right to copy the command</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+ssh-keygen -t ecdsa
+</code>
+</pre>
 </div>
+<p>Hit enter a few times till you see the key's randomart image as shown in the image below</p>
+<img src="/lab/static/images/ccp/ccp5.png" class="img-responsive img-shadow">
+<p>Display the public key using 'cat'</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+cat ~/.ssh/id_ecdsa.pub
+</code>
+</pre>
+</div>
+<p><b>Hightlight the key from "ecdsa-sha2..... to ... "=" sign as show in the image below (and copy to buffer)"</b></p>
+<img src="/lab/static/images/ccp/ccp6.png" class="img-responsive img-shadow">
 
 <!--
 ##############################################################################################################################
@@ -40,8 +60,10 @@ Step {% set step = step +  1 %}
     You will need to point the browser on your lab laptop  to the CCP admin website in this lab. Using the same
     Chrome browser that you are using to read this guide, go to the URL:
      <a href="http://10.139.13.50/ver/3/clusters" target="blank">CCP Admin</a>
-
 </p>
+<p>Ignore/accept the invalid SSL certificate</p>
+<img src="/lab/static/images/ccp/ccp_01.png" class="img-responsive img-shadow">
+
 <p>The credentials for CCP are:</p>
 <ul>
     <li>
@@ -52,57 +74,54 @@ Step {% set step = step +  1 %}
     </li>
 
 </ul>
-<p>Ignore the invalid SSL certificate</p>
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Feature update splash screen</h3>
-<p>
-    Select 'Get Started' if the splash screen appears
-</p>
-<img src="/lab/static/images/aci1/apicSplash.jpg" class="img-responsive img-shadow">
-
-
 
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Adding a new tenant</h3>
+<h3>Step {{ step }} - Create New cluter by clicking on 'NEW CLUSTER'</h3>
 <p>
-    Take note of the existing Tenants
+Make sure that you are using 'VERSION3' and are using vSphere</p>
+<img src="/lab/static/images/ccp/ccp1.png" class="img-responsive img-shadow">
+
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' Cluster</h3>
+<p>
+    Infrastructure provider - vCenter; in poduction env, you might have several.
     </p>
-    <p>Click on 'Tenants', and then 'Add Tenant'
-</p>
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/4" class="img-responsive img-shadow ">
+    <p>Kubernetes Cluster Name - '{{data.apic_stdnt_uname}}' (user defined)</p>
+    <p>ACI CNI profile - 'cloud-aci' which contains ACI specific settings</p>
+
+<<img src="/lab/static/images/ccp/ccp2.png" class="img-responsive img-shadow">
+<p>Click 'NEXT'</p>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Fill in the provider details</h3>
+<p>This page is for vCenter specific details.</p>
+<<img src="/lab/static/images/ccp/ccp3.png" class="img-responsive img-shadow">
+<p>Fill in the details as shown</p>
 
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' tenant</h3>
-
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/5" class="img-responsive img-shadow">
-
+<h3>Step {{ step }} - Fill in your Master/Node specific details</h3>
 <p>
-    The Tenant should be named: {{copythis(data.vmware_cred_username)}}
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Explore any existing VMM integration</h3>
-<p>
-    Click on 'Virtual Networking' and open 'Container Domains'
-</p>
-<p>Take note of any existing Kubernetes integrations</p>
-
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/6" class="img-responsive img-shadow">
+Please chose only 1 Master and 1 Worker in order to reduce load on the lab</p>
+<p>Use the ssh key from Step 1</p>
+<p>We will use a local Harbor registry to expedite App installaton</p>
+<<img src="/lab/static/images/ccp/ccp4.png" class="img-responsive img-shadow">
 
 
 

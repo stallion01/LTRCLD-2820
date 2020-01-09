@@ -499,7 +499,7 @@ def get_pod_data(pod):
         "aci_mylabapp_graph":           "k8s_pod%02d_svc_global" %  pod,
         # All Linux prompts for CLI mimick on document
         "home_prompt":                  "pod%02d ~ " % pod ,
-        "master_prompt":                "[root@pod%02d-master ~]#" % pod ,
+        "master_prompt":                "[ccpuser@pod%02d ~]$" % pod ,
         "master_prompt_my_app":         "[root@pod%02d-master my_app]#" % pod ,
         "master_prompt_dockerplay":     "[root@pod%02d-master dockerplay]#" % pod ,
         "master_prompt_wp":             "[root@pod%02d-master wp_local]#" % pod ,
