@@ -106,14 +106,6 @@
       weburl: "tenant"
       file: "ccm/setup.html"
       title: "Deploying Mmgt cluster"
-    vcenter:
-      line: 'data'
-      step: 2
-      pos: 32
-      ls: True
-      weburl: "vcenter"
-      file: "ccm/ccp1.html"
-      title: "CCP Control plane"
 - ccp:
     head:
       line: 'head'
