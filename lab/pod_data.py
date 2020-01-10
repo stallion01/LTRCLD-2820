@@ -504,7 +504,7 @@ def get_pod_data(pod):
         "master_prompt_my_app":         "[root@pod%02d-master my_app]#" % pod ,
         "master_prompt_dockerplay":     "[root@pod%02d-master dockerplay]#" % pod ,
         "master_prompt_wp":             "[root@pod%02d-master wp_local]#" % pod ,
-        "node1_prompt":                 "[root@pod%02d-node1 ~]#" % pod ,
+        "node1_prompt":                 "[ccpuser@pod%02d-0-master-0:~]$" % pod ,
         "node2_prompt":                 "[root@pod%02d-node2 ~]#" % pod ,
         "linux_prompt":                 "pod%02d ~ $ " % pod ,
         "apic_prompt":                  apic_prompt[int(pod_numstr[:1])],

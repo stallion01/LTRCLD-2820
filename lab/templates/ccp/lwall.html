@@ -1,129 +1,178 @@
 {% extends "base_cisco.html" %}
-{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance, copythis %}
 {% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+
+
 <div class="section_header">
-    <div class="title">Lab Access</div>
-    <div class="title_section">vpn setup</div>
+    <div class="title">Live Wall App</div>
+    <div class="title_section">Deployment</div>
 </div>
-<h1>
-    Getting connected to the Lab
-</h1>
-<p>
-    You would have to live under a rock today to not have heard about containers and Docker. They
-    have taken over the techie world by storm. Originally known in Linux circles and mostly
-    focused around application programing, containers are a new architectural method of
-    collecting what is needed to provide a service. Instead of having long installation
-    instructions with information of packages that are needed to get a service operational,
-    containers can be written to contain all that is needed for the service to run.
+{{ html_for_step_status|safe }}
+
+<h1>Lab Toplogy</h1>
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - SSH to your jumpbox and connect to your Master node</h3>
+<p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}} or click here -
+<a target="_blank" href="chrome-extension://pnhechapfaindjhompbnflcldabbghjo/html/nassh.html#ccpuser@{{data.pod_master_ip}}:22">
+<img src="/core/static/images/symbols/ssh_pointer.png" style="height:20px;" >
+</a>
 </p>
-<div class="row">
-    <div class="col-md-6 col-sm-12">
-        <p>
-            Containers differ from normal Virtual Machines (VM's) in the fact that containers
-            running on the same host share the underlying kernel amongst them. This variation
-            means that the operating system doesn't need to be "reproduced". This provides two
-            separate important things: you can start containers very quickly to
-            provide the service, and they can be made to be extremely small in
-            size.
-        </p>
-        <p>
-            Yet, what are these services we keep talking about? Since the days of
-            application development on mainframe computers, developers
-            have been working to "compartmentalize" the applications they
-            developed into smaller, more manageable, processes. This provides an important
-            function to a programmer, the ability to change and modify part of an application
-            without having to impact and rebuild the whole application.
-        </p>
-    </div>
-    <div class="col-md-6 col-sm-12">
-        <img src="/lab/static/images/guide/container-vm.png" class="img-responsive ">
-    </div>
+<p>Click 'Copy' on the right to copy the command into your clipboard<br>
+<b>Use the IP Adress that you copied in the previous section</b></p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+mkdir -p $HOME/.kube
+ssh 'your master node ip address'
+</code>
+</pre>
 </div>
-<p>
-    Achieving this goal requires writing applications in such a way that they
-    can communicate with each other through programmatic tools like RPC (remote
-    procedure calls) or the newer term, API (application programing interface).
-</p>
-<p>
-    In the past, people had different processes running on single servers. Then these
-    evolved into running across networks through network RPCs. Complexity and lack
-    of standards made these hard to manage. Then standard protocols where developed
-    like ReST to be able to send data between network services. Different
-    programmatic tooling to simplify creation of API's made it possible to now
-    easily break applications into much smaller chunks.
-</p>
-<p>
-    With that in mind, containers have evolved from the original LXC concepts
-    to what they are today. A mechanism for developers to create services
-    that are easy to deploy and manage, that can be orchestrated and managed
-    in such a way that they are small, nimble and fast. Hence the term
-    <strong>micro-services</strong> was coined.
-</p>
 
-<h1>
-    Container orchestration
-</h1>
-<p>
-    The process of orchestration of containers involved the development of tools that
-    would make it possible to manage the lifecycle of the application through
-    automation. These involves aspects like placement, scheduling, resource
-    management, updates and monitoring.
-</p>
-<p>
-    One of the key components of orchestration of containers is the declarative
-    configuration model that is used throughout the eco-system. DEVOPS teams
-    write the proper declarative configuration such that the automation uses this
-    configuration throughout the architecture. This declarative configuration,
-    usually accomplished with YAML or JSON contains all the crucial elements
-    required by this application component to function. These might include
-    network ports, storage, volumes and other parameters.
-</p>
-<p>
-    It is also the job of the orchestrator to insure proper placement of
-    workloads based on system activity, load and policy. For example,
-    provisioning an application that has some sort of high availability
-    requirement and placing all the components in the same physical compute
-    node makes no sense.
-</p>
-<p>
-    It is also the job of the orchestrator for monitoring health of the
-    all the containers that compromise the application component and make sure
-    that they are active and functional.
-</p>
-<p>
-    There are many container orchestrators in the market. Three of the
-    popular ones are: Kubernetes, Docker Swarm and Apache Mesos. Over the
-    past years Kubernetes has been gaining traction in the industry as a
-    leader in the orchestration space of containers and the reason why
-    Cisco has developed this integration model, based on Cisco ACI user
-    feedback.
-</p>
-<h1>
-    Kubernetes
-</h1>
-<p>
-    Kubernetes originated as an open source project in google loosely
-    based on Google's own Borg architecture for managing their datacenter
-    workloads ( Borg remains internal google only ). Kubernetes birth
-    date is in the year 2014 and has been adopted and extended by the
-    community since with many extensions added by other corporations and
-    open-source advocates.
-</p>
-<p>
-    From that birth in 2014 kubernetes continues to garner interest in the
-    market. Different platforms utilize kubernetes as the basis for
-    managing containers ( Rancher, OpenShift ). The internet can't
-    stop asking questions about Kubernetes:
-</p>
-<img src="/lab/static/images/kubernetes-trends.png" class="img-responsive img-shadow">
-<p>
-    Which leads us as to why you are here with us today.
-</p>
+<p>Copy kubeconfig file to your jumphost</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.node1_prompt}}">
+<code class="language-bash">
+sudo cp -i /etc/kubernetes/admin.conf config
+sudo chown ccpuser config
+scp config {{data.vmware_cred_username}}:~/.kube/
+exit
+</code>
+</pre>
+</div>
 
 
 
+<p>The output you see should be similar to the image as shown below</p>
+<img src="/lab/static/images/ccp/ccp5.png" class="img-responsive img-shadow">
+<p>Display the public key using 'cat'</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+cat ~/.ssh/id_ecdsa.pub
+</code>
+</pre>
+</div>
+<p><b>Hightlight the key from "ecdsa-sha2..... to ... "=" sign as show in the image below (and copy to buffer)"</b></p>
+<img src="/lab/static/images/ccp/ccp6.png" class="img-responsive img-shadow">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check the status of your VM deployment</h3>
+<p>
+    You sould see a {{data.vmware_cred_username}}-0-master-0 master VM and a {{data.vmware_cred_username}}-1-node-gr-0 node VM
+    being deployed in the Recent Tasks under your resource pool
+</p>
+<p>Take note of the IP addresses assigned by the CCP control plane cluster</p>
+<img src="/lab/static/images/ccp/vmw2.png" class="img-responsive img-shadow">
 
 
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Login to APIC to see what CCP has deployed</h3>
+<p>
+  <a target="_blank" href="http://{{data.apic4pod}}">Your POD APIC at
+        {{data.apic4pod}}</a>.
+</p>
+<p>The credentials for this APIC are:</p>
+<ul>
+    <li>
+        User ID: {{data.apic_stdnt_uname}}
+    </li>
+    <li>
+        Password: {{data.apic_stdnt_pass}}
+    </li>
+    <li>Domain: acs</li>
+</ul>
+<br>
+<p>
+
+  <p>
+      Notice that CCP has created a new {{data.vmware_cred_username}} tenant
+      ; click on 'Tenants', and then click on {{data.vmware_cred_username}}
+  </p>
+  <img src="/lab/imgman/pod/{{ data.pod_id }}/id/11" class="img-responsive img-shadow ">
+
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Explore the '{{data.apic_stdnt_uname}}' tenant details</h3>
+<p>
+    Expand Applciation Profiles and Applicaton EPGs.
+    </p>
+    <p>Click on the Topology view that shows the EPGs and Contracts</p>
+    <p>Exlore the relationship between the EGPs by clicking on 'kube-default' in the image</p>
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/12" class="img-responsive">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check to see if ACI sees the Nodes</h3>
+<p>Click on kube-nodes, and Operational</p>
+<p>Examine the IP addresses that ACI has detected from the data plane</p>
+<img src="/lab/static/images/ccp/aci02.png" class="img-responsive img-shadow">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Examine the addtions in the VMM domain section</h3>
+<p>
+Click on 'Virtual Networking' and Expand Kubernetes under 'Container Domains'</p>
+<p>Expand {{data.vmware_cred_username}} and look for any pods in the 'default' namespace</p>
+<p>We will deploy an application into this namespace in the next section</p>
+<img src="/lab/static/images/ccp/aci031.png" class="img-responsive img-shadow">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check the status and details in CCP</h3>
+<p>
+Go back to the tab/window with Cisco Container Platform <br>Log back in with 'admin/admin' if your session has expired </p>
+<p>For {{data.vmware_cred_username}}, click on the icon below 'Actions' and click 'View Details' </p>
+<img src="/lab/static/images/ccp/ccp9.png" class="img-responsive img-shadow">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Why do the nodes have two of the same IP addresses?</h3>
+<p>
+Click on 'ADD-ONS' and install 'HyperFlex Storage(CSI)'</p>
+
+<img src="/lab/static/images/ccp/ccp10.png" class="img-responsive img-shadow">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Click on 'ADD-ONS' and install 'HyperFlex Storage(CSI)'</h3>
+
+<img src="/lab/static/images/ccp/ccp14.png" class="img-responsive img-shadow">
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}

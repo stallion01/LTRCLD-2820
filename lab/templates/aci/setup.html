@@ -94,11 +94,12 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' tenant</h3>
+{{copythis(data.vmware_cred_username)}}<br>
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/5" class="img-responsive img-shadow">
 
 <p>
-    The Tenant should be named: {{copythis(data.vmware_cred_username)}}
+
 
 <!--
 ##############################################################################################################################

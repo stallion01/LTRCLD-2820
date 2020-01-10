@@ -17,7 +17,7 @@ Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,B
 7,PNG,TXT,/aci1/step3.png,84,323,0,14,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Select to highlight {{data.vmware_cred_username}}
 8,PNG,TXT,/ccp/ccp2.png,394,292,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}
 9,PNG,TXT,/ccp/ccp4.png,52,350,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,ccpuser
-9,PNG,TXT,/ccp/ccp4.png,52,525,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.pod_cidr}}
+9,PNG,TXT,/ccp/ccp4.png,52,525,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.pod_cidr}} (Click to copy from above)
 9,PNG,TXT,/ccp/ccp4.png,178,948,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Add 10.101.128.101
 9,PNG,TXT,/ccp/ccp4.png,178,1130,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Add 10.139.12.210
 9,PNG,TXT,/ccp/ccp4.png,52,436,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Use SSH key from Step 1
@@ -29,12 +29,13 @@ Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,B
 12,PNG,PDOWN,/ccp/aci01.png,131,209,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 12,PNG,PDOWN,/ccp/aci01.png,989,143,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 12,PNG,PDOWN,/ccp/aci01.png,552,542,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
+13,PNG,TXT,/ccp/ccp3.png,67,462,0,14,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}
 900,PNG,TXT,/k8s_net/k8s_net_1.png,159,116,0,14,#303030,#white,white,/inconsolata/inconsolata-v18-latin-700.woff,left,10.2{{data.pod_numstr}}.5.187/32
 900,PNG,TXT,/k8s_net/k8s_net_1.png,220,226,0,14,#303030,#white,white,/inconsolata/inconsolata-v18-latin-700.woff,left,10.2{{data.pod_numstr}}.154.21/32
 991,PNG,TXT,/ccp/ccp-master.png,615,190,0,24,#FFFFFF,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.pname}}-0-master-0
-991,PNG,TXT,/ccp/ccp-master.png,615,160,0,32,#FFFFFF,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,{{data.pod_master_ip}}
+991,PNG,TXT,/ccp/ccp-master.png,615,160,0,32,#FFFFFF,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,Name
 991,PNG,TXT,/ccp/ccp-master.png,1198,190,0,24,#FFFFFF,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.pname}}-1-node-gr-0
-991,PNG,TXT,/ccp/ccp-master.png,1198,160,0,32,#FFFFFF,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,{{data.pod_node1_ip}}
+991,PNG,TXT,/ccp/ccp-master.png,1198,160,0,32,#FFFFFF,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,Name
 993,PNG,TXT,/guide/work_on_node2.png,1198,118,0,24,#white,#white,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.pname}}-node2.ecatsrtpdmz.cisco.com
 993,PNG,TXT,/guide/work_on_node2.png,1198,85,0,32,#white,#white,white,/inconsolata/inconsolata-v18-latin-700.woff,left,{{data.pod_node2_ip}}
 999,PNG,TXT,/aci/aci-top-bar-menu.png,212,56,0,14,blue,#white,white,/CiscoSans/CiscoSansTTHeavy.woff,left,Test
