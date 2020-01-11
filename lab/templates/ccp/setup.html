@@ -33,7 +33,7 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-ssh-keygen -t ecdsa -N '' -f ~/.ssh/id_rsa <<< y
+ssh-keygen -t ecdsa -N '' -f ~/.ssh/id_ecdsa <<< y
 </code>
 </pre>
 </div>
@@ -47,7 +47,7 @@ cat ~/.ssh/id_ecdsa.pub
 </code>
 </pre>
 </div>
-<p><b>Hightlight the key from "ecdsa-sha2..... to ... "=" sign as show in the image below (and copy to buffer)"</b></p>
+<p><b>Hightlight the key from "ecdsa-sha2..... to ... "=" sign as show in the image below;<br>Open Notepad, and paste it for later use"</b></p>
 <img src="/lab/static/images/ccp/ccp6.png" class="img-responsive img-shadow">
 
 <!--
@@ -128,7 +128,7 @@ We will use a local Harbor registry to expedite App installaton</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/9" class="img-responsive">
 <p>Input NTP and Registry as shown below (At least one entry for NTP)</p>
 <img src="/lab/static/images/ccp/ccp7.png" class="img-responsive img-shadow">
-<p>Click NEXT</p>
+<p>Click NEXT, and FINISH</p>
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}

@@ -138,7 +138,7 @@
       ls: True
       weburl: "lwapp"
       file: "ccp/lwall.html"
-      title: "Deploy Livewall App Profile"
+      title: "Setup Kubernetes Connection"
     aci:
       line: 'data'
       step: 4
@@ -146,7 +146,7 @@
       ls: True
       weburl: "aci"
       file: "ccp/apic.html"
-      title: "ACI livewall App Profile"
+      title: "Deploy livewall Application"
 - app:
     head:
       line: 'head'

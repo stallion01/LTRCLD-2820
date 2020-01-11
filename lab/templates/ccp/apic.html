@@ -15,38 +15,37 @@
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
 
+
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Log into VMware vCenter</h3>
-<p>Point your browser to https://10.101.128.100/ui or click here -
-<a target='_blank' href='https://10.101.128.100/ui'>
-<img src="/core/static/images/symbols/http_pointer.png" style="height:25px;" >
-</a>
+<h3>Step {{ step }} - Deploy "LiveWall" Application profile from CLI</h3>
+<p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}} or click here -
+<a target="_blank" href="chrome-extension://pnhechapfaindjhompbnflcldabbghjo/html/nassh.html#ccpuser@{{data.pod_master_ip}}:22">
+<img src="/core/static/images/symbols/ssh_pointer.png" style="height:20px;" >
+</a
 </p>
-<p>Ignore/accept the invalid SSL certificate</p>
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/10" class="img-responsive">
-
-<p>The credentials for vCenter are:</p>
-<ul>
-    <li>
-        User ID: {{data.vmware_cred_username}}
-    </li>
-    <li>
-        Password: C1sco123
-    </li>
-
-</ul>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+  cd $HOME/clemea20
+  git pull
+  ./lwAppProfile
+</code>
+</pre>
+</div>
+<br>
 
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Check the status of your VM deployment</h3>
+<h3>Step {{ step }} - Deploy "LiveWall" Application profile from CLI</h3>
 <p>
+
     You sould see a {{data.vmware_cred_username}}-0-master-0 master VM and a {{data.vmware_cred_username}}-1-node-gr-0 node VM
     being deployed in the Recent Tasks under your resource pool
 </p>

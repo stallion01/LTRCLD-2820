@@ -774,14 +774,14 @@ html.cui body .credentials {
     vertical-align: middle; }
 
 /*
-Adding borders and shadows to images to better represent in doc 
+Adding borders and shadows to images to better represent in doc
 */
 .cui .img-shadow {
   box-shadow: 0 15px 10px -10px #c0c0c0;
   border: 1px solid #e0e0e0; }
 
 /*
- fix button for nice copy 
+ fix button for nice copy
 */
 .cui .nice-copy .input-group-button .btn--small {
   background-color: #e0e0e0;

@@ -6,8 +6,8 @@
 
 
 <div class="section_header">
-    <div class="title">Live Wall App</div>
-    <div class="title_section">Deployment</div>
+    <div class="title">Kubernetes Setup</div>
+    <div class="title_section">Management</div>
 </div>
 {{ html_for_step_status|safe }}
 
@@ -24,155 +24,80 @@ Step {% set step = step +  1 %}
 <p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}} or click here -
 <a target="_blank" href="chrome-extension://pnhechapfaindjhompbnflcldabbghjo/html/nassh.html#ccpuser@{{data.pod_master_ip}}:22">
 <img src="/core/static/images/symbols/ssh_pointer.png" style="height:20px;" >
-</a>
+</a
+<p>Type <b>'yes'</b> if prompted with ssh key validation message</p>
 </p>
 <p>Click 'Copy' on the right to copy the command into your clipboard<br>
-<b>Use the IP Adress that you copied in the previous section</b></p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
 mkdir -p $HOME/.kube
-ssh 'your master node ip address'
+export TOKEN=$(curl -v -k -X POST -H "Content-Type:application/x-www-form-urlencoded" -d "username=admin&password=admin" https://10.139.13.50/v3/system/login  2> >(grep X-Auth-Token) | grep X-Auth-Token | awk -F ":" '{print $2}' | tr -d '\n\r')
+export {{data.apic_stdnt_uname}}Master=$(curl -ksSL --request GET -H "X-Auth-Token":"$TOKEN" $CCP/v3/clusters/ | jq '.[] | .master_group.nodes' | jq '.[] | .name, .public_ip' | awk '/{{data.apic_stdnt_uname}}-0-master-0/{getline;print;}' | tr -d '\"')
+
+</code>
+</pre>
+</div>
+<br>
+<p>SSH to your master node
+<br>Type <b>'yes'</b> if prompted with ssh key validation message</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+ssh ${{data.apic_stdnt_uname}}Master
 </code>
 </pre>
 </div>
 
-<p>Copy kubeconfig file to your jumphost</p>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Configure access to you k8s cluster</h3>
+<p>In order to access your Kubernetes cluster, we'll have to copy the kubeconfig file to your jumphost</p>
+<br>Type 'yes' if prompted with ssh key validation message
+<br>When prompted, type in the password to your jumphost which is <b>'C1sco123'</b>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.node1_prompt}}">
 <code class="language-bash">
 sudo cp -i /etc/kubernetes/admin.conf config
 sudo chown ccpuser config
-scp config {{data.vmware_cred_username}}:~/.kube/
+scp config {{data.pod_master_ip}}:~/.kube/
+</code>
+</pre>
+</div>
+
+
+
+<p>Type exit and get back to the the jumphost</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.node1_prompt}}">
+<code class="language-bash">
 exit
 </code>
 </pre>
 </div>
 
-
-
-<p>The output you see should be similar to the image as shown below</p>
-<img src="/lab/static/images/ccp/ccp5.png" class="img-responsive img-shadow">
-<p>Display the public key using 'cat'</p>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Test kubernetes connection from Jumphost</h3>
+<b>Use 'kubectl' to get node and pod information</b>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-cat ~/.ssh/id_ecdsa.pub
+kubectl get nodes -o wide
+kubectl get pods --all-namespaces
 </code>
 </pre>
 </div>
-<p><b>Hightlight the key from "ecdsa-sha2..... to ... "=" sign as show in the image below (and copy to buffer)"</b></p>
-<img src="/lab/static/images/ccp/ccp6.png" class="img-responsive img-shadow">
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Check the status of your VM deployment</h3>
-<p>
-    You sould see a {{data.vmware_cred_username}}-0-master-0 master VM and a {{data.vmware_cred_username}}-1-node-gr-0 node VM
-    being deployed in the Recent Tasks under your resource pool
-</p>
-<p>Take note of the IP addresses assigned by the CCP control plane cluster</p>
-<img src="/lab/static/images/ccp/vmw2.png" class="img-responsive img-shadow">
+<p>The output should look something similar to this.</p>
+  <img src="/lab/static/images/ccp/lwall1.png" class="img-responsive img-shadow">
 
 
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Login to APIC to see what CCP has deployed</h3>
-<p>
-  <a target="_blank" href="http://{{data.apic4pod}}">Your POD APIC at
-        {{data.apic4pod}}</a>.
-</p>
-<p>The credentials for this APIC are:</p>
-<ul>
-    <li>
-        User ID: {{data.apic_stdnt_uname}}
-    </li>
-    <li>
-        Password: {{data.apic_stdnt_pass}}
-    </li>
-    <li>Domain: acs</li>
-</ul>
-<br>
-<p>
-
-  <p>
-      Notice that CCP has created a new {{data.vmware_cred_username}} tenant
-      ; click on 'Tenants', and then click on {{data.vmware_cred_username}}
-  </p>
-  <img src="/lab/imgman/pod/{{ data.pod_id }}/id/11" class="img-responsive img-shadow ">
-
-
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Explore the '{{data.apic_stdnt_uname}}' tenant details</h3>
-<p>
-    Expand Applciation Profiles and Applicaton EPGs.
-    </p>
-    <p>Click on the Topology view that shows the EPGs and Contracts</p>
-    <p>Exlore the relationship between the EGPs by clicking on 'kube-default' in the image</p>
-
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/12" class="img-responsive">
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Check to see if ACI sees the Nodes</h3>
-<p>Click on kube-nodes, and Operational</p>
-<p>Examine the IP addresses that ACI has detected from the data plane</p>
-<img src="/lab/static/images/ccp/aci02.png" class="img-responsive img-shadow">
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Examine the addtions in the VMM domain section</h3>
-<p>
-Click on 'Virtual Networking' and Expand Kubernetes under 'Container Domains'</p>
-<p>Expand {{data.vmware_cred_username}} and look for any pods in the 'default' namespace</p>
-<p>We will deploy an application into this namespace in the next section</p>
-<img src="/lab/static/images/ccp/aci031.png" class="img-responsive img-shadow">
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Check the status and details in CCP</h3>
-<p>
-Go back to the tab/window with Cisco Container Platform <br>Log back in with 'admin/admin' if your session has expired </p>
-<p>For {{data.vmware_cred_username}}, click on the icon below 'Actions' and click 'View Details' </p>
-<img src="/lab/static/images/ccp/ccp9.png" class="img-responsive img-shadow">
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Why do the nodes have two of the same IP addresses?</h3>
-<p>
-Click on 'ADD-ONS' and install 'HyperFlex Storage(CSI)'</p>
-
-<img src="/lab/static/images/ccp/ccp10.png" class="img-responsive img-shadow">
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Click on 'ADD-ONS' and install 'HyperFlex Storage(CSI)'</h3>
-
-<img src="/lab/static/images/ccp/ccp14.png" class="img-responsive img-shadow">
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}
