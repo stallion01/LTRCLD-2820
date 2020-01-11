@@ -6,7 +6,7 @@
 
 
 <div class="section_header">
-    <div class="title">{{data.vmware_cred_username}} Cluster</div>
+    <div class="title">Cisco Livewall App</div>
     <div class="title_section">Deployment</div>
 </div>
 {{ html_for_step_status|safe }}
@@ -43,111 +43,139 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Deploy "LiveWall" Application profile from CLI</h3>
+<h3>Step {{ step }} - Examine the changes in APIC</h3>
 <p>
+Take notice that we have deployed three new EPGs (Collector, api, and frontend) and contracts between them
+</p>This step was scripted for you to save time<br>
 
-    You sould see a {{data.vmware_cred_username}}-0-master-0 master VM and a {{data.vmware_cred_username}}-1-node-gr-0 node VM
-    being deployed in the Recent Tasks under your resource pool
-</p>
-<p>Take note of the IP addresses assigned by the CCP control plane cluster</p>
-<img src="/lab/static/images/ccp/vmw2.png" class="img-responsive img-shadow">
-
-
+<img src="/lab/static/images/ccp/lwall2.png" class="img-responsive img-shadow">
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Login to APIC to see what CCP has deployed</h3>
-<p>
-  <a target="_blank" href="http://{{data.apic4pod}}">Your POD APIC at
-        {{data.apic4pod}}</a>.
-</p>
-<p>The credentials for this APIC are:</p>
-<ul>
-    <li>
-        User ID: {{data.apic_stdnt_uname}}
-    </li>
-    <li>
-        Password: {{data.apic_stdnt_pass}}
-    </li>
-    <li>Domain: acs</li>
-</ul>
-<br>
-<p>
-
-  <p>
-      Notice that CCP has created a new {{data.vmware_cred_username}} tenant
-      ; click on 'Tenants', and then click on {{data.vmware_cred_username}}
-  </p>
-  <img src="/lab/imgman/pod/{{ data.pod_id }}/id/11" class="img-responsive img-shadow ">
-
-
-
+<h3>Step {{ step }} - SSH to your jumpbox and deploy the containerized application</h3>
+<p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}} or click here -
+<a target="_blank" href="chrome-extension://pnhechapfaindjhompbnflcldabbghjo/html/nassh.html#ccpuser@{{data.pod_master_ip}}:22">
+<img src="/core/static/images/symbols/ssh_pointer.png" style="height:20px;" >
+</a>
+<br>Run the following commands from CLI
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+cd $HOME/clemea20/01-livewall
+./01-launch-livewall.sh
+</code>
+</pre>
+</div>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Explore the '{{data.apic_stdnt_uname}}' tenant details</h3>
-<p>
-    Expand Applciation Profiles and Applicaton EPGs.
-    </p>
-    <p>Click on the Topology view that shows the EPGs and Contracts</p>
-    <p>Exlore the relationship between the EGPs by clicking on 'kube-default' in the image</p>
-
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/12" class="img-responsive">
-
+<h3>Step {{ step }} - Log back into ACI, open Operational tab under livewall app EPGs</h3>
+<b>Notice anything different?</b>
+<img src="/lab/static/images/ccp/lwall4.png" class="img-responsive img-shadow">
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Check to see if ACI sees the Nodes</h3>
-<p>Click on kube-nodes, and Operational</p>
-<p>Examine the IP addresses that ACI has detected from the data plane</p>
-<img src="/lab/static/images/ccp/aci02.png" class="img-responsive img-shadow">
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Examine the addtions in the VMM domain section</h3>
+<h3>Step {{ step }} - Examine the additions in the VMM domain section</h3>
 <p>
 Click on 'Virtual Networking' and Expand Kubernetes under 'Container Domains'</p>
 <p>Expand {{data.vmware_cred_username}} and look for any pods in the 'default' namespace</p>
-<p>We will deploy an application into this namespace in the next section</p>
 <img src="/lab/static/images/ccp/aci031.png" class="img-responsive img-shadow">
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Check the status and details in CCP</h3>
-<p>
-Go back to the tab/window with Cisco Container Platform <br>Log back in with 'admin/admin' if your session has expired </p>
-<p>For {{data.vmware_cred_username}}, click on the icon below 'Actions' and click 'View Details' </p>
-<img src="/lab/static/images/ccp/ccp9.png" class="img-responsive img-shadow">
+<h3>Step {{ step }} - SSH back to your jumpbox to see the Deployment</h3>
+<br>
+<p>From your jumphost, execute
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+kubectl get deployments
+</code>
+</pre>
+</div>
+
+      Notice that there are five deployments for this micro-service app <br>
+  <img src="/lab/static/images/ccp/lwall5.png" class="img-responsive img-shadow">
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Why do the nodes have two of the same IP addresses?</h3>
-<p>
-Click on 'ADD-ONS' and install 'HyperFlex Storage(CSI)'</p>
-
-<img src="/lab/static/images/ccp/ccp10.png" class="img-responsive img-shadow">
+<h3>Step {{ step }} - Find the frontend IP address from kubernetes</h3>
+<br>
+<p>From your jumphost, execute
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+kubectl get svc
+</code>
+</pre>
+</div>
+  <img src="/lab/static/images/ccp/lwall6.png" class="img-responsive img-shadow"><br>
+  <br>
+<b>Copy the EXTERNAL-IP address of the frontend LoadBalancer and open it in Chrome</b>
+<img src="/lab/static/images/ccp/lwall7.png" class="img-responsive img-shadow">
 
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Click on 'ADD-ONS' and install 'HyperFlex Storage(CSI)'</h3>
+<h3>Step {{ step }} - Let's break the connection to the backend Database</h3>
+<p>Keep in mind that this database is running in a 'bare-metal' mode outside of Kubernetes <br>
+ACI is able to enfore security between all tiers of the application including Bare Metal and VMs</p>
+<p></p>
+<p>Log back into ACI, goto {{data.vmware_cred_username}}, select livewall App Profile and Click on Topology </p>
+<p>Click on 'mysql(database)' EPG once <br>
+  Notice the {{data.vmware_cred_username}}-mysql(common) contract between Kubernetes and Baremetal workload</p>
+<img src="/lab/static/images/ccp/lwall8.png" class="img-responsive img-shadow">
 
-<img src="/lab/static/images/ccp/ccp14.png" class="img-responsive img-shadow">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Delete the {{data.vmware_cred_username}}-mysql consumed contract from the 'api' EPG</h3>
+<p>
+<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'livewall' then 'api' <br>
+Select the {{data.vmware_cred_username}}-mysql contract and delete from the menu on top right</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/15" class="img-responsive">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Examine if the App broke by visiting the LiveWall Webpage from Step 7</h3>
+<p>
+Within a few seconds, you will notice that the application is now broken</p>
+
+<img src="/lab/static/images/ccp/lwall10.png" class="img-responsive img-shadow">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Let's go back to ACI and re-add the contract</h3>
+<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'livewall' then 'api' <br>
+Select 'Add Consumed Contract from the menu on top right</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/16" class="img-responsive">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Select '{{data.vmware_cred_username}}-mysql' from the drop down menu</h3>
+<p>Click Submit</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/17" class="img-responsive">
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}
