@@ -163,7 +163,7 @@
       ls: True
       weburl: "lwall"
       file: "app/setup.html"
-      title: "K8s Livewall App"
+      title: "Message board App"
     mysql:
       line: 'data'
       step: 2
