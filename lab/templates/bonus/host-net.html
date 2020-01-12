@@ -1,0 +1,172 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+
+
+<div class="section_header">
+    <div class="title">Docker</div>
+    <div class="title_section">Networks</div>
+</div>
+
+<p>
+    One fundamental concept to understand about containers is how they are exposed to the network. Normally
+    VM's are exposed as an IP in a VLAN that is route/known through the network. In the container world
+    things are a little more specific. The IP of the host that runs the containers is vital, yet
+    each service container running on the host is running inside a private network. Hence to reach
+    the container service, a mapping of IP and PORT is needed to reach the network behind that
+    host IP address. The most common method for a host running containers is the bridge
+    network.
+</p>
+
+<h2>Bridge Network</h2>
+<p>
+    The bridge driver creates a private network inside the compute host. This makes it possible
+    for containers to communicate among each other internally. If you setup a web application
+    that needs to talk to a database stack, you could use the internal bridge network driver to
+    get them to communicate privately in a simple fashion.
+</p>
+<p>
+    Behind the scene docker creates linux bridges, interfaces, host routes and iptables rules
+    to make connectivity possible between devices inside the same defined network. External
+    connectivity to these networks is done via containers themselves, exposing ports
+    to primary interfaces of the compute host.
+</p>
+<p>
+    For an example application of a web application with a database application the process
+    of configuring the connectivity would involve:
+</p>
+<ol>
+    <li>Create the docker network on the host</li>
+    <li>Create the container for the database and define it to use the created network</li>
+    <li>Create the web container that will use the created network but then map the external to internal
+        ports. This will make the port accessible to the world and be mapped to the internal port.
+    </li>
+</ol>
+<p>
+    If you look at the following diagram:
+</p>
+<div class="row">
+    <div class="col-md-6 col-sm-12">
+        <img src="/lab/static/images/docker/docker-net-1.png" class="img-responsive">
+    </div>
+    <div class="col-md-6 col-sm-12 ">
+        <p>
+            The host has a public internet routable address of 136.145.37.120. There are
+            two separate containers running on this host that are using the defined
+            <kbd>my_bridge</kbd> network.
+        </p>
+        <p>
+            Internally the network defined is using the subnet 172.16.1.x for all the
+            containers that are using it. The services are using specific ports
+            inside of these containers. In this case MySQL is using it's standard
+            port of 3306 and the apache/PHP process is listening on port 80 ( standard )
+            HTTP port.
+        </p>
+        <p>
+            The internal network is hidden to the world until it is exposed. And the
+            exposure happens via the container that wants to be reached externally.
+            In this case the container that wants to be reached to provide the
+            service is the APACHE/PHP process so that client browsers can reach it.
+        </p>
+        <p>
+            To make it possible to reach the internal port 80 a <strong>mapping</strong>
+            is created in Docker to map from the outside interface to the
+            internal network host. With a mapping of external port 80 to internal
+            port 80, now people reaching the ip address of 136.145.37.120 with
+            a browser would reach the container.
+        </p>
+        <p>
+            Yet this introduces a problem. If I have various services in this
+            host that want to provide APACHE/PHP services, they can't all
+            take over PORT 80 in the host.
+        </p>
+    </div>
+</div>
+<p>
+    Looking at this diagram you can see the problem better. To be able to have multiple containers
+    offering the same service on the same host, there has to be a mapping from the external
+    IP/PORT to the internal IP/PORT.
+</p>
+<img src="/lab/static/images/docker/docker-net-2.png" class="img-responsive">
+<p>
+    This mapping makes it possible to have hundreds of containers running on the same host
+    for which each service is then advertised to the world via that port.
+</p>
+<p>
+    You could advertise the service as www.myShoeShop.com:8081 to the world but it would
+    be very confusing. For this reason an old construct is built to manage this relationship;
+    the load balancer or service gateway.
+</p>
+<h3>
+    Load Balancers and Proxies
+</h3>
+<div class="row">
+    <div class="col-sm-12 col-md-6">
+        <p>
+            Load balancers or Proxies let you front end a large cluster of
+            services and advertise them with DNS to the world. You can create a
+            service in the load balancer that is ready to receive traffic for
+            www.myShoeShop.com and properly route it to the containers that are going to
+            deliver the service. This also makes it easy to define scalability by giving the
+            user the ability to automatically create more service containers to handle the
+            load.
+        </p>
+        <p>
+            This process is critical in understanding when you look at orchestration of
+            containers with applications like Docker Swarm, Kubernetes, Mesos and
+            others. Each tries to solve specific pain points that exist in managing
+            this. Kubernetes has become an industry standard.
+        </p>
+        <p>
+            In the diagram on the right, you can see that a load balancer is aware of
+            a service that will arrive into the host with the URL myShoeSop.com. The
+            load balancer/proxy upon receiving the request has what is known as a
+            <b>application route</b> defined and understands what containers in the network
+            can answer for this service. In automated services platform like kubernetes, or
+            orchestration applications like OpenShift could monitor the
+            performance of the service and can automatically spawn more
+            containers to manage the load.
+        </p>
+    </div>
+    <div class="col-sm-12 col-md-6">
+        <img src="/lab/static/images/docker/docker-net-3.png" class="img-responsive">
+    </div>
+</div>
+<p>
+    What we have showed to this point is the host bridge driver that is the default
+    mode of operation of Docker. The problem is that this doesn't address
+    multiple hosts. For this competing standards have been evolving for various years.
+    Container Network Model ( CNM ) was built by Docker itself. Around the same time
+    CoreOS came out with Container Network Interface (CNI).
+</p>
+<p>
+    Kubernetes, maybe the most popular orchestrator uses CNI instead of CNM due to
+    several issues. Since Google is the muscle behind Kubernetes, that decision drove
+    the industry in this direction. Big names like CloudFoundry, Mesos and others
+    utilize CNI; Including Cisco.
+</p>
+
+
+<h2>How Overlays play a role in container networks</h2>
+<p>
+    If you observe the network above, we see that this application that is running
+    APACHE/PHP has also a database that it needs. In this overly simplistic application
+    each of the APACHE/PHP service containers need to be able to establish
+    a connection to the database to retrieve data for the application.
+</p>
+<p>
+    In a single node, this network that is created makes possible for the communications
+    to exist between these containers. Now think if you would need for these containers
+    to talk to each other over a network of hosts where each container is on a separate
+    host. To be able to keep the relationship between the different networks across
+    multiple hosts requires the ability to think bigger.
+</p>
+<p>
+    What best way to address this then to utilize network overlays to be able to
+    transport packets from host to host with a relationship to the network that
+    they belong to.
+</p>
+{{ end_of_page(page_position,data) }}
+{% endblock %}

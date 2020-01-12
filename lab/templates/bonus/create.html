@@ -1,0 +1,404 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+
+
+<div class="section_header">
+    <div class="title">Docker</div>
+    <div class="title_section">Composing</div>
+</div>
+<p>
+    In the previous section we started with an Ubuntu image. This is a pretty big docker image to start with and using such an image for
+    a micro-service in an application can lead to inefficiency and other problems. You always want to think as containers
+    starting from the bare-minimum requirements, in other words. It is best to start from the ground up.
+</p>
+<p>
+    For this reason there are various container distributions that are very small and contain just the bare requirements to
+    run. One of these is called <strong>Alpine</strong> linux.
+</p>
+<p>
+    If you go to <a href="https://hub.docker.com/_/alpine/" target="_blank">Alpine Repository in Docker Hub ( https://hub.docker.com/_/alpine/ ) </a>
+    you will start to see significant differences between Alpine and Ubuntu. For example if you click on the Tags you will notice that
+    the compressed size is around 2MB ( compared to Ubuntu's 43MB ). Using these small containers will lead to smaller download times from
+    registries, easier manipulation and a more secure environment ( less processes running in the containers ). Yet the challenge with
+    these containers is, because they have been brought down to a bare minimum, they are not well suited for human interaction. They miss
+    many of the amenities of a normal Linux installation ( e.g. Alpine doesn't even include bash, only sh )
+</p>
+<p>
+    But these provide great foundations of simplicity on which we can build a container that performs the specific function you
+    are looking for and nothing else.
+</p>
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Download Alpine image</h3>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+docker pull {{data.alpine_docker_hub}}
+</code>
+</pre>
+</div>
+<p>
+    Running the command docker images will give you an immediate view of the different between these two
+    containers as it relates to size.
+</p>
+
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+docker images
+</code>
+</pre>
+</div>
+
+<pre>
+{{ data.master_prompt}} docker images
+REPOSITORY TAG IMAGE ID CREATED SIZE
+ubuntu X.XX f975c5035748 2 weeks ago 112MB
+alpine X.XX 3fd9065eaf02 2 months ago 4.14MB
+</pre>
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Modify Alpine image with new software</h3>
+<p>
+    Now that we have donwloaded the Alpine image, we will be making some modifications to the image
+    to our tastes. To start this container we are going to take a slightly different approach and not
+    start in detached mode and execute a shell (sh) and drop directly into the container.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+docker run -t -i -h=alpine-ciscolive --name alpine-ciscolive {{data.alpine_docker_hub}} sh
+</code>
+</pre>
+</div>
+<p>
+    This will leave you directly in the container. Now you will install additional packages that we need inside
+    this container. We want to install a series of packages that we want to add.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.container_alpine_prompt}}" data-output="2-4">
+<code class="language-bash">
+apk add --update --no-cache python3
+</code>
+</pre>
+</div>
+<p>
+    Which will add the packages for Alpine linux for python3.
+</p>
+<pre>
+{{ data.container_alpine_prompt}} apk add --update --no-cache python3
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.10/community/x86_64/APKINDEX.tar.gz
+(1/11) Installing libbz2 (1.0.6-r7)
+(2/11) Installing expat (2.2.8-r0)
+(3/11) Installing libffi (3.2.1-r6)
+(4/11) Installing gdbm (1.13-r1)
+(5/11) Installing xz-libs (5.2.4-r0)
+(6/11) Installing ncurses-terminfo-base (6.1_p20190518-r0)
+(7/11) Installing ncurses-terminfo (6.1_p20190518-r0)
+(8/11) Installing ncurses-libs (6.1_p20190518-r0)
+(9/11) Installing readline (8.0.0-r0)
+(10/11) Installing sqlite-libs (3.28.0-r1)
+(11/11) Installing python3 (3.7.5-r1)
+Executing busybox-1.30.1-r2.trigger
+OK: 70 MiB in 25 packages
+</pre>
+<p>
+    You can then upgrade PIP in the container.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.container_alpine_prompt}}" data-output="2-4">
+<code class="language-bash">
+pip3 install --upgrade pip
+</code>
+</pre>
+</div>
+
+<pre>
+{{ data.container_alpine_prompt}} pip3 install --upgrade pip
+Collecting pip
+Downloading https://files.pythonhosted.org/packages/0f/74/ecd13431bcc456ed390b44c8a6e917c1820365cbebcb6a8974d1cd045ab4/pip-10.0.1-py2.py3-none-any.whl (1.3MB)
+100% |=========================================================================================| 1.3MB 947kB/s
+Installing collected packages: pip
+Found existing installation: pip 9.0.1
+Uninstalling pip-9.0.1:
+Successfully uninstalled pip-9.0.1
+Successfully installed pip-10.0.1
+</pre>
+<p>
+    Now, that we have succesfully completed the installation of the Alpine packages and upgraded PIP. You will exit the container in order to continue to the
+    next task.
+    Where we will be modifying the image.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{data.container_alpine_prompt}}" data-output="2-4">
+<code class="language-bash">
+exit
+</code>
+</pre>
+</div>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Create image based on container changes</h3>
+<p>
+    Now that you have made the changes to the container, we can make a new container image based on those changes.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+docker commit -m "Added Python to Alpine" alpine-ciscolive ciscolive/alpine-python
+</code>
+</pre>
+</div>
+
+<pre>
+{{ data.master_prompt}} docker commit -m "Added Python to Alpine" alpine-ciscolive ciscolive/alpine-python
+
+sha256:24a5136782451cf7ad815b4ebfb3c8c07216dff6214837f01dd8f31124b099db
+</pre>
+<p>
+    You will notice that the command returned a string of characters with sha256. This means that the commit was succesful.
+    It is time to verify that the image was created by runinng by following command <code>docker images</code>.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+docker images
+</code>
+</pre>
+</div>
+<p>
+    And the output should be similar to:
+</p>
+<pre>
+"{{ data.master_prompt}}" docker images
+REPOSITORY                TAG                 IMAGE ID            CREATED              SIZE
+ciscolive/alpine-python   latest              24a513678245        About a minute ago   57.4MB
+ubuntu                    16.04               0b1edfbffd27        9 days ago           113MB
+alpine                    3.7                 3fd9065eaf02        3 months ago         4.14MB
+</pre>
+
+<p>
+    Now you have created a new container image that contains Alpine and the base python3 code
+    base to run a python script. You will notice that the image size has increased to
+    a size of 57MB. That was just a simply install of python. Now imagine basing that
+    in an image that is bigger. If you aren't paying attention container images can grow
+    to a point that they are no different than virtual machines, bloated with things
+    that are not necessary for the proper execution of your micro-service application.
+</p>
+<p>
+    With this container that you have built you could simply now run the container
+    and it will have the python3 already installed. While this was a interesting
+    exercise, there is a much better way to accomplish this goal using
+    what is known as a Dockerfile.
+</p>
+<h1>Dockerfile</h1>
+<p>
+    Dockerfile is a instruction set for building a docker image.
+    The advantage of Dockerfile is that a text file can be used to define the exact
+    construct of the container and how that container is to interact with the host
+    operating system, file system and network components. Many applications use
+    Dockerfiles as the mechanism to define how a series of containers interact
+    with each other to build an application of micro-services.
+</p>
+<p>
+    The file is composed of a series of instructions. A couple of these are:
+</p>
+<table class="table table-condensed">
+    <tr>
+        <th>COMMAND</th>
+        <th>DESCRIPTION</th>
+    </tr>
+    <tr>
+        <td>FROM</td>
+        <td>
+            Defines the base image for the container build and subsequent instructions. In our case
+            we would start with the alpine image and then add to it.
+        </td>
+    </tr>
+    <tr>
+        <td>RUN</td>
+        <td>
+            The RUN command will execute the commands in the new R/W layer that is created for
+            the container.
+        </td>
+    </tr>
+    <tr>
+        <td>CMD</td>
+        <td>
+            There can only be <strong>one</strong> CMD defined in a Dockerfile. If you list more than
+            one, only the last one will take effect. The main purpose of CMD is to provide
+            defaults for an executing container.
+        </td>
+    </tr>
+    <tr>
+        <td>EXPOSE</td>
+        <td>
+            This instruction informs Docker that the container listens on the specified ports at runtime.
+        </td>
+    </tr>
+    <tr>
+        <td>COPY</td>
+        <td>
+            Copies files from a directory into the container filesystem R/W layer.
+        </td>
+    </tr>
+    <tr>
+        <td>VOLUME</td>
+        <td>
+            Creates a mount point from the native host. Provides a mechanism to have a view
+            onto the host container filesystem.
+        </td>
+    </tr>
+</table>
+<p>
+    For a complete reference on Dockerfile please check the <a target="_blank" href="https://docs.docker.com/engine/reference/builder/">
+        Reference Documentation at Docker.</a>
+</p>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Create Dockerfile</h3>
+<p>
+    As the first step you will create a directory for us to work with.
+</p>
+
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+cd ~
+mkdir dockerplay
+cd dockerplay
+</code>
+</pre>
+</div>
+<p>
+    Inside the directory you will create a new Dockerfile. We have simplified this process for you to easily
+    create the file with a simple copy/paste.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_dockerplay}}" data-output="2-12">
+<code class="language-bash">
+cat &lt;&lt; EOF &gt; Dockerfile
+FROM alpine:3.7
+
+LABEL description="Alpine Linux with Python 3"
+LABEL version="1.0"
+LABEL maintainer="{{data.pname}}-ltraci2967@ciscolive.com"
+
+RUN apk add --update --no-cache python3
+RUN pip3 install --upgrade pip
+EOF
+</code>
+</pre>
+</div>
+<p>
+    With the dockerfile built, now you can execute the docker build command.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_dockerplay}}" data-output="2-4">
+<code class="language-bash">
+docker build -t ciscolive/dockerfile-example .
+</code>
+</pre>
+</div>
+<p>
+    For which the output should look similar:
+</p>
+<pre>
+{{ data.master_prompt_dockerplay}} docker build -t ciscolive/dockerfile-example .
+Sending build context to Docker daemon  2.048kB
+Step 1/6 : FROM alpine:3.7
+3.7: Pulling from library/alpine
+5d20c808ce19: Pull complete
+Digest: sha256:8421d9a84432575381bfabd248f1eb56f3aa21d9d7cd2511583c68c9b7511d10
+Status: Downloaded newer image for alpine:3.7
+ ---> 6d1ef012b567
+Step 2/6 : LABEL description="Alpine Linux with Python 3"
+ ---> Running in 762a3abccd82
+Removing intermediate container 762a3abccd82
+ ---> ef85251def8b
+Step 3/6 : LABEL version="1.0"
+ ---> Running in ec67dfede77d
+Removing intermediate container ec67dfede77d
+ ---> 045664243070
+Step 4/6 : LABEL maintainer="pod25-ltraci2967@ciscolive.com"
+ ---> Running in c7c907e7c8e8
+Removing intermediate container c7c907e7c8e8
+ ---> acff0c500647
+Step 5/6 : RUN apk add --update --no-cache python3
+ ---> Running in a2b86b82fd18
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.7/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.7/community/x86_64/APKINDEX.tar.gz
+(1/11) Installing libbz2 (1.0.6-r7)
+(2/11) Installing expat (2.2.8-r0)
+(3/11) Installing libffi (3.2.1-r4)
+(4/11) Installing gdbm (1.13-r1)
+(5/11) Installing xz-libs (5.2.3-r1)
+(6/11) Installing ncurses-terminfo-base (6.0_p20171125-r1)
+(7/11) Installing ncurses-terminfo (6.0_p20171125-r1)
+(8/11) Installing ncurses-libs (6.0_p20171125-r1)
+(9/11) Installing readline (7.0.003-r0)
+(10/11) Installing sqlite-libs (3.25.3-r2)
+(11/11) Installing python3 (3.6.9-r1)
+Executing busybox-1.27.2-r11.trigger
+OK: 66 MiB in 24 packages
+Removing intermediate container a2b86b82fd18
+ ---> 5f0db97b6b71
+Step 6/6 : RUN pip3 install --upgrade pip
+ ---> Running in 05572da5d25d
+Collecting pip
+  Downloading https://files.pythonhosted.org/packages/00/b6/9cfa56b4081ad13874b0c6f96af8ce16cfbc1cb06bedf8e9164ce5551ec1/pip-19.3.1-py2.py3-none-any.whl (1.4MB)
+Installing collected packages: pip
+  Found existing installation: pip 18.1
+    Uninstalling pip-18.1:
+      Successfully uninstalled pip-18.1
+Successfully installed pip-19.3.1
+Removing intermediate container 05572da5d25d
+ ---> a680273ddf4e
+Successfully built a680273ddf4e
+Successfully tagged ciscolive/dockerfile-example:latest
+</pre>
+<p>
+    You can run <code>docker images</code> and you will see a new image has been built.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_dockerplay}}" data-output="2-4">
+<code class="language-bash">
+cd ~
+docker images
+</code>
+</pre>
+</div>
+
+<pre>
+{{ data.master_prompt}}docker images
+REPOSITORY TAG IMAGE ID CREATED SIZE
+ciscolive/dockerfile-example latest 9143b2af8740 8 minutes ago 63.9MB
+ciscolive/alpine-python latest 24a513678245 25 minutes ago 57.4MB
+ubuntu 16.04 0b1edfbffd27 9 days ago 113MB
+alpine 3.7 3fd9065eaf02 3 months ago 4.14MB
+</pre>
+{{ end_of_page(page_position,data) }}
+{% endblock %}

@@ -35,6 +35,8 @@ Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,B
 15,PNG,PLEFT,/ccp/lwall9.png,1288,335,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 16,PNG,PLEFT,/ccp/lwall9.png,1377,223,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 17,PNG,TXT,/ccp/lwall11.png,173,48,0,14,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}-mysql
+18,PNG,TXT,/hx/hx4.png,256,762,0,20,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}
+18,PNG,TXT,/hx/hx4.png,256,910,0,20,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,C1sco123
 900,PNG,TXT,/k8s_net/k8s_net_1.png,159,116,0,14,#303030,#white,white,/inconsolata/inconsolata-v18-latin-700.woff,left,10.2{{data.pod_numstr}}.5.187/32
 900,PNG,TXT,/k8s_net/k8s_net_1.png,220,226,0,14,#303030,#white,white,/inconsolata/inconsolata-v18-latin-700.woff,left,10.2{{data.pod_numstr}}.154.21/32
 991,PNG,TXT,/ccp/ccp-master.png,615,190,0,24,#FFFFFF,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.pname}}-0-master-0

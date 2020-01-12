@@ -139,14 +139,7 @@
       weburl: "lwapp"
       file: "ccp/lwall.html"
       title: "Setup Kubernetes Connection"
-    aci:
-      line: 'data'
-      step: 4
-      pos: 44
-      ls: True
-      weburl: "aci"
-      file: "ccp/apic.html"
-      title: "Deploy livewall Application"
+
 - app:
     head:
       line: 'head'
@@ -162,8 +155,8 @@
       pos: 51
       ls: True
       weburl: "lwall"
-      file: "app/setup.html"
-      title: "Message board App"
+      file: "ccp/apic.html"
+      title: "Deploy livewall Application"
     mysql:
       line: 'data'
       step: 2
@@ -223,7 +216,7 @@
       weburl: "finished"
       file: "finished.html"
       title: "Finished"
-- reference:
+- bonus:
     head:
       line: 'head'
       step: 0
@@ -231,12 +224,44 @@
       ls: True
       weburl: "head"
       file: None
-      title: "Reference"
-    troubleshooting:
+      title: "Bonus Lab"
+    docker:
       line: 'data'
       step: 1
       pos: 101
       ls: True
-      weburl: "troubleshooting"
-      file: "Reference/troubleshooting.html"
-      title: "Troubleshooting tips"
+      weburl: "docker"
+      file: "bonus/docker.html"
+      title: "Learn Containers"
+    cont-basics:
+      line: 'data'
+      step: 2
+      pos: 102
+      ls: True
+      weburl: "cont-basics"
+      file: "bonus/basics.html"
+      title: "Container"
+    cont-create:
+      line: 'data'
+      step: 3
+      pos: 103
+      ls: True
+      weburl: "cont-create"
+      file: "bonus/create.html"
+      title: "Creating Containers"
+    cont-nets:
+      line: 'data'
+      step: 4
+      pos: 104
+      ls: True
+      weburl: "cont-nets"
+      file: "bonus/host-net.html"
+      title: "Container Host Networks"
+    myapp:
+      line: 'data'
+      step: 5
+      pos: 105
+      ls: True
+      weburl: "myapp"
+      file: "bonus/cont-compose-myapp.html"
+      title: "Deploy Lab MyAPP"

@@ -11,58 +11,51 @@
 </div>
 {{ html_for_step_status|safe }}
 
-<h1>CCP Lab Toplogy</h1>
-<p>
-    For this lab each pod has admin access to the common CCP control plane
-    cluster which will be used to deploy the tenant clusters.
-</p>
+<h1>HyperFlex CSI Plugin Components</h1>
+
+Understanding how Kubernetes uses Storage Volumes allows us to appreciate the
+link between HyperFlex and CSI plugin.
 <div class="row">
     <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
-        <img src="/lab/static/images/labtopo.png" class="img-responsive center-block ">
+        <img src="/lab/static/images/hx/hx3.png" class="img-responsive center-block ">
     </div>
 </div>
 
-<div class="alert alert--warning">
-    <div class="alert__icon icon-exclamation-triangle"></div>
-    <div class="alert__message">
-        For this lab we ask you to be cautious when working with Tenants to ensure
-        you don't affect other student labs.
-    </div>
-</div>
 
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Connect to CCP admin console</h3>
+<h3>Step {{ step }} - Connect to HyperFlex admin console</h3>
 <p>
-    You will need to point the browser on your lab laptop  to the CCP admin website in this lab. Using the same
+    You will need to point the browser on your lab laptop to the HX Connect admin website in this lab. Using the same
     Chrome browser that you are using to read this guide, go to the URL:
-     <a href="http://10.139.13.50/ver/3/clusters" target="blank">CCP Admin</a>
+     <a href="http://10.139.11.10" target="_blank">HX Connect</a>
+     </p>
+<p>Ignore the invalid SSL certificate</p>
 
-</p>
-<p>The credentials for CCP are:</p>
+<p>The credentials for HX Connect are:</p>
 <ul>
     <li>
-        User ID: admin
+        User ID: {{data.pname}}
     </li>
     <li>
-        Password: admin
+        Password: C1sco123
     </li>
 
 </ul>
-<p>Ignore the invalid SSL certificate</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/18" class="img-responsive img-shadow">
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Feature update splash screen</h3>
+<h3>Step {{ step }} - HyperFlex Connect - HX user interface</h3>
 <p>
-    Select 'Get Started' if the splash screen appears
+    Navigate through the various sections here. (Pod Specific read-only access)
 </p>
-<img src="/lab/static/images/aci1/apicSplash.jpg" class="img-responsive img-shadow">
+<img src="/lab/static/images/hx/hx5.png" class="img-responsive img-shadow">
 
 
 
@@ -71,38 +64,29 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Adding a new tenant</h3>
+<h3>Step {{ step }} - Explore the Virtual Machines</h3>
 <p>
-    Take note of the existing Tenants
+    On the Navigation section
     </p>
-    <p>Click on 'Tenants', and then 'Add Tenant'
+    <p>Click 'Virtual Machines'
 </p>
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/4" class="img-responsive img-shadow ">
+<img src="/lab/static/images/hx/hx6.png" class="img-responsive img-shadow">
 
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' tenant</h3>
-
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/5" class="img-responsive img-shadow">
-
+<h3>Step {{ step }} - Explore the Kubernetes Configuration</h3>
 <p>
-    The Tenant should be named: {{copythis(data.vmware_cred_username)}}
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Explore any existing VMM integration</h3>
-<p>
-    Click on 'Virtual Networking' and open 'Container Domains'
+    On the Navigation section;
+    Click 'Kubernetes' <br>
+      You should notice that this is 'Enabled' as a global setting.<br>
+      You need both this enabled and the add-on in CCP installed for Persistant Volumes to work with CCP.
 </p>
-<p>Take note of any existing Kubernetes integrations</p>
+<img src="/lab/static/images/hx/hx7.png" class="img-responsive img-shadow">
+<p>
 
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/6" class="img-responsive img-shadow">
 
 
 

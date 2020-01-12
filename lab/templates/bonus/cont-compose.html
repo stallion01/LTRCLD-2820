@@ -1,0 +1,241 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+<div class="section_header">
+    <div class="title">Applications</div>
+    <div class="title_section">Using compose</div>
+</div>
+<p>
+    Now that we understand a little more on container networks, let's deploy an application that
+    has two separate containers that need to talk to each other to provide a service. This 
+    application is going to need a network on the host to establish this connection.
+</p>
+<p>
+    While we can create all the components using the docker CLI command, we are going to
+    utilize a new powerful tool called <a href="https://docs.docker.com/compose/overview/" target="_blank">docker compose</a>.
+    Compose provides a mechanism to define the structure of a service and all the required parts to make it work. A typical
+    compose file would contain information on how what ports to expose, volumes to map into the container and networks
+    that are needed for the application.
+</p>
+
+<img src="/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Install Docker Compose</h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}"  data-output="2-4">
+<code class="language-bash">
+pip install docker-compose
+</code>
+</pre>
+</div>
+<pre>
+{{ data.master_prompt}} pip install docker-compose
+Collecting docker-compose
+  Downloading https://files.pythonhosted.org/packages/27/3c/6fcaa3b546ae8103c444149a1746f9a7043df7503e12bad318e8217312fb/docker_compose-1.21.2-py2.py3-none-any.whl (123kB)
+</pre>
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Create directory for our compose file</h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}"  data-output="2-4">
+<code class="language-bash">
+cd ~
+mkdir wp_local
+cd ~/wp_local
+</code>
+</pre>
+</div>
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Docker compose file for a word press application</h3>
+<p>
+  The following is a compose file to deploy a word press application. The compose
+  file starts with a definition of the version of the syntax. Following every service
+  that we want to define. In this case two separate services; DB and WORDPRESS.
+</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_wp}}" data-output="2-50">
+<code class="language-bash">
+cd ~/wp_local
+cat &lt;&lt; EOF &gt; docker-compose.yml
+version: '3.3'
+
+services:
+   db:
+     image: mysql:5.7
+     volumes:
+       - db_data:/var/lib/mysql
+     restart: always
+     networks:
+        - internal
+     environment:
+       MYSQL_ROOT_PASSWORD: somewordpress
+       MYSQL_DATABASE: wordpress
+       MYSQL_USER: wordpress
+       MYSQL_PASSWORD: wordpress
+
+   wordpress:
+     depends_on:
+       - db
+     image: wordpress:latest
+     networks:
+        - internal
+     ports:
+       - "8000:80"
+     restart: always
+     environment:
+       WORDPRESS_DB_HOST: db:3306
+       WORDPRESS_DB_USER: wordpress
+       WORDPRESS_DB_PASSWORD: wordpress
+volumes:
+   db_data:
+
+networks:
+   internal:
+      driver: bridge
+EOF
+</code>
+</pre>
+</div>
+<table class="table table-condensed">
+  <thead>
+    <th>
+
+    </th>
+  </thead>
+</table>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Run Docker Compose</h3>
+
+<p>
+    Now that we have created the docker-compose.yml. We need to run the <code>docker compose</code> comamnd. This command will take
+    the input from the <code>docker-compose.yml</code> file and configure itself. It is important to note that this command will 
+    download the necessary containers from DockerHub as welll.  
+  </p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_wp}}"  data-output="2-4">
+<code class="language-bash">
+docker-compose up -d
+</code>
+</pre>
+</div>
+<pre>
+{{ data.master_prompt_wp}} docker-compose up -d
+Pulling db (mysql:5.7)...
+5.7: Pulling from library/mysql
+f2aa67a397c4: Pull complete
+1accf44cb7e0: Pull complete
+2d830ea9fa68: Pull complete
+740584693b89: Pull complete
+4d620357ec48: Pull complete
+ac3b7158d73d: Pull complete
+a48d784ee503: Pull complete
+bf1194add2f3: Pull complete
+0e5c74178a02: Pull complete
+e9201d309436: Pull complete
+bf1ac4524e8e: Pull complete
+Digest: sha256:f030e84582d939d313fe2ef469b5c65ffd0f7dff3b4b98e6ec9ae2dccd83dcdf
+Status: Downloaded newer image for mysql:5.7
+Pulling wordpress (wordpress:latest)...
+latest: Pulling from library/wordpress
+f2aa67a397c4: Already exists
+c533bdb78a46: Pull complete
+65a7293804ac: Pull complete
+35a9c1f94aea: Pull complete
+651774c607cc: Pull complete
+7c01fbe5ed3d: Pull complete
+9ff29ed84bfc: Pull complete
+647feb0f6355: Pull complete
+0b9d1c540863: Pull complete
+3416ab5471ed: Pull complete
+246c5fc29b1a: Pull complete
+98923ca5a50a: Pull complete
+8931bc5b7082: Pull complete
+fb2e6680ec40: Pull complete
+36c71eb6672c: Pull complete
+aee6d1701877: Pull complete
+b48dafdceab4: Pull complete
+b8b77748246f: Pull complete
+ae3947bf258f: Pull complete
+76bf79d20589: Pull complete
+Digest: sha256:15e2a017680bf1fadbaa0c9513b95ec2aba42e505ae93a394d766b4bdccc4ab2
+Status: Downloaded newer image for wordpress:latest
+Creating wp_local_db_1 ... done
+Creating wp_local_wordpress_1 ... done
+</pre>
+
+<p>
+Let's use the <code>docker images</code> and <code>docker ps -a</code> to verify the iamges and containers were 
+succesfully downloaded and started.
+</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_wp}}"  data-output="2-4">
+ <code class="language-bash">
+docker images
+</code>
+</pre>
+</div>
+
+<pre>
+{{ data.master_prompt_wp}} docker images
+docker images
+REPOSITORY                     TAG                 IMAGE ID            CREATED             SIZE
+ciscolive/dockerfile-example   latest              9143b2af8740        About an hour ago   63.9MB
+ciscolive/alpine-python        latest              24a513678245        About an hour ago   57.4MB
+<b><font color="green">wordpress                      latest              652d1ff3db63        2 days ago          407MB
+mysql                          5.7                 0d16d0a97dd1        2 days ago          372MB</font></b>
+ubuntu                         16.04               0b1edfbffd27        9 days ago          113MB
+alpine                         3.7                 3fd9065eaf02        3 months ago        4.14MB
+</pre>
+
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_wp}}"  data-output="2-4">
+<code class="language-bash">
+docker ps
+</code>
+</pre>
+</div>
+
+<pre>
+{{ data.master_prompt_wp}} docker ps
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+<b><font color="green">5a1846324af8        wordpress:latest    "docker-entrypoint..."   4 minutes ago       Up 4 minutes        0.0.0.0:8000->80/tcp   wp_local_wordpress_1
+c3ea49b67bfc        mysql:5.7           "docker-entrypoint..."   4 minutes ago       Up 4 minutes        3306/tcp               wp_local_db_1</font></b>
+</pre>
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Wordpress Application </h3>
+<p>
+  Once the output finishes and the containers are completed from build you can click on 
+  this reference: <a href="http://{{data.pod_master_ip}}:8000" target="_blank">POD{{data.pod_numstr}} Word Press</a>
+</p>
+
+{{  end_of_page(page_position,data) }}
+{% endblock %}

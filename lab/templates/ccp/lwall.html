@@ -33,7 +33,7 @@ Step {% set step = step +  1 %}
 <code class="language-bash">
 mkdir -p $HOME/.kube
 export TOKEN=$(curl -v -k -X POST -H "Content-Type:application/x-www-form-urlencoded" -d "username=admin&password=admin" https://10.139.13.50/v3/system/login  2> >(grep X-Auth-Token) | grep X-Auth-Token | awk -F ":" '{print $2}' | tr -d '\n\r')
-export {{data.apic_stdnt_uname}}Master=$(curl -ksSL --request GET -H "X-Auth-Token":"$TOKEN" $CCP/v3/clusters/ | jq '.[] | .master_group.nodes' | jq '.[] | .name, .public_ip' | awk '/{{data.apic_stdnt_uname}}-0-master-0/{getline;print;}' | tr -d '\"')
+export {{data.apic_stdnt_uname}}Master=$(curl -ksSL --request GET -H "X-Auth-Token":"$TOKEN" https://10.139.13.50/v3/clusters/ | jq '.[] | .master_group.nodes' | jq '.[] | .name, .public_ip' | awk '/{{data.apic_stdnt_uname}}-0-master-0/{getline;print;}' | tr -d '\"')
 
 </code>
 </pre>

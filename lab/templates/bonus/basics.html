@@ -1,0 +1,330 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+
+
+<div class="section_header">
+    <div class="title">Docker</div>
+    <div class="title_section">The Basics</div>
+</div>
+<p>
+    Now that we have covered the basic history and technology of containers, we want leverage some of those concepts in this
+    lab. First we need to understand the concept of Docker Hub.
+</p>
+
+<h1>Docker Hub</h1>
+<p>
+    Docker Hub is the repository in which Docker users can create, test, store and distribute container images amongst
+    each other. Docker Hub can be leveraged in the cloud, but many companies host their own local Docker Hub repository.
+</p>
+<p>
+    Click <a href="https://hub.docker.com/" target="blank">Docker Hub</a> in a browser window. In the top portion of
+    the window is the search bar. Enter ubuntu. In the search results you will find a result like this:
+</p>
+<img src="/lab/static/images/dockerhub/dockerhub-ubuntu-1.png" class="img-responsive">
+<p>
+    When you click on details you will get a description page that covers various information points and
+    examples of the Docker container. On the top right you will see a window with the docker pull
+    command (We will explain this soon).
+</p>
+<p>
+    One of the key concepts to understand is the concept of tags. For example, in the case of ubuntu
+    it can be called in various ways. In the top of the page there is a tab called <kbd>Tags</kbd>.
+</p>
+<img src="/lab/static/images/dockerhub/dockerhub-ubuntu-2.png" class="img-responsive">
+<p>
+    If you click on this you will see a list. These tag names can be invoked individually to
+    request a more specific version of the container. These are used in many ways. In the description section
+    it stipulates that for ubuntu:
+</p>
+<ul>
+    <li>The ubuntu:latest tag points to the "latest LTS", since that's the version recommended for general use. </li>
+    <li>The ubuntu:rolling tag points to the latest release (regardless of LTS status).</li>
+</ul>
+<p>
+    As best practice it isn't recommended to just pull a container without a tag. As in this case you are
+    gambling as to what release exactly your application will be using as a base operating system. And that in itself
+    could lead to failures if changes happen in the cloud. To avoid this condition it is recommended to
+    <strong>always</strong> be specific. Let's look at the ubuntu 16.04 as an example. The release name is xenial.
+</p>
+<ul>
+    <li>16.04</li>
+    <li>xenial</li>
+    <li>xenial-20180228</li>
+    <li>xenial-20180123</li>
+    <li>xenial-20180112.1</li>
+    <li>xenial-20171201</li>
+</ul>
+<p>
+    As you can see, there are various releases. Users always want to make sure they select the right build for their project.
+    The idea behind this verification is to make sure the user has the correct version of the container. This comes into play
+    because a user may need a specific version of the container.
+</p>
+<p>
+    Let's now pull a specific version of ubuntu to play with. We just want to pull the latest
+    16.04 release container.
+
+</p>
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Download Ubuntu container image</h3>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+docker pull ubuntu:16.04
+</code>
+</pre>
+</div>
+<p>
+    You should see an output as follows:
+</p>
+<pre>
+16.04: Pulling from library/ubuntu
+22dc81ace0ea: Pull complete
+1a8b3c87dba3: Pull complete
+91390a1c435a: Pull complete
+07844b14977e: Pull complete
+b78396653dae: Pull complete
+Digest: sha256:e348fbbea0e0a0e73ab0370de151e7800684445c509d46195aef73e090a49bd6
+Status: Downloaded newer image for ubuntu:16.04
+</pre>
+<p>
+    To see the downloaded container in your local file store, issue the following command:
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+docker images
+</code>
+</pre>
+</div>
+<pre>
+{{ data.master_prompt}} docker images
+REPOSITORY TAG IMAGE ID CREATED SIZE
+ubuntu 16.04 f975c5035748 2 weeks ago 112MB
+</pre>
+<p>
+    For every Docker image you download, the Docker client will tag it with an image id. This is what you
+    will have to use to manipulate that image.
+</p>
+
+<p>
+    As we discussed containers can be hosted in either cloud or private locations. Many people simply use a container
+    from one of the public container registries like Docker Hub. The error many people make is to start with containers
+    that are based on known distributions. These can lead to <b>fat containers</b> that are a drag on your plans for
+    a streamlined private cloud.
+</p>
+<p>
+    There are a variety of <strong>stripped down</strong> linux distribution containers that have a bare minimum
+    install. One of these distributions is Alpine Linux. The smallest available Alpine Linux distribution starts at
+    a couple of megabytes in size.
+</p>
+
+<h1>Understanding Container Layered Filesystem</h1>
+<p>
+    When you downloaded the Ubuntu image before, it had output similar to the following:
+</p>
+<pre>
+16.04: Pulling from library/ubuntu
+22dc81ace0ea: Pull complete
+1a8b3c87dba3: Pull complete
+91390a1c435a: Pull complete
+07844b14977e: Pull complete
+b78396653dae: Pull complete
+Digest: sha256:e348fbbea0e0a0e73ab0370de151e7800684445c509d46195aef73e090a49bd6
+Status: Downloaded newer image for ubuntu:16.04
+</pre>
+<p>
+    Each of the lines that end with <code>Pull Complete</code> are layers of the container that you
+    downloaded.
+</p>
+<img src="/lab/static/images/containers/container-layers.png" class="img-responsive">
+<p>
+    The <code>docker history</code> command provides the details of what each of these various
+    layers consist of. To get this first issue the command <code>docker images</code>.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-15">
+<code class="language-bash">
+docker images
+</code>
+</pre>
+</div>
+<p>
+    The output contains the images that have been downloaded, one that you pulled and one that
+    was downloaded when you issued the <code>docker run</code> command.
+</p>
+<pre>
+{{ data.master_prompt}} docker images
+REPOSITORY TAG IMAGE ID CREATED SIZE
+ubuntu latest <b>
+    <font color="green">f975c5035748</font>
+</b> 2 weeks ago 112MB
+</pre>
+<p>
+    Copy the docker image ID from the downloaded ubuntu image and then use this ID for the
+    <code>docker history</code> command. Below is the sample to follow:
+</p>
+
+<pre>
+{{data.master_prompt}} docker history <b>
+    <font color="green">f975c5035748</font>
+</b>
+IMAGE CREATED CREATED BY SIZE COMMENT
+f975c5035748 2 weeks ago /bin/sh -c #(nop) CMD ["/bin/bash"] 0B
+&lt;missing&gt; 2 weeks ago /bin/sh -c mkdir -p /run/systemd && echo '... 7B
+&lt;missing&gt; 2 weeks ago /bin/sh -c sed -i 's/^#\s*\(deb.*universe\... 2.76kB
+&lt;missing&gt; 2 weeks ago /bin/sh -c rm -rf /var/lib/apt/lists/* 0B
+&lt;missing&gt; 2 weeks ago /bin/sh -c set -xe && echo '#!/bin/sh' >... 745B
+&lt;missing&gt; 2 weeks ago /bin/sh -c #(nop) ADD file:c753df38640ab6e... 112MB
+</pre>
+
+<p>The important reason to understand this step is because it gives you an idea on the efficiency of the container
+    in a host. If your application needs hundreds of containers that are based on the same image, then only
+    the difference of that R/W layer created when the container was built counts towards the incremental
+    storage on the compute resource.
+</p>
+
+<img src="/lab/static/images/containers/containers-combined.png" class="img-responsive">
+<p>
+    In this example, the base image is 112MB in size. The three combined containers that are
+    depicted in the diagram would mean that the three containers in this host are
+    consuming a total of 220MB (112 + 87 + 9 + 12 ).
+</p>
+<p>
+    If these were micro-services utilizing virtual machines then at best you would start with
+    112MB * 3 plus (87 + 9 + 12 ) or 444MB. If you consider a hefty compute resource that could
+    run hundreds of containers, you can start to understand the advantage of containerized micro-services.
+</p>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Start Ubuntu container</h3>
+<p>
+    The first exercise you will do is to start a very small alpine container from docker hub.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+docker run -d -t -i --rm -h=ubuntu-ciscolive --name ubuntu-ciscolive ubuntu:16.04
+</code>
+</pre>
+</div>
+<p>
+    To explain we have provided these parameters:
+</p>
+<ol>
+    <li>
+        <kbd>-d</kbd><br />
+        <p>Detached mode</p>
+    </li>
+    <li>
+        <kbd>-i</kbd><br />
+        <p>Interactive mode</p>
+    </li>
+    <li>
+        <kbd>-t</kbd><br />
+        <p>Allocate a pseudo tty. If you don't allocate a pseudo tty then when the container principal
+            process starts ( bash ) it would not have a way to get input and fails causing the container
+            to stop.
+        </p>
+    </li>
+    <li>
+        <kbd>-h</kbd><br />
+        <p>This provides the hostname for the container</p>
+    </li>
+    <li>
+        <kbd>--rm</kbd><br />
+        <p>Upon termination of process or stopping of container, delete the container.</p>
+    </li>
+    <li>
+        <kbd>--name</kbd><br />
+        <p>Provide a name to be able to manage container without having to use the identifier.</p>
+    </li>
+</ol>
+<p>
+    After running this command you will be returned to your prompt. Now you can see the container
+    that is running.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+docker ps -a
+</code>
+</pre>
+</div>
+<p>
+    The output should be similar to the following with different container ID.
+</p>
+<pre>
+{{data.master_prompt}} docker ps -a
+CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
+62ef904844b6 ubuntu:16.04 "/bin/bash" 7 seconds ago Up 6 seconds ubuntu-ciscolive
+</pre>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Attach to container</h3>
+<p>
+    Now that you have a working container you can attach to the container itself.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+docker attach ubuntu-ciscolive
+</code>
+</pre>
+</div>
+<p>
+    Once inside the container execute the command <code>ps -ef</code>. You should only see
+    two processes. The <code>ps</code> process and the actual <code>bash</code> shell.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.container_prompt}}" data-output="2-4">
+<code class="language-bash">
+ps -ef 
+</code>
+</pre>
+</div>
+<pre>
+{{ data.container_prompt}} ps -ef
+UID PID PPID C STIME TTY TIME CMD
+root 1 0 0 13:50 pts/0 00:00:00 /bin/bash
+root 9 1 0 14:00 pts/0 00:00:00 ps -ef
+</pre>
+<p>
+    Now exit the container.
+</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.container_prompt}}" data-output="2-4">
+<code class="language-bash">
+exit
+</code>
+</pre>
+</div>
+<p>
+    At this point the container will be exited and removed ( deleted ) from the system because of the
+    <kbd>--rm</kbd> parameter.
+    As a reference, you can exit an active detached container easily without stopping the container
+    with the sequence
+    <kbd>CTRL + p</kbd> and <kbd>CTRL + q</kbd>. In the previous set using the exit command
+    kills the bash shell causing the container to terminate.
+</p>
+<p>
+    You can verify that the container has been deleted, by executing the <code>docker ps -a</code> command as previously shown.
+</p>
+{{ end_of_page(page_position,data) }}
+{% endblock %}
