@@ -114,7 +114,7 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Examine the addtions in the VMM domain section</h3>
+<h3>Step {{ step }} - Examine the additions in the VMM domain section</h3>
 <p>
 Click on 'Virtual Networking' and Expand Kubernetes under 'Container Domains'</p>
 <p>Expand {{data.vmware_cred_username}} and look for any pods in the 'default' namespace</p>
@@ -138,8 +138,6 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Why do the nodes have two of the same IP addresses?</h3>
 
 <p>
-<b>Copy the PUBLIC IP Address of <srong>{{data.vmware_cred_username}}-0-master-0 to notepad.</strong></b><br>
-  We'll be using this IP address in the next Section<br></p><p>
 Click on 'ADD-ONS' and install 'HyperFlex Storage(CSI)'</p>
 
 <img src="/lab/static/images/ccp/ccp10.png" class="img-responsive img-shadow">
