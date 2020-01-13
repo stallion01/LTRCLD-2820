@@ -23,8 +23,9 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Launch Cisco VPN mobility client</h3>
 <p>
     The Lab pods are only accessible via vpn due it's location with the DMZ
-    <br>Type in "vpn.reqdemo.com" and click connect
+    <br>Type or copy/paste from below "vpn.reqdemo.com/ciscolive" and click connect
 </p>
+<p>{{copythis('vpn.reqdemo.com/ciscolive')}}</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/1" class="img-responsive img-shadow"><br />
 
 
@@ -33,23 +34,9 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Invalid Cert Warning</h3>
+<h3>Step {{ step }} - Enter VPN username and password</h3>
 
 <p>
-    Please ignore the Cert warning and click on 'Connect Anyway' button
-</p>
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/2" class="img-responsive img-shadow"><br />
-
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Connect using REQLAB-ADMIN group</h3>
-
-<p>
-    Chose 'REQLAB-ADMIN' in the group from the drop down menu
     <br>Type in your username as shown
     <br>Type in your password as shown
 </p>

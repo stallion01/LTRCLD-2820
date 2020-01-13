@@ -34,7 +34,9 @@ Step {% set step = step +  1 %}
 <img src="/core/static/images/symbols/ssh_pointer.png" style="height:20px;" >
 </a
 </p>
-<p>To save time, we will be using a script to quickly install the App Profile</p>
+<p>Storage Classes allows us to describe various "classes" of storage in kubernetes. Different classes
+   might map to quality-of-service levels, or to backup policies, or to arbitrary policies
+   determined by the cluster administrators</p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -44,6 +46,10 @@ kubectl get sc
 </div>
 <br>
 <p>Let's also look for any Persistent Volume Claims</p>
+<p>A PersistentVolumeClaim (PVC) is a request for storage by a user. It is similar to a Pod.
+  Pods consume node resources and PVCs consume PV resources. Pods can request specific levels
+   of resources (CPU and Memory). Claims can request specific size and access modes
+   (e.g., they can be mounted once read/write or many times read-only).</p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -58,7 +64,7 @@ kubectl get pvc
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Download the MB application files from github</h3>
+<h3>Step {{ step }} - Download the messageboard application files from github</h3>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -86,6 +92,11 @@ Step {% set step = step +  1 %}
 </pre>
 </div>
 <br>
+<p>When you create an object in Kubernetes, you must provide the object spec that describes its desired state,
+   as well as some basic information about the object (such as a name). When you use the Kubernetes API to
+   create the object (either directly or via kubectl), that API request must include that information as
+   JSON in the request body. Most often, you provide the information to kubectl in a .yaml file.
+   kubectl converts the information to JSON when making the API request.</p>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
