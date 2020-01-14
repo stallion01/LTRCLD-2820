@@ -49,7 +49,7 @@ kubectl get sc
 <p>A PersistentVolumeClaim (PVC) is a request for storage by a user. It is similar to a Pod.
   Pods consume node resources and PVCs consume PV resources. Pods can request specific levels
    of resources (CPU and Memory). Claims can request specific size and access modes
-   (e.g., they can be mounted once read/write or many times read-only).<br><b>Are there any claims bound to volumes</b></p>
+   (e.g., they can be mounted once read/write or many times read-only).<br><b>Are there any PVCs?</b></p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -73,6 +73,7 @@ Step {% set step = step +  1 %}
   cd $HOME/clemea20
   git clone https://github.com/stallione/messageboard.git
   ls -l messageboard
+  cd messageboard
   cat 01-message-board-pvc.yaml
 </code>
 </pre>
@@ -97,11 +98,22 @@ Step {% set step = step +  1 %}
   cd $HOME/clemea20/messageboard
   cat 01-message-board-pvc.yaml
   kubectl apply -f 01-message-board-pvc.yaml
-  kubectl get pvc
 </code>
 </pre>
 </div>
 <br>
+
+<p>Let's also look for any Persistent Volume Claims once again</p>
+<p>It might take a minute to the the Volume bound to the claim<br><b>Are there any PVCs?</b></p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+kubectl get pvc
+</code>
+</pre>
+</div>
+<br>
+
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
@@ -127,18 +139,89 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Upgrade the messageboard application</h3>
+<h3>Step {{ step }} - Lets get our service IP for the messageboard application</h3>
+<p>Point your browser to the External IP address and port number<br><b>Why are there two port numbers?</b></p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-  cd $HOME/clemea20/messageboard
-  chmod +x 03-upgrade-mb-app.sh
-  ./03-upgrade-mb-app.sh
+kubectl get svc
 </code>
 </pre>
 </div>
 <br>
 
+<img src="/lab/static/images/hx/hx9.png" class="img-responsive">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Open Messageboard application on your browser</h3>
+<p>Point your browser to the "External IP address:portnumber" from the previous step<br><b>Click on "sign up"</b>
+<br><b>Enter the following </b>
+<br>Username: {{data.apic_stdnt_uname}}<br>
+E-Mail: {{data.apic_stdnt_uname}}@ciscolive <br>
+Password: cisco
+</br>
+</p>
+
+
+<img src="/lab/static/images/hx/hx10.png" class="img-responsive">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Login with the credentials above</h3>
+<p><b>Click "sign in" and enter your username/password from previous step</b></p>
+
+
+<img src="/lab/static/images/hx/hx11.png" class="img-responsive">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Enter your first message on the messageboard</h3>
+<p>Enter one or more messages<br><b>Click Share and "sign out" after posting your messages</b></p>
+
+
+<img src="/lab/static/images/hx/hx12.png" class="img-responsive">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Notice your message(s) have been posted</h3>
+<p>The backend of this messageboad has a database which reads this from the persistent volume presented earlier in the lab</p>
+
+
+<img src="/lab/static/images/hx/hx13.png" class="img-responsive">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Upgrade the messageboard application to version 2.0</h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+  cd $HOME/clemea20/messageboard
+  kubectl set image pod/message-board message-board=10.139.12.210/mb/message_board:version2
+</code>
+</pre>
+</div>
+<br>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Open or refresh the Messageboard application on your browser</h3>
+<p>Notice that the version has changed to 2.0 with a different log<br><b>Is your message still there?</b></p>
+
+<img src="/lab/static/images/hx/hx14.png" class="img-responsive">
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}
