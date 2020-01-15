@@ -20,7 +20,7 @@
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - USE CCP API to export kubeconfig file</h3>
+<h3>Step {{ step }} - SSH to your jumpbox and connect to your Master node</h3>
 <p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}} or click here -
 <a target="_blank" href="chrome-extension://pnhechapfaindjhompbnflcldabbghjo/html/nassh.html#ccpuser@{{data.pod_master_ip}}:22">
 <img src="/core/static/images/symbols/ssh_pointer.png" style="height:20px;" >
@@ -31,10 +31,50 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
+mkdir -p $HOME/.kube
 export TOKEN=$(curl -v -k -X POST -H "Content-Type:application/x-www-form-urlencoded" -d "username=admin&password=admin" https://10.139.13.50/v3/system/login  2> >(grep X-Auth-Token) | grep X-Auth-Token | awk -F ":" '{print $2}' | tr -d '\n\r')
-export {{data.apic_stdnt_uname}}id=$(curl -ksSL --request GET -H "X-Auth-Token":"$TOKEN" https://10.139.13.50/v3/clusters/ | jq '.[] | {id: .id, name: .name}' | grep -B1 "{{data.apic_stdnt_uname}}" | awk '/id/{print $2}' | tr -d '\"\,')
-curl -ksSL --request GET -H "X-Auth-Token":"$TOKEN" https://10.139.13.50/v3/clusters/${{data.apic_stdnt_uname}}id | jq -r '.kubeconfig' | sed 's/\n/\n/g' > ~/KUBECONFIG.env
-export KUBECONFIG=~/KUBECONFIG.env
+export {{data.apic_stdnt_uname}}Master=$(curl -ksSL --request GET -H "X-Auth-Token":"$TOKEN" https://10.139.13.50/v3/clusters/ | jq '.[] | .master_group.nodes' | jq '.[] | .name, .public_ip' | awk '/{{data.apic_stdnt_uname}}-0-master-0/{getline;print;}' | tr -d '\"')
+
+</code>
+</pre>
+</div>
+<br>
+<p>SSH to your master node
+<br>Type <b>'yes'</b> if prompted with ssh key validation message</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+ssh ${{data.apic_stdnt_uname}}Master
+</code>
+</pre>
+</div>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Configure access to you k8s cluster</h3>
+<p>In order to access your Kubernetes cluster, we'll have to copy the kubeconfig file to your jumphost</p>
+<br>Type 'yes' if prompted with ssh key validation message
+<br>When prompted, type in the password to your jumphost which is <b>'C1sco123'</b>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.node1_prompt}}">
+<code class="language-bash">
+sudo cp -i /etc/kubernetes/admin.conf config
+sudo chown ccpuser config
+scp config {{data.pod_master_ip}}:~/.kube/
+</code>
+</pre>
+</div>
+
+
+
+<p>Type exit and get back to the the jumphost</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.node1_prompt}}">
+<code class="language-bash">
+exit
 </code>
 </pre>
 </div>
