@@ -29,7 +29,7 @@
     Cisco Cloud Platform  <code>(CCP)</code> using the CNI plugin is able to automatically build
     a tenant and configure the Kubernetes application profile. In this section, we'll manually build a
     tenant and expore the Kubernetes integration components. We'll in a later step remove
-    this configuration and monitor how CCP automates this process.
+    this configuration and monitor how CCP automates this process. <b>The purpose of this section is to highlight that you are starting from a clean ACI fabric for your pod. This is a live fabric!</b>
 </p>
 
 <div class="alert alert--warning">
@@ -95,7 +95,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' tenant</h3>
 {{copythis(data.vmware_cred_username)}}<br>
-
+<p><b>Only enter '{{data.apic_stdnt_uname}}' for tenant name; leave all other fields empty</b></p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/5" class="img-responsive img-shadow">
 
 <p>
@@ -110,7 +110,7 @@ Step {% set step = step +  1 %}
 <p>
     Click on 'Virtual Networking' and open 'Container Domains'
 </p>
-<p>Take note of any existing Kubernetes integrations</p>
+<p>Take note that there aren't any kubernetes integrations yet; later in the lab you'll see CCP adds elements to this section</p>
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/6" class="img-responsive img-shadow">
 

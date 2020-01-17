@@ -16,12 +16,12 @@
 </p>
 <p>
     For this reason there are various container distributions that are very small and contain just the bare requirements to
-    run. One of these is called <strong>Alpine</strong> linux.
+    run. One of these is called <strong>Alpine</strong> linux. Another is called <strong>busybox</strong>.
 </p>
 <p>
-    If you go to <a href="https://hub.docker.com/_/alpine/" target="_blank">Alpine Repository in Docker Hub ( https://hub.docker.com/_/alpine/ ) </a>
-    you will start to see significant differences between Alpine and Ubuntu. For example if you click on the Tags you will notice that
-    the compressed size is around 2MB ( compared to Ubuntu's 43MB ). Using these small containers will lead to smaller download times from
+    If you go to <a href="https://hub.docker.com/_/busybox/" target="_blank">busybox repository in Docker Hub ( https://hub.docker.com/_/busybox/ ) </a>
+    you will start to see significant differences between busybox and Ubuntu. For example if you click on the Tags you will notice that
+    the compressed size is around 800KB ( compared to Ubuntu's 43MB ). Using these small containers will lead to smaller download times from
     registries, easier manipulation and a more secure environment ( less processes running in the containers ). Yet the challenge with
     these containers is, because they have been brought down to a bare minimum, they are not well suited for human interaction. They miss
     many of the amenities of a normal Linux installation ( e.g. Alpine doesn't even include bash, only sh )

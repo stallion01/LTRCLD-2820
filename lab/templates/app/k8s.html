@@ -11,7 +11,22 @@
 </div>
 
 
-<h3>Under Construction - Section reserved for  Kuberntes Annotations </h3>
+<h1>CCP Lab Toplogy</h1>
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Let's break the application connection to the backend Database</h3>
+<p>Keep in mind that this database is running in a 'bare-metal' mode outside of Kubernetes <br>
+ACI is able to enfore security between all tiers of the application including Bare Metal and VMs</p>
+<p></p>
+<p>Log back into ACI, goto {{data.vmware_cred_username}}, select livewall App Profile and Click on Topology </p>
+<p>Click on 'mysql(database)' EPG once <br>
+  Notice the {{data.vmware_cred_username}}-mysql(common) contract between Kubernetes and Baremetal workload</p>
+<img src="/lab/static/images/ccp/lwall8.png" class="img-responsive img-shadow">
 
 
 <!--
@@ -19,8 +34,38 @@
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Please proceed to the next Section</h3>
+<h3>Step {{ step }} - Delete the {{data.vmware_cred_username}}-mysql consumed contract from the 'api' EPG</h3>
+<p>
+<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'livewall' then 'api' <br>
+Select the {{data.vmware_cred_username}}-mysql contract and delete from the menu on top right</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/15" class="img-responsive">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Examine if the App broke by visiting the LiveWall Webpage from Step 7</h3>
+<p>
+Within a few seconds, you will notice that the application is now broken</p>
 
+<img src="/lab/static/images/ccp/lwall10.png" class="img-responsive img-shadow">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Let's go back to ACI and re-add the contract</h3>
+<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'livewall' then 'api' <br>
+Select 'Add Consumed Contract from the menu on top right</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/16" class="img-responsive">
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Select '{{data.vmware_cred_username}}-mysql' from the drop down menu</h3>
+<p>Click Submit</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/17" class="img-responsive">
 
 
 {{ end_of_page(page_position,data) }}

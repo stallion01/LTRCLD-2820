@@ -148,7 +148,7 @@
       ls: True
       weburl: "head"
       file: None
-      title: "Deploy Hybrid Applicaton"
+      title: "Deploy Hybrid Application"
     lwall:
       line: 'data'
       step: 1

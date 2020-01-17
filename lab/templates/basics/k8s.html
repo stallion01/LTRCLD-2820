@@ -77,7 +77,10 @@
     configuration throughout the architecture. This declarative configuration,
     usually accomplished with YAML or JSON contains all the crucial elements
     required by this application component to function. These might include
-    network ports, storage, volumes and other parameters.
+    network ports, storage, volumes and other parameters. <i><b>(Kuberntes uses mainifest files which allows
+    a developer to declare, for example the number of instances that each deployment should run. There are several
+    parameters that can be embedded into the manifest and kubernetes satisfies it using it's own
+    orchestration engine)</b></i>
 </p>
 <p>
     It is also the job of the orchestrator to insure proper placement of
@@ -114,7 +117,7 @@
     From that birth in 2014 kubernetes continues to garner interest in the
     market. Different platforms utilize kubernetes as the basis for
     managing containers ( Rancher, OpenShift ). The internet can't
-    stop asking questions about Kubernetes:
+    stop asking questions about kubernetes:
 </p>
 <img src="/lab/static/images/kubernetes-trends.png" class="img-responsive img-shadow">
 

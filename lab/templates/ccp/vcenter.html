@@ -50,7 +50,6 @@ Step {% set step = step +  1 %}
     Expand the vew to your resource group. <br>You sould see a {{data.vmware_cred_username}}-0-master-0 master VM and a {{data.vmware_cred_username}}-1-node-gr-0 node VM
     being deployed in the Recent Tasks under your resource pool
 </p>
-<p>Take note of the IP addresses assigned by the CCP control plane cluster</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/14" class="img-responsive img-shadow ">
 
 
@@ -92,10 +91,10 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Explore the '{{data.apic_stdnt_uname}}' tenant details</h3>
 <p>
-    Expand Applciation Profiles and Applicaton EPGs.
+    Expand Application Profiles and Applicaton EPGs.
     </p>
     <p>Click on the Topology view that shows the EPGs and Contracts</p>
-    <p>Exlore the relationship between the EGPs by clicking on 'kube-default' in the image</p>
+    <p>Explore the relationship between the EGPs by clicking on 'kube-default' in the image</p>
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/12" class="img-responsive">
 
@@ -106,7 +105,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Check to see if ACI sees the Nodes</h3>
 <p>Click on kube-nodes, and Operational</p>
-<p>Examine the IP addresses that ACI has detected from the data plane</p>
+<p>Notice that ACI has learned the IP addresses of the nodes from the <b>data plane</b></p>
 <img src="/lab/static/images/ccp/aci02.png" class="img-responsive img-shadow">
 
 <!--
@@ -120,36 +119,6 @@ Click on 'Virtual Networking' and Expand Kubernetes under 'Container Domains'</p
 <p>Expand {{data.vmware_cred_username}} and look for any pods in the 'default' namespace</p>
 <p>We will deploy an application into this namespace in the next section</p>
 <img src="/lab/static/images/ccp/aci031.png" class="img-responsive img-shadow">
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Check the status and details in CCP</h3>
-<p>
-Go back to the tab/window with Cisco Container Platform <br>Log back in with 'admin/admin' if your session has expired </p>
-<p>For {{data.vmware_cred_username}}, click on the icon below 'Actions' and click 'View Details' </p>
-<img src="/lab/static/images/ccp/ccp9.png" class="img-responsive img-shadow">
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Why do the nodes have two of the same IP addresses?</h3>
-
-<p>
-Click on 'ADD-ONS' and install 'HyperFlex Storage(CSI)'</p>
-
-<img src="/lab/static/images/ccp/ccp10.png" class="img-responsive img-shadow">
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Click on 'ADD-ONS' and install 'HyperFlex Storage(CSI)'</h3>
-
-<img src="/lab/static/images/ccp/ccp14.png" class="img-responsive img-shadow">
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}
