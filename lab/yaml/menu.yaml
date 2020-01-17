@@ -232,7 +232,7 @@
       ls: True
       weburl: "docker"
       file: "bonus/docker.html"
-      title: "Learn Containers"
+      title: "Installing Docker"
     cont-basics:
       line: 'data'
       step: 2
@@ -240,7 +240,7 @@
       ls: True
       weburl: "cont-basics"
       file: "bonus/basics.html"
-      title: "Container"
+      title: "Using Docker Images"
     cont-create:
       line: 'data'
       step: 3
@@ -248,7 +248,7 @@
       ls: True
       weburl: "cont-create"
       file: "bonus/create.html"
-      title: "Creating Containers"
+      title: "Build, Deploy Container App"
     cont-nets:
       line: 'data'
       step: 4
@@ -264,4 +264,4 @@
       ls: True
       weburl: "myapp"
       file: "bonus/cont-compose-myapp.html"
-      title: "Deploy Lab MyAPP"
+      title: "Container App Networking"

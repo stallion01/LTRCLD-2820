@@ -12,18 +12,20 @@
 {{ html_for_step_status|safe }}
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
-<!--
+
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Install repo utilities</h3>
+<h3>Step {{ step }} - Install repo utilities to Master</h3>
+<p>-----add ssh command and ip addresses here------ <br>enter password 'C1sco123' whenever prompted</p>
 <p>
     Before we install docker, you will install some utilities that are required for docker to run on the OS.
 </p>
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
+  sudo su
 yum install -y yum-utils
 yum install -y device-mapper-persistent-data lvm2
 </code>
@@ -38,7 +40,7 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-yum -y install epel-release 
+yum -y install epel-release
 </code>
 </pre>
 </div>
@@ -194,7 +196,7 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{data.master_prompt}}" data-output="2-9">
 <code class="language-bash">
-systemctl enable docker.service 
+systemctl enable docker.service
 </code>
 </pre>
 </div>
@@ -202,7 +204,7 @@ systemctl enable docker.service
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{data.master_prompt}}" data-output="2-9">
 <code class="language-bash">
-systemctl start docker.service 
+systemctl start docker.service
 </code>
 </pre>
 </div>
@@ -214,7 +216,7 @@ systemctl start docker.service
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-9">
 <code class="language-bash">
-systemctl status docker.service 
+systemctl status docker.service
 </code>
 </pre>
 </div>

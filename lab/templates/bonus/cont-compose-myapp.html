@@ -4,349 +4,190 @@
 {% set step =  0 %}
 {% set innerstep =  0 %}
 <div class="section_header">
-  <div class="title">Applications</div>
-  <div class="title_section">Using compose</div>
+  <div class="title">Docker Networking</div>
+  <div class="title_section"></div>
 </div>
-<p>
-  Now that we understand a little more on container networks, let's deploy an application that
-  has two separate containers that need to talk to each other to provide a service. This
-  application is going to need a network on the host to establish this connection.
-</p>
-<p>
-  While we can create all the components using the docker CLI command, we are going to
-  utilize a new powerful tool called <a href="https://docs.docker.com/compose/overview/" target="_blank">docker compose</a>.
-  Compose provides a mechanism to define the structure of a service and all the required parts to make it work. A typical
-  compose file would contain information on how what ports to expose, volumes to map into the container and networks
-  that are needed for the application.
-</p>
+
+
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
-
+<p>
+  <b>Now that we understand a little more on container networks, let's look at our application that
+  has been deployed and how the container communicates with the host and external networks.</b>
+</p>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Install Docker Compose</h3>
-<p>
-  Since we are using the same NODE for the integration of ACI/Kubernetes and the showing you some
-  fundamentals of docker, we have to install compose the manual way. This is due to a conflict that
-  would arise when the RPM package for the Cisco ACI integration scripts wants to install docker
-  compose and the latest version that we can install with yum. In an environment where you are
-  installing Kubernetes, you would not have a need to install
-  docker-compose. The version that is available in YUM is also ancient and we can't utilize
-  some of the parameters available in latest versions.
-</p>
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
-<code class="language-bash">
-cd ~
-wget  {{data.software_http_url}}{{data.docker_compose_on_server}}
-</code>
-</pre>
-</div>
-
-
-<pre>
-{{ data.master_prompt}}wget https://svs-rtp-dmz-files.ciscolive.com/ltraci-2967/docker-compose-Linux-x86_64 /usr/local/bin/docker-compose
---2018-06-01 15:01:32-- https://svs-rtp-dmz-files.ciscolive.com/ltraci-2967/docker-compose-Linux-x86_64
-Resolving svs-rtp-dmz-files.ciscolive.com (svs-rtp-dmz-files.ciscolive.com)... 64.102.250.150
-Connecting to svs-rtp-dmz-files.ciscolive.com (svs-rtp-dmz-files.ciscolive.com)|64.102.250.150|:443... connected.
-HTTP request sent, awaiting response... 200 OK
-Length: 10858808 (10M) [application/octet-stream]
-Saving to: â€˜docker-compose-Linux-x86_64â€™
-
-100%[=========================================================================================================================================>] 10,858,808
-51.7MB/s in 0.2s
-
-2018-06-01 15:01:33 (51.7 MB/s) - â€˜docker-compose-Linux-x86_64â€™ saved [10858808/10858808]
-</pre>
-
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
-<code class="language-bash">
-mv {{data.docker_compose_on_server}} /usr/local/bin/docker-compose
-chmod +x /usr/local/bin/docker-compose
-</code>
-</pre>
-</div>
-<p>
-  Let's verify that the correct version of docker compose has been installed.
-</p>
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
-<code class="language-bash">
-docker-compose --version
-</code>
-</pre>
-</div>
-
-<pre>
-{{ data.master_prompt}}docker-compose --version
-docker-compose version 1.21.2, build a133471
-</pre>
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Create directory for our compose file</h3>
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
-<code class="language-bash">
-mkdir ~/{{data.my_app_folder}}
-cd ~/{{data.my_app_folder}}
-</code>
-</pre>
-</div>
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Pull myplayapp from registry</h3>
-<p>
-  We have built a private docker repository to pull some images we have. This image is a small image that displays
-  information of the container in a web format.
-</p>
+<h3>Step {{ step }} - Examine the interfaces and ip addresses of the host</h3>
+<p>Notice the 'docker0' interface and it's ip address</p>
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
 <code class="language-bash">
-docker pull {{data.registry_url}}/{{data.registry_myapp}}
-</code>
-</pre>
-</div>
-<p>
-  After doing a pull, that means that the container is available to use.
-</p>
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
-<code class="language-bash">
-docker images
-</code>
-</pre>
-</div>
-
-<pre>
-{{ data.master_prompt_my_app}} docker images
-REPOSITORY TAG IMAGE ID CREATED SIZE
-ciscolive/dockerfile-example latest f34726c89b80 35 minutes ago 63.9MB
-ciscolive/alpine-python latest 4ad5f50986c8 36 minutes ago 57.4MB
-<b>
-  <font color="green">svs-rtp-dmz-registry.ciscolive.com/myplayapp v1 0e877ddd34b7 8 days ago 277MB</font>
-</b>
-ubuntu 16.04 0b1edfbffd27 4 weeks ago 113MB
-alpine 3.7 3fd9065eaf02 4 months ago 4.14MB
-</pre>
-
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Docker compose file for myplayapp</h3>
-<p>
-  The following compose file defines the operation of the container you will
-  run. With docker compose you can define one or more containers in a single
-  compose file and give the details on how these containers can talk to each
-  other via the same network. You can also see that we have mapped the
-  external PORT to the internal container port. This container uses port
-  8090 when it is operational.
-</p>
-<p>
-  We have also defined a specific network for the container to use. We will
-  examine the container in a little more depth from a network perspective.
-</p>
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-50">
-<code class="language-bash">
-cd ~/{{data.my_app_folder}}
-cat &lt;&lt; EOF &gt; docker-compose.yml
-version: '3.5'
-
-services:
-  my_app:
-    container_name: myplayapp
-    image: {{data.registry_url}}/{{data.registry_myapp}}
-    networks:
-      - internal
-    ports:
-      - 8000:8090
-
-
-networks:
-  internal:
-    driver: bridge
-    name: myappnet
-EOF
-</code>
-</pre>
-</div>
-
-<p>
-  You may have noticed that there is a version definition in the docker-compose file. This is very important as
-  the version dictates the proper interpreter component of compose. There is an
-  <a target="_blank" href="https://docs.docker.com/compose/compose-file/compose-versioning/">extensive document</a> that
-  covers details on the different versions and what is supported in each. The advantage of the version structure
-  is that your definition will utilize the right interpreter and always work while that tag is sustained in
-  compose.
-</p>
-
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Run Docker Compose</h3>
-
-<p>
-  Now that we have created the docker-compose.yml. We need to run the <code>docker compose</code> comamnd. This
-  will provide you with the ability to start and stop the service we are defining.
-</p>
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
-<code class="language-bash">
-docker-compose up -d
+ip address
 </code>
 </pre>
 </div>
 <pre>
-{{ data.master_prompt_my_app}} docker-compose up -d
-Creating network "myappnet" with driver "bridge"
-Creating myplayapp ... done
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+      inet6 ::1/128 scope host
+         valid_lft forever preferred_lft forever
+  2: ens192: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+      link/ether 00:50:56:8f:2b:99 brd ff:ff:ff:ff:ff:ff
+      inet 10.139.14.22/24 brd 10.139.14.255 scope global noprefixroute dynamic ens192
+         valid_lft 10796sec preferred_lft 10796sec
+      inet6 fe80::3352:a577:e7dd:7e98/64 scope link tentative noprefixroute dadfailed
+         valid_lft forever preferred_lft forever
+      inet6 fe80::2959:c8da:ab27:af57/64 scope link tentative noprefixroute dadfailed
+         valid_lft forever preferred_lft forever
+      inet6 fe80::95a4:6361:e270:c7cd/64 scope link noprefixroute
+         valid_lft forever preferred_lft forever
+  3: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+      link/ether 02:42:13:4a:e0:b3 brd ff:ff:ff:ff:ff:ff
+      inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+         valid_lft forever preferred_lft forever
+      inet6 fe80::42:13ff:fe4a:e0b3/64 scope link
+         valid_lft forever preferred_lft forever
+  11: vethe488ce9@if10: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default
+      link/ether fe:a7:91:e9:fe:38 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+      inet6 fe80::fca7:91ff:fee9:fe38/64 scope link
+         valid_lft forever preferred_lft forever
 </pre>
-
-<p>
-  We can see that the docker container is operational with:
-</p>
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
-<code class="language-bash">
-docker ps | grep myplayapp
-</code>
-</pre>
-</div>
-
-<pre>
-{{ data.master_prompt_my_app}} docker ps
-CONTAINER ID IMAGE COMMAND CREATED STATUS PORTS NAMES
-8ab565f998be {{data.registry_url}}/{{data.registry_myapp}} "/bin/sh -c '/usr/..." 5 seconds ago Up 5 seconds 8080/tcp, 0.0.0.0:8000->8090/tcp myplayapp
-</pre>
-
-
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Check the Application </h3>
-<p>
-  The application should be viewable in your browser at:
-  <a href="http://{{data.pod_master_ip}}:8000" target="_blank">POD{{data.pod_numstr}} My Play App</a>
-</p>
-
+<h3>Step {{ step }} - Display the docker instances and exposed ports</h3>
+<p> <strong>Copy the 'CONTAINER ID' from your output</strong> We will use it to explore its details later in this section</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+docker ps
+</code>
+</pre>
+</div>
+<pre>
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                NAMES
+3e9219d1debc        go-server           "/bin/sh -c /home/se…"   2 hours ago         Up 2 hours          0.0.0.0:80->80/tcp   xenodochial_morse
+</pre>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Understanding the host network a little better</h3>
-<p>
-  You can list configured networks on your docker host with <code>docker network ls</code>
-</p>
+<h3>Step {{ step }} - Display all the networks availabe for docker</h3>
+<p>Notice the presence of 'Bridge' and 'Host' networks similar to what you would see in a virtualized enviroment</p>
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
 <code class="language-bash">
-docker network ls | grep myappnet
+docker network ls
 </code>
 </pre>
 </div>
-
 <pre>
-{{ data.master_prompt_my_app}} docker network ls
-NETWORK ID NAME DRIVER SCOPE
-[cut]
-da8dc16ed064 myappnet bridge local
+docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+5c26defaad25        bridge              bridge              local
+470521b54f60        host                host                local
+9af8c48b8d0b        none                null                local
 </pre>
-
-<p>
-  You can inspect further the defined network with <code>docker network inspect</code> command.
-</p>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Explore the 'bridge' network in detail</h3>
+<p>Notice the presense of 'Bridge' and 'Host' networks similar to what you would see in a Virtualized enviroment</p>
+<br>Can you find the IP address of your container?
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
 <code class="language-bash">
-docker network inspect myappnet
+docker network inspect bridge
 </code>
 </pre>
 </div>
 
 <pre>
 <code class="language-json">
-[
-    {
-        "Name": "myappnet",
-        "Id": "da8dc16ed0648105afe8871b49b565129bf90e480c5837bb4584be56a337fd59",
-        "Created": "2018-05-21T20:10:09.861296445-04:00",
-        "Scope": "local",
-        "Driver": "bridge",
-        "EnableIPv6": false,
-        "IPAM": {
-            "Driver": "default",
-            "Options": null,
-            "Config": [
-                {
-                    "Subnet": "172.18.0.0/16",
-                    "Gateway": "172.18.0.1"
-                }
-            ]
-        },
-        "Internal": false,
-        "Attachable": true,
-        "Ingress": false,
-        "ConfigFrom": {
-            "Network": ""
-        },
-        "ConfigOnly": false,
-        "Containers": {
-            "8ab565f998bea72b5493e57a019bd824e02849f5f339091f7c33ac5a529b6225": {
-                "Name": "myplayapp",
-                "EndpointID": "2347ee8257a512456d4deae108421caca85ddfcaf3f9cddc8a86374c1591060b",
-                "MacAddress": "02:42:ac:12:00:02",
-                "IPv4Address": "172.18.0.2/16",
-                "IPv6Address": ""
-            }
-        },
-        "Options": {},
-        "Labels": {
-            "com.docker.compose.network": "myappnet",
-            "com.docker.compose.project": "my_app",
-            "com.docker.compose.version": "1.21.2"
-        }
-    }
-]
+  [
+      {
+          "Name": "bridge",
+          "Id": "5c26defaad251b82e1b0bc99d451ac945d2c74e3bd4002d30b08286d08c100f9",
+          "Created": "2020-01-16T16:51:35.573774461-05:00",
+          "Scope": "local",
+          "Driver": "bridge",
+          "EnableIPv6": false,
+          "IPAM": {
+              "Driver": "default",
+              "Options": null,
+              "Config": [
+                  {
+                      "Subnet": "172.17.0.0/16"
+                  }
+              ]
+          },
+          "Internal": false,
+          "Attachable": false,
+          "Ingress": false,
+          "ConfigFrom": {
+              "Network": ""
+          },
+          "ConfigOnly": false,
+          "Containers": {
+              "3e9219d1debca99ec642cb11b5673b9fcbc31aacffa93faf620081632a5c992d": {
+                  "Name": "xenodochial_morse",
+                  "EndpointID": "213f3be29e879d549289d2c912dcefb44fa3b1cda32fb902cc6c4aa7a5782129",
+                  "MacAddress": "02:42:ac:11:00:02",
+                  "IPv4Address": "172.17.0.2/16",
+                  "IPv6Address": ""
+              }
+          },
+          "Options": {
+              "com.docker.network.bridge.default_bridge": "true",
+              "com.docker.network.bridge.enable_icc": "true",
+              "com.docker.network.bridge.enable_ip_masquerade": "true",
+              "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+              "com.docker.network.bridge.name": "docker0",
+              "com.docker.network.driver.mtu": "1500"
+          },
+          "Labels": {}
+      }
+  ]
 </code>
 </pre>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Get the ip address of the container</h3>
+
 <p>
-  We can quickly look in the container and see the IP ( we have also shown it in the web app page ).
+  We can quickly look in the container and see the IP (<code>use the <b>'CONTAINER ID'</b> from step 2</code>).
 </p>
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
 <code class="language-bash">
-docker exec -it myplayapp ip a
+docker exec -it {'CONTAINER ID'} ip a
 </code>
 </pre>
 </div>
 <pre>
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN qlen 1
-    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-26: eth0@if27: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue state UP
-    link/ether 02:42:ac:12:00:02 brd ff:ff:ff:ff:ff:ff
-    inet 172.18.0.2/16 scope global eth0
-       valid_lft forever preferred_lft forever
+  docker exec -it <b>3e9219d1debc</b> ip a
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+  10: eth0@if11: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
+      link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff
+      inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+         valid_lft forever preferred_lft forever
 </pre>
 
 
