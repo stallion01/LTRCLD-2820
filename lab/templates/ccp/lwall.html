@@ -20,11 +20,8 @@
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - USE CCP API to export kubeconfig file</h3>
-<p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}} or click here -
-<a target="_blank" href="chrome-extension://pnhechapfaindjhompbnflcldabbghjo/html/nassh.html#ccpuser@{{data.pod_master_ip}}:22">
-<img src="/core/static/images/symbols/ssh_pointer.png" style="height:20px;" >
-</a>
+<h3>Step {{ step }} - Use CCP API to export kubeconfig file</h3>
+<p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}}
 <p>Type <b>'yes'</b> if prompted with ssh key validation message</p>
 <p>Click 'Copy' on the right to copy the command into your clipboard<br>
 <p>The first two commands below get the 'Token' from CCP which in turn is used to extract your pod specific Kubeconfig file.

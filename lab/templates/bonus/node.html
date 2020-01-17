@@ -1,0 +1,196 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+<div class="section_header">
+  <div class="title">Accessing Kubernetes</div>
+  <div class="title_section"></div>
+</div>
+
+
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
+<p>
+  <b>Now that we understand a little more on container networks, let's look at our application that
+  has been deployed and how the container communicates with the host and external networks.</b>
+</p>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Examine the interfaces and ip addresses of the host</h3>
+<p>Notice the 'docker0' interface and it's ip address</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+ip address
+</code>
+</pre>
+</div>
+<pre>
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+      inet6 ::1/128 scope host
+         valid_lft forever preferred_lft forever
+  2: ens192: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+      link/ether 00:50:56:8f:2b:99 brd ff:ff:ff:ff:ff:ff
+      inet 10.139.14.22/24 brd 10.139.14.255 scope global noprefixroute dynamic ens192
+         valid_lft 10796sec preferred_lft 10796sec
+      inet6 fe80::3352:a577:e7dd:7e98/64 scope link tentative noprefixroute dadfailed
+         valid_lft forever preferred_lft forever
+      inet6 fe80::2959:c8da:ab27:af57/64 scope link tentative noprefixroute dadfailed
+         valid_lft forever preferred_lft forever
+      inet6 fe80::95a4:6361:e270:c7cd/64 scope link noprefixroute
+         valid_lft forever preferred_lft forever
+  3: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+      link/ether 02:42:13:4a:e0:b3 brd ff:ff:ff:ff:ff:ff
+      inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+         valid_lft forever preferred_lft forever
+      inet6 fe80::42:13ff:fe4a:e0b3/64 scope link
+         valid_lft forever preferred_lft forever
+  11: vethe488ce9@if10: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default
+      link/ether fe:a7:91:e9:fe:38 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+      inet6 fe80::fca7:91ff:fee9:fe38/64 scope link
+         valid_lft forever preferred_lft forever
+</pre>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Display the docker instances and exposed ports</h3>
+<p> <strong>Copy the 'CONTAINER ID' from your output</strong> We will use it to explore its details later in this section</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+docker ps
+</code>
+</pre>
+</div>
+<pre>
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                NAMES
+3e9219d1debc        go-server           "/bin/sh -c /home/se…"   2 hours ago         Up 2 hours          0.0.0.0:80->80/tcp   xenodochial_morse
+</pre>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Display all the networks availabe for docker</h3>
+<p>Notice the presence of 'Bridge' and 'Host' networks similar to what you would see in a virtualized enviroment</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+docker network ls
+</code>
+</pre>
+</div>
+<pre>
+docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+5c26defaad25        bridge              bridge              local
+470521b54f60        host                host                local
+9af8c48b8d0b        none                null                local
+</pre>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Explore the 'bridge' network in detail</h3>
+<p>Notice the presense of 'Bridge' and 'Host' networks similar to what you would see in a Virtualized enviroment</p>
+<br>Can you find the IP address of your container?
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+docker network inspect bridge
+</code>
+</pre>
+</div>
+
+<pre>
+<code class="language-json">
+  [
+      {
+          "Name": "bridge",
+          "Id": "5c26defaad251b82e1b0bc99d451ac945d2c74e3bd4002d30b08286d08c100f9",
+          "Created": "2020-01-16T16:51:35.573774461-05:00",
+          "Scope": "local",
+          "Driver": "bridge",
+          "EnableIPv6": false,
+          "IPAM": {
+              "Driver": "default",
+              "Options": null,
+              "Config": [
+                  {
+                      "Subnet": "172.17.0.0/16"
+                  }
+              ]
+          },
+          "Internal": false,
+          "Attachable": false,
+          "Ingress": false,
+          "ConfigFrom": {
+              "Network": ""
+          },
+          "ConfigOnly": false,
+          "Containers": {
+              "3e9219d1debca99ec642cb11b5673b9fcbc31aacffa93faf620081632a5c992d": {
+                  "Name": "xenodochial_morse",
+                  "EndpointID": "213f3be29e879d549289d2c912dcefb44fa3b1cda32fb902cc6c4aa7a5782129",
+                  "MacAddress": "02:42:ac:11:00:02",
+                  "IPv4Address": "172.17.0.2/16",
+                  "IPv6Address": ""
+              }
+          },
+          "Options": {
+              "com.docker.network.bridge.default_bridge": "true",
+              "com.docker.network.bridge.enable_icc": "true",
+              "com.docker.network.bridge.enable_ip_masquerade": "true",
+              "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
+              "com.docker.network.bridge.name": "docker0",
+              "com.docker.network.driver.mtu": "1500"
+          },
+          "Labels": {}
+      }
+  ]
+</code>
+</pre>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Get the ip address of the container</h3>
+
+<p>
+  We can quickly look in the container and see the IP (<code>use the <b>'CONTAINER ID'</b> from step 2</code>).
+</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+docker exec -it {'CONTAINER ID'} ip a
+</code>
+</pre>
+</div>
+<pre>
+  docker exec -it <b>3e9219d1debc</b> ip a
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+  10: eth0@if11: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
+      link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff
+      inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+         valid_lft forever preferred_lft forever
+</pre>
+
+
+
+{{ end_of_page(page_position,data) }}
+{% endblock %}

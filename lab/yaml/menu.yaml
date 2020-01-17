@@ -265,3 +265,19 @@
       weburl: "myapp"
       file: "bonus/cont-compose-myapp.html"
       title: "Container App Networking"
+    kube:
+      line: 'data'
+      step: 6
+      pos: 106
+      ls: True
+      weburl: "kube"
+      file: "bonus/kube.html"
+      title: "Installing Kuberntes"
+    node:
+      line: 'data'
+      step: 7
+      pos: 107
+      ls: True
+      weburl: "node"
+      file: "bonus/node.html"
+      title: "Accessing Kuberntes"
