@@ -29,7 +29,7 @@ Step {% set step = step +  1 %}
 Password: C1sco123
 
 <p>Type <b>'yes'</b> if prompted with ssh key validation message; we use the public key for authentication to CCP tenant nodes</p>
-<p>Click <b>'Copy'</b> on the far right to copy the command into your clipboard</p>
+<p>Click <b>'Copy'</b> on the far right to copy the command into your clipboard and paste it on your jumphost's terminal</p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -47,7 +47,7 @@ cat ~/.ssh/id_ecdsa.pub
 </code>
 </pre>
 </div>
-<p><b>Hightlight the key from "ecdsa-sha2..... to ... "=" sign as show in the image below;<br>Open Notepad, and paste it for later use"</b></p>
+<p><b>Hightlight the key from "ecdsa-sha2..... to ... "=" sign as show in the image below;<br>Open Notepad, and paste it for later use</b></p>
 <img src="/lab/static/images/ccp/ccp6.png" class="img-responsive img-shadow">
 
 <!--
@@ -110,7 +110,9 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Fill in the provider details</h3>
 <p>This page is for vCenter specific details as shown, pick '{{data.apic_stdnt_uname}}' as your resource pool</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/13" class="img-responsive">
-<<b>Click NEXT</b>
+<p>
+<b>Click NEXT</b>
+</p>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
