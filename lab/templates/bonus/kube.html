@@ -15,152 +15,203 @@
   <b>Now that we understand a little more on container networks, let's look at our application that
   has been deployed and how the container communicates with the host and external networks.</b>
 </p>
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Examine the interfaces and ip addresses of the host</h3>
-<p>Notice the 'docker0' interface and it's ip address</p>
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
-<code class="language-bash">
-ip address
-</code>
-</pre>
-</div>
-<pre>
-  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-      inet 127.0.0.1/8 scope host lo
-         valid_lft forever preferred_lft forever
-      inet6 ::1/128 scope host
-         valid_lft forever preferred_lft forever
-  2: ens192: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
-      link/ether 00:50:56:8f:2b:99 brd ff:ff:ff:ff:ff:ff
-      inet 10.139.14.22/24 brd 10.139.14.255 scope global noprefixroute dynamic ens192
-         valid_lft 10796sec preferred_lft 10796sec
-      inet6 fe80::3352:a577:e7dd:7e98/64 scope link tentative noprefixroute dadfailed
-         valid_lft forever preferred_lft forever
-      inet6 fe80::2959:c8da:ab27:af57/64 scope link tentative noprefixroute dadfailed
-         valid_lft forever preferred_lft forever
-      inet6 fe80::95a4:6361:e270:c7cd/64 scope link noprefixroute
-         valid_lft forever preferred_lft forever
-  3: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
-      link/ether 02:42:13:4a:e0:b3 brd ff:ff:ff:ff:ff:ff
-      inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
-         valid_lft forever preferred_lft forever
-      inet6 fe80::42:13ff:fe4a:e0b3/64 scope link
-         valid_lft forever preferred_lft forever
-  11: vethe488ce9@if10: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default
-      link/ether fe:a7:91:e9:fe:38 brd ff:ff:ff:ff:ff:ff link-netnsid 0
-      inet6 fe80::fca7:91ff:fee9:fe38/64 scope link
-         valid_lft forever preferred_lft forever
-</pre>
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Display the docker instances and exposed ports</h3>
-<p> <strong>Copy the 'CONTAINER ID' from your output</strong> We will use it to explore its details later in this section</p>
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
-<code class="language-bash">
-docker ps
-</code>
-</pre>
-</div>
-<pre>
-CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                NAMES
-3e9219d1debc        go-server           "/bin/sh -c /home/se…"   2 hours ago         Up 2 hours          0.0.0.0:80->80/tcp   xenodochial_morse
-</pre>
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Display all the networks availabe for docker</h3>
-<p>Notice the presence of 'Bridge' and 'Host' networks similar to what you would see in a virtualized enviroment</p>
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
-<code class="language-bash">
-docker network ls
-</code>
-</pre>
-</div>
-<pre>
-docker network ls
-NETWORK ID          NAME                DRIVER              SCOPE
-5c26defaad25        bridge              bridge              local
-470521b54f60        host                host                local
-9af8c48b8d0b        none                null                local
-</pre>
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Explore the 'bridge' network in detail</h3>
-<p>Notice the presense of 'Bridge' and 'Host' networks similar to what you would see in a Virtualized enviroment</p>
-<br>Can you find the IP address of your container?
-<div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
-<code class="language-bash">
-docker network inspect bridge
-</code>
-</pre>
-</div>
 
-<pre>
-<code class="language-json">
-  [
-      {
-          "Name": "bridge",
-          "Id": "5c26defaad251b82e1b0bc99d451ac945d2c74e3bd4002d30b08286d08c100f9",
-          "Created": "2020-01-16T16:51:35.573774461-05:00",
-          "Scope": "local",
-          "Driver": "bridge",
-          "EnableIPv6": false,
-          "IPAM": {
-              "Driver": "default",
-              "Options": null,
-              "Config": [
-                  {
-                      "Subnet": "172.17.0.0/16"
-                  }
-              ]
-          },
-          "Internal": false,
-          "Attachable": false,
-          "Ingress": false,
-          "ConfigFrom": {
-              "Network": ""
-          },
-          "ConfigOnly": false,
-          "Containers": {
-              "3e9219d1debca99ec642cb11b5673b9fcbc31aacffa93faf620081632a5c992d": {
-                  "Name": "xenodochial_morse",
-                  "EndpointID": "213f3be29e879d549289d2c912dcefb44fa3b1cda32fb902cc6c4aa7a5782129",
-                  "MacAddress": "02:42:ac:11:00:02",
-                  "IPv4Address": "172.17.0.2/16",
-                  "IPv6Address": ""
-              }
-          },
-          "Options": {
-              "com.docker.network.bridge.default_bridge": "true",
-              "com.docker.network.bridge.enable_icc": "true",
-              "com.docker.network.bridge.enable_ip_masquerade": "true",
-              "com.docker.network.bridge.host_binding_ipv4": "0.0.0.0",
-              "com.docker.network.bridge.name": "docker0",
-              "com.docker.network.driver.mtu": "1500"
-          },
-          "Labels": {}
-      }
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Lets disable the firewall first!</h3>
+<p>For ease of installation, let's stop the iptables service!</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+  mkdir /etc/docker
+  cd /etc/docker
+</code>
+</pre>
+</div>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+cat &lt;&lt; EOF &gt; daemon.json
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2",
+  "storage-opts": [
+    "overlay2.override_kernel_check=true"
   ]
+}
+EOF
 </code>
 </pre>
+</div>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+<code class="language-bash">
+mkdir -p /etc/systemd/system/docker.service.d
 
+systemctl daemon-reload
+
+</code>
+</pre>
+</div>
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Lets change the default cgroup driver to systemd</h3>
+<p>This is a recommendation for a stable system</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-9">
+<code class="language-bash">
+systemctl restart docker
+
+</code>
+</pre>
+</div>
+
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+docker info | grep -i cgroup
+</code>
+</pre>
+</div>
+<pre>
+{{data.master_prompt}} docker info | grep -i cgroup
+<b>
+    <font color="green">Cgroup Driver: systemd </font>
+</b>
+</pre>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Turn off Swap</h3>
+
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+swapoff -a
+</code>
+</pre>
+</div>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Configure Kubernetes Repository</h3>
+<p>Kubernetes packages are not available from official CentOS 7 repositories.
+Enter the following command to retrieve the Kubernetes repositories.</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+cat &lt;&lt; EOF &gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+</code>
+</pre>
+</div>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Let's install the three basic packages required for Kubernetes</h3>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+yum install -y kubelet kubeadm kubectl
+</code>
+</pre>
+</div>
+
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+systemctl enable kubelet
+</code>
+</pre>
+</div>
+
+
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+systemctl start kubelet
+</code>
+</pre>
+</div>
+
+
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+setenforce 0
+</code>
+</pre>
+</div>
+
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+kubeadm init --pod-network-cidr=10.244.0.0/16
+</code>
+</pre>
+</div>
+<pre>
+  [kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+  [kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+  [kubelet-start] Starting the kubelet
+  [certs] Using certificateDir folder "/etc/kubernetes/pki"
+<===========TRUNCATED ==============> 
+  [bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+  [bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+  [bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+  [bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
+  [bootstrap-token] Creating the "cluster-info" ConfigMap in the "kube-public" namespace
+  [kubelet-finalize] Updating "/etc/kubernetes/kubelet.conf" to point to a rotatable kubelet client certificate and key
+  [addons] Applied essential addon: CoreDNS
+  [addons] Applied essential addon: kube-proxy
+
+  Your Kubernetes control-plane has initialized successfully!
+
+  To start using your cluster, you need to run the following as a regular user:
+
+    mkdir -p $HOME/.kube
+    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+  You should now deploy a pod network to the cluster.
+  Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+    https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+  Then you can join any number of worker nodes by running the following on each as root:
+
+  kubeadm join 10.139.14.22:6443 --token vb0wh7.b1l095y6lkpqfnl2 \
+      --discovery-token-ca-cert-hash sha256:a4f8c12df570ca901feffd378a4e743b3ad6bdd0098cfa7e266dbd4a9fcd64df
+</pre>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
@@ -168,26 +219,47 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Get the ip address of the container</h3>
 
-<p>
-  We can quickly look in the container and see the IP (<code>use the <b>'CONTAINER ID'</b> from step 2</code>).
-</p>
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
 <code class="language-bash">
-docker exec -it {'CONTAINER ID'} ip a
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+</code>
+</pre>
+</div>
+
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 </code>
 </pre>
 </div>
 <pre>
-  docker exec -it <b>3e9219d1debc</b> ip a
-  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
-      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
-      inet 127.0.0.1/8 scope host lo
-         valid_lft forever preferred_lft forever
-  10: eth0@if11: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
-      link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff
-      inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
-         valid_lft forever preferred_lft forever
+podsecuritypolicy.policy/psp.flannel.unprivileged created
+clusterrole.rbac.authorization.k8s.io/flannel created
+clusterrolebinding.rbac.authorization.k8s.io/flannel created
+serviceaccount/flannel created
+configmap/kube-flannel-cfg created
+daemonset.apps/kube-flannel-ds-amd64 created
+daemonset.apps/kube-flannel-ds-arm64 created
+daemonset.apps/kube-flannel-ds-arm created
+daemonset.apps/kube-flannel-ds-ppc64le created
+daemonset.apps/kube-flannel-ds-s390x created
+</pre>
+
+
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<code class="language-bash">
+kubectl get nodes
+</code>
+</pre>
+</div>
+<pre>
+  NAME          STATUS   ROLES    AGE    VERSION
+  master-node   Ready    master   5m8s   v1.17.1
 </pre>
 
 
