@@ -267,11 +267,10 @@ docker run -d -p 80:80 --rm -it go-server
 </code>
 </pre>
 </div>
-<p>
-    Point your browser to http://$masterip/$podname</p>
+
     <p>
       The application should be viewable in your browser at:
-      <a href="http://{{data.pod_master_ip}}:8000" target="_blank">POD{{data.pod_numstr}} My Play App</a>
+      <a href="http://{{data.pod_node1_ip}}/{{data.pod_id}}" target="_blank">POD{{data.pod_numstr}} My New Web Server</a>
     </p>
 
 <!--
