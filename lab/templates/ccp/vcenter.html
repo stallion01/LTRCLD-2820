@@ -111,7 +111,9 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Check to see if ACI sees the Nodes</h3>
-<p>Click on kube-nodes, and Operational</p>
+<p>Click on kube-nodes, and Operational. The operational tab under an EPG in ACI shows the current active devices that ACI
+sees from the leaf switch ports. ACI keeps track of both the mac-addresses and IP addresses within the fabric, thus eliminating
+the need for arp and reducing broadcasts and removing 'flood-and-learn' from the fabric; one of the many advantages of ACI.</p>
 <p>Notice that ACI has learned the IP addresses of the nodes from the <b>data plane</b></p>
 <img src="/lab/static/images/ccp/aci02.png" class="img-responsive img-shadow">
 
