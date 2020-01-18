@@ -67,6 +67,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Click on 'INSTALL ADD-ON' and install 'HyperFlex Storage(CSI)'</h3>
 
 <img src="/lab/static/images/ccp/ccp14.png" class="img-responsive img-shadow">
+<p>Click 'INSTALL' at the bottom right</p>
 <img src="/lab/static/images/ccp/ccp24.png" class="img-responsive img-shadow">
 
 
@@ -77,8 +78,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - SSH to your jumpbox and deploy the containerized application</h3>
 <p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}}
-</a>
-<br>Run the following commands from CLI
+<br>Run the following commands from CLI; the shell script fires off a few kubernetes yaml manifests from the folder
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">

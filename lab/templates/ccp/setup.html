@@ -25,7 +25,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Copy your public key from the jumphost</h3>
 <p>SSH using putty to your jumphost at IP address -<b>{{data.pod_master_ip}}</b> using the following credentials </p>
-<br>Username: {{data.vmware_cred_username}}<br>
+<br>Username: ccpuser<br>
 Password: C1sco123
 
 <p>Type <b>'yes'</b> if prompted with ssh key validation message; we use the public key for authentication to CCP tenant nodes</p>

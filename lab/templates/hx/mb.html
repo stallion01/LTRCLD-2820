@@ -79,7 +79,20 @@ Step {% set step = step +  1 %}
 </pre>
 </div>
 <br>
-
+<pre>
+  ---
+  apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    name: mboard-pvc
+  spec:
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: 100Gi
+    storageClassName: hyperflex-csi
+</pre>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
@@ -90,7 +103,7 @@ Step {% set step = step +  1 %}
    as well as some basic information about the object (such as a name). When you use the Kubernetes API to
    create the object (either directly or via kubectl), that API request must include that information as
    JSON in the request body. Most often, you provide the information to kubectl in a .yaml file.
-   kubectl converts the information to JSON when making the API request.<br><b>Notice a 100Gig Volume has now been bound to the claim request</b></p>
+   kubectl converts the information to JSON when making the API request.</p>
 
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
@@ -104,7 +117,8 @@ Step {% set step = step +  1 %}
 <br>
 
 <p>Let's also look for any Persistent Volume Claims once again</p>
-<p>It might take a minute to the the Volume bound to the claim<br><b>Are there any PVCs?</b></p>
+<p>It might take a minute for  the Volume to bind to the claim request<br>
+  <b>Notice a 100Gig Volume has now been bound to the claim request, what storage class are we using?</b></p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -134,6 +148,44 @@ Step {% set step = step +  1 %}
 </pre>
 </div>
 <br>
+<pre>
+<code>This is the entire application manifest</code>
+  apiVersion: v1
+  kind: Pod
+  metadata:
+      name: message-board
+      labels:
+          app: message-board
+          name: message-board
+  spec:
+      containers:
+      - name: message-board
+        image: 10.139.12.210/mb/message_board:version1
+        volumeMounts:
+        - name: mb-volume
+          mountPath: /sqldb
+        ports:
+        - containerPort: 5000
+        imagePullPolicy: Always
+      volumes:
+        - name: mb-volume
+          persistentVolumeClaim:
+            claimName: mboard-pvc
+  ---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: message-board
+    labels:
+      name: message-board
+  spec:
+    type: LoadBalancer
+    ports:
+    - port: 5000
+      nodePort: 30002
+    selector:
+      name: message-board
+</pre>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}

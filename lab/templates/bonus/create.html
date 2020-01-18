@@ -88,20 +88,21 @@ docker run -it --rm busybox
 </div>
 <br>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+    <pre class="command-line language-bash" data-prompt="{{ data.container_alpine_prompt}}" data-output="2-4">
 <code class="language-bash">
 ls
 ip address
 which nginx
 which apache
+python
 </code>
 </pre>
 </div>
 <p>
-    The image is so small and does not include a web server.
+    The image is so small and does not include a web server (or even python).
     This leaves us with the only option of executing binaries directly on it. </p>
     <div class="fancy-terminal">
-        <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+        <pre class="command-line language-bash" data-prompt="{{ data.container_alpine_prompt}}" data-output="2-4">
     <code class="language-bash">
 exit
     </code>

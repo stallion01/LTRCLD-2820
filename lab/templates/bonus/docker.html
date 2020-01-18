@@ -28,7 +28,13 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-  sudo su
+sudo su
+</code>
+</pre>
+</div>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
 yum install -y yum-utils
 yum install -y device-mapper-persistent-data lvm2
 </code>
