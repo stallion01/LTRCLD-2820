@@ -15,7 +15,7 @@ Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,B
 7,PNG,PDOWN,/aci1/step3.png,141,30,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 7,PNG,PDOWN,/aci1/step3.png,30,61,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 7,PNG,TXT,/aci1/step3.png,84,323,0,14,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Select to highlight {{data.vmware_cred_username}}
-8,PNG,TXT,/ccp/ccp2.png,394,292,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}
+8,PNG,TXT,/ccp/ccp201.png,401,294,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}
 9,PNG,TXT,/ccp/ccp4.png,52,350,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,ccpuser
 9,PNG,TXT,/ccp/ccp4.png,52,525,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.pod_cidr}} (Click to copy from above)
 9,PNG,TXT,/ccp/ccp4.png,178,948,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Add 10.101.128.101

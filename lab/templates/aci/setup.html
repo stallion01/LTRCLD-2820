@@ -26,7 +26,7 @@
 
 <h1>Creating ACI Tenant manually</h1>
 <p>
-    Cisco Cloud Platform  <code>(CCP)</code> using the CNI plugin is able to automatically build
+    Cisco Cloud Platform  <code>(CCP)</code> using the CNI (Container Network Interface) plugin is able to automatically build
     a tenant and configure the Kubernetes application profile. In this section, we'll manually build a
     tenant and expore the Kubernetes integration components. We'll in a later step remove
     this configuration and monitor how CCP automates this process. <b>The purpose of this section is to highlight that you are starting from a clean ACI fabric for your pod. This is a live fabric!</b>
@@ -110,7 +110,7 @@ Step {% set step = step +  1 %}
 <p>
     Click on 'Virtual Networking' and open 'Container Domains'
 </p>
-<p>Take note that there aren't any kubernetes integrations yet; later in the lab you'll see CCP adds elements to this section</p>
+<p><b>Take note that there aren't any kubernetes integrations yet; later in the lab you'll see CCP adds elements to this section</b></p>
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/6" class="img-responsive img-shadow">
 

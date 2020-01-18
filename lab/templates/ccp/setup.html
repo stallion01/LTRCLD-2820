@@ -95,9 +95,9 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' Cluster</h3>
 <p>
-    Infrastructure provider - vSphere; in production env, you might have several.
+    Infrastructure provider - vxphere (In production env, you might have several providers)
     </p>
-    <p>Kubernetes Cluster Name - '{{data.apic_stdnt_uname}}' (user defined)</p>
+    <p>Kubernetes Cluster Name - '{{data.apic_stdnt_uname}}'</p>
     <p>ACI CNI profile - 'cloud-aci' which contains ACI specific settings</p>
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/8" class="img-responsive">
