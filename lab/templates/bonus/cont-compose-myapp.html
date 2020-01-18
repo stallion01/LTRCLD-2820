@@ -23,7 +23,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Examine the interfaces and ip addresses of the host</h3>
 <p>Notice the 'docker0' interface and it's ip address</p>
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
 ip address
 </code>
@@ -65,7 +65,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Display the docker instances and exposed ports</h3>
 <p> <strong>Copy the 'CONTAINER ID' from your output</strong> We will use it to explore its details later in this section</p>
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
 docker ps
 </code>
@@ -83,7 +83,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Display all the networks availabe for docker</h3>
 <p>Notice the presence of 'Bridge' and 'Host' networks similar to what you would see in a virtualized enviroment</p>
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
 docker network ls
 </code>
@@ -105,7 +105,7 @@ Step {% set step = step +  1 %}
 <p>Notice the presense of 'Bridge' and 'Host' networks similar to what you would see in a Virtualized enviroment</p>
 <br>Can you find the IP address of your container?
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
 docker network inspect bridge
 </code>
@@ -172,7 +172,7 @@ Step {% set step = step +  1 %}
   We can quickly look in the container and see the IP (<code>use the <b>'CONTAINER ID'</b> from step 2</code>).
 </p>
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
 docker exec -it {'CONTAINER ID'} ip a
 </code>

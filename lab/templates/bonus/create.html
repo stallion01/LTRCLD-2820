@@ -40,7 +40,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Download busybox image</h3>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
 docker pull busybox
 </code>
@@ -52,7 +52,7 @@ docker pull busybox
 </p>
 
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
 docker images
 </code>
@@ -80,7 +80,7 @@ Step {% set step = step +  1 %}
      <p>If you want to explore the shell yourself, run this command :</p>
 </p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
 docker run -it --rm busybox
 </code>
@@ -121,7 +121,7 @@ Step {% set step = step +  1 %}
 <p>Google's go language is very easy to learn and build executables <br> <b>Here is a simple code snipit to build a Web Server</b>
   The following will create a file called 'server.go' on your working directory</p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_dockerplay}}" data-output="2-12">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-12">
 <code class="language-bash">
 cat &lt;&lt; EOF &gt; server.go
 package main
@@ -150,7 +150,7 @@ EOF
    doesn’t have the same OS or architecture. We do this with the GOOS and GOARCH environment variables</p>
    <p>This will compile an executable binary called 'server' on your working directory</p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
 GOOS=linux GOARCH=386 go build ./server.go
 </code>
@@ -230,7 +230,7 @@ Step {% set step = step +  1 %}
 <p>
     Now that you have made the changes to the container, we can make a new container image based on those changes.
 </p><div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_dockerplay}}" data-output="2-12">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-12">
 <code class="language-bash">
 cat &lt;&lt; EOF &gt; Dockerfile
 FROM busybox
@@ -242,7 +242,7 @@ EOF
 </div>
 <p>Let's run docker to build the new image</p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_dockerplay}}" data-output="2-12">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-12">
 <code class="language-bash">
 docker build -t go-server .
 </code>
@@ -261,7 +261,7 @@ Step {% set step = step +  1 %}
     <br>We will be translating port 80 from the container to the host ip address.
 </p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
 docker run -d -p 80:80 --rm -it go-server
 </code>
@@ -282,7 +282,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Let's look at all the image list again</h3>
 <p></p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_dockerplay}}" data-output="2-12">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-12">
 <code class="language-bash">
 docker images
 </code>

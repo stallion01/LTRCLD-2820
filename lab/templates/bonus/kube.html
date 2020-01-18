@@ -25,7 +25,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Lets disable the firewall first!</h3>
 <p>For ease of installation, let's stop the iptables service! (In production, you'll punch holes in the firewall instead of disabling it altogether!)</p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
 systemctl stop firewalld
 </code>
@@ -39,7 +39,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Lets change the default cgroup driver to systemd</h3>
 <p>This is a recommendation for a stable system, but first make a 'docker' directory in /etc' (if it doesn't exist)</p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
   mkdir /etc/docker
   cd /etc/docker
@@ -48,7 +48,7 @@ Step {% set step = step +  1 %}
 </div>
 <p>Next, let's create a file that tells docker to use systemd for cgroup driver</p>
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 cat &lt;&lt; EOF &gt; daemon.json
 {
@@ -68,7 +68,7 @@ EOF
 </div>
 <p>Next, we create a new folder for docker service, and reload the service</p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-4">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 mkdir -p /etc/systemd/system/docker.service.d
 
@@ -87,7 +87,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Restart docker and check the cgroup driver has been set to systemd</h3>
 <p>Restart docker process</p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-9">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-9">
 <code class="language-bash">
 systemctl restart docker
 
@@ -96,7 +96,7 @@ systemctl restart docker
 </div>
 <p>Check if systemd is the new driver</p>
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 docker info | grep -i cgroup
 </code>
@@ -117,7 +117,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Turn off Swap</h3>
 <p>swap is inefficient way of handling memory, kubernetes does a great job and we don't need swap</p>
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 swapoff -a
 </code>
@@ -133,7 +133,7 @@ Step {% set step = step +  1 %}
 <p>Kubernetes packages are not available from official CentOS 7 repositories.
 Enter the following command to retrieve the Kubernetes repositories.</p>
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 cat &lt;&lt; EOF &gt; /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
@@ -160,7 +160,7 @@ Step {% set step = step +  1 %}
 <b>kubectl:</b> the command line utility to interact with your cluster
 </pre>
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 yum install -y kubelet kubeadm kubectl
 </code>
@@ -168,7 +168,7 @@ yum install -y kubelet kubeadm kubectl
 </div>
 <p>enable kubelet service; kubelet is the 'agent' that watches for pod specs from kuberetes API server</p>
 <div class="fancy-terminal">
-<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 systemctl enable kubelet
 </code>
@@ -177,7 +177,7 @@ systemctl enable kubelet
 <p>Start the kubelet service!</p>
 
 <div class="fancy-terminal">
-<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 systemctl start kubelet
 </code>
@@ -186,7 +186,7 @@ systemctl start kubelet
 
 <p>Set SElinux into permissive mode. This is required to allow containers to access the host filesystem, which is needed by pod network for example</p>
 <div class="fancy-terminal">
-<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 setenforce 0
 </code>
@@ -199,7 +199,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - The prep work is done! Let's initialize the cluster</h3>
 <div class="fancy-terminal">
-<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 kubeadm init --pod-network-cidr=10.244.0.0/16
 </code>
@@ -249,7 +249,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Download kubeconfig file to access our cluster</h3>
 
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -265,7 +265,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - We haven't defined a CNI for networking, let's use flannel!</h3>
 
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 </code>
@@ -287,7 +287,7 @@ daemonset.apps/kube-flannel-ds-s390x created
 
 <h3>Let's check if we have our kubernetes master up and running</h3>
 <div class="fancy-terminal">
-  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_my_app}}" data-output="2-4">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
 kubectl get nodes
 </code>

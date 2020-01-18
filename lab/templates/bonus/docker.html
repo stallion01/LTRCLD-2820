@@ -24,7 +24,7 @@ Username: ccpuser <br>
 Password: C1sco123
 
 <p>
-    Before we install docker, you will install some utilities that are required for docker to run on the OS.
+    Before we install docker, you will install some utilities that are required for docker to run on the OS. <code>Enter 'Cisco123' for sudo password</code>
 </p>
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ks}}">
@@ -48,7 +48,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Install EPEL repository</h3>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}">
 <code class="language-bash">
 yum -y install epel-release
 </code>
@@ -61,7 +61,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Install Python Package management tools</h3>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}">
 <code class="language-bash">
 yum -y install python-wheel python-pip
 pip install --upgrade pip
@@ -78,7 +78,7 @@ Step {% set step = step +  1 %}
     You will need to add the docker community edition repository into the linux distribution.
 </p>
 <div class="fancy-terminal">
-    <pre class="command-line" data-prompt="{{ data.master_prompt}}" data-output="2-5">
+    <pre class="command-line" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-5">
 <code class="language-bash">
 yum-config-manager \
         --add-repo \
@@ -90,7 +90,7 @@ yum-config-manager \
     Now that you used yum-config-manager to insert the repo, you need to tell yum to re-read cache.
 </p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}">
 <code class="language-bash">
 yum makecache fast
 </code>
