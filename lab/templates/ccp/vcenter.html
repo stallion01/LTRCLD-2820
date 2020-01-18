@@ -130,7 +130,7 @@ Click on 'Virtual Networking' and Expand Kubernetes under 'Container Domains'</p
    ACI-CNI plugin. If you have ACI in your environment and do not have CCP and instead have vanilla kubernetes, ACI-CNI plugin brings
    this same level of integration that you see here in this lab.
    As you navigate through the Kubernetes section in ACI, you begin to appreciate the level of visibility that ACI brings
-   to the table when integrated with Kubernetes.</p>Expand {{data.vmware_cred_username}} and look for any pods in the 'default' namespace
+   to the table when integrated with Kubernetes.</p>Expand {{data.vmware_cred_username}} and look for any pods in the 'default' namespace.
 We will deploy an application into this namespace in the next section
 <img src="/lab/static/images/ccp/aci0311.png" class="img-responsive img-shadow">
 <!--
@@ -138,7 +138,7 @@ We will deploy an application into this namespace in the next section
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Check the status and details in CCP</h3>
+<h3>Step {{ step }} - Check the status and details of your cluster deployment in CCP</h3>
 <p>
 Go back to the tab/window with Cisco Container Platform <br>Log back in with 'admin/admin' if your session has expired </p>
 <p>For {{data.vmware_cred_username}}, click on the icon below 'Actions' and click 'View Details' </p>
@@ -149,7 +149,10 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Why do the nodes have two of the same IP addresses?</h3>
-
+<p>At this point, your kubernetes tenant cluster is deployed and ready for use.
+  Notice the button which says <code>DOWNLOAD KUBECONFIG</code> in the image? This is the file that you would handover to
+any user(s) that would want to use the cluster. The file contains the authenication key (token) and other parameters necessary
+to connect to the cluster and start using it. In the next section, we'll use a different method to get this file (Developers don't use Web U.I toos!)</p>
 <img src="/lab/static/images/ccp/ccp10.png" class="img-responsive img-shadow">
 
 
