@@ -6,12 +6,13 @@
 
 
 <div class="section_header">
-    <div class="title">{{data.vmware_cred_username}} Cluster</div>
+    <div class="title">{{data.vmware_cred_username}} cluster</div>
     <div class="title_section">Deployment</div>
 </div>
 {{ html_for_step_status|safe }}
 
 <h1>CCP Lab Toplogy</h1>
+<p>In this section, you will be using Cisco ACI and VMware vCenter along with CCP to monitor the deployment of your tenant cluster</p>
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
 
@@ -26,9 +27,6 @@ Step {% set step = step +  1 %}
 <img src="/core/static/images/symbols/http_pointer.png" style="height:25px;" >
 </a>
 </p>
-<p>Ignore/accept the invalid SSL certificate</p>
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/10" class="img-responsive">
-
 <p>The credentials for vCenter are:</p>
 <ul>
     <li>
@@ -39,6 +37,10 @@ Step {% set step = step +  1 %}
     </li>
 
 </ul>
+
+<p>Ignore/accept the invalid SSL certificate</p>
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/10" class="img-responsive">
+
 
 <!--
 ##############################################################################################################################
