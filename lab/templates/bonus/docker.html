@@ -10,18 +10,19 @@
     <div class="title_section">Install</div>
 </div>
 {{ html_for_step_status|safe }}
-
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
-
-<h2>Under Construction!!!</h2>
-##############################################################################################################################
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/992" class="img-responsive">
+<h1>Manual Configuration of Docker and Kubernetes</h1>
+<h5>The bonus section is designed to give you a thorough understanding of the concepts of docker and then guide you through the steps necessary for getting a Kubernetes Cluster stood up</h5>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Install repo utilities to Master</h3>
-<p>-----add ssh command and ip addresses here------ <br>enter password 'C1sco123' whenever prompted</p>
+SSH using putty to your Master node at IP address -<b>{{data.pod_node1_ip}}</b> using the following credentials <br>
+Username: ccpuser <br>
+Password: C1sco123
+
 <p>
     Before we install docker, you will install some utilities that are required for docker to run on the OS.
 </p>

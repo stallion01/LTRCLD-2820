@@ -43,14 +43,18 @@ Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,B
 991,PNG,TXT,/ccp/ccp-master.png,615,160,0,32,#FFFFFF,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,Name
 991,PNG,TXT,/ccp/ccp-master.png,1198,190,0,24,#FFFFFF,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.pname}}-1-node-gr-0
 991,PNG,TXT,/ccp/ccp-master.png,1198,160,0,32,#FFFFFF,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,Name
-992,PNG,TXT,/master.png,615,190,0,24,#FFFFFF,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.pname}}-0-master-0
-992,PNG,TXT,/master.png,615,160,0,32,#FFFFFF,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,Name
-992,PNG,TXT,/master.png,1198,190,0,24,#FFFFFF,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.pname}}-1-node-gr-0
-992,PNG,TXT,/master.png,1198,160,0,32,#FFFFFF,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,Name
-993,PNG,TXT,/worker.png,615,190,0,24,#FFFFFF,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.pname}}-0-master-0
-993,PNG,TXT,/worker.png,615,160,0,32,#FFFFFF,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,Name
-993,PNG,TXT,/worker.png,1198,190,0,24,#FFFFFF,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.pname}}-1-node-gr-0
-993,PNG,TXT,/worker.png,1198,160,0,32,#FFFFFF,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,Name
+992,PNG,TXT,/master.png,70,240,0,24,#98C72A,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,Name: {{data.pname}}
+992,PNG,TXT,/master.png,70,210,0,32,#98C72A,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,IP: {{data.pod_master_ip}}
+992,PNG,TXT,/master.png,639,240,0,24,#98C72A,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,Name: {{data.pname}}-k8s-master
+992,PNG,TXT,/master.png,639,210,0,32,#98C72A,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,IP: {{data.pod_node1_ip}}
+992,PNG,TXT,/master.png,1238,240,0,24,#98C72A,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,Name: {{data.pname}}-k8s-worker
+992,PNG,TXT,/master.png,1238,210,0,32,#98C72A,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,IP: {{data.pod_node2_ip}}
+993,PNG,TXT,/worker.png,70,240,0,24,#98C72A,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,Name: {{data.pname}}
+993,PNG,TXT,/worker.png,70,210,0,32,#98C72A,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,IP: {{data.pod_master_ip}}
+993,PNG,TXT,/worker.png,639,240,0,24,#98C72A,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,Name: {{data.pname}}-k8s-master
+993,PNG,TXT,/worker.png,639,210,0,32,#98C72A,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,IP: {{data.pod_node1_ip}}
+993,PNG,TXT,/worker.png,1238,240,0,24,#98C72A,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,Name: {{data.pname}}-k8s-worker
+993,PNG,TXT,/worker.png,1238,210,0,32,#98C72A,#696969,white,/inconsolata/inconsolata-v18-latin-700.woff,left,IP: {{data.pod_node2_ip}}
 994,PNG,TXT,/guide/work_on_node2.png,1198,118,0,24,#white,#white,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.pname}}-node2.ecatsrtpdmz.cisco.com
 994,PNG,TXT,/guide/work_on_node2.png,1198,85,0,32,#white,#white,white,/inconsolata/inconsolata-v18-latin-700.woff,left,{{data.pod_node2_ip}}
 994,PNG,TXT,/aci/aci-top-bar-menu.png,212,56,0,14,blue,#white,white,/CiscoSans/CiscoSansTTHeavy.woff,left,Test

@@ -8,9 +8,10 @@
   <div class="title_section">workers</div>
 </div>
 
-<h1>Configuring your first worker node!</h1>
 
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/993" class="img-responsive">
+<h1>Configuring your first worker node!</h1>
 <p>
   <b>Now that we understand a little more on container networks, let's look at our application that
   has been deployed and how the container communicates with the host and external networks.</b>
@@ -20,8 +21,11 @@
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Install repo utilities to Master</h3>
-<p>-----add ssh command and ip addresses here------ <br>enter password 'C1sco123' whenever prompted</p>
+<h3>Step {{ step }} - Install repo utilities to Worker</h3>
+SSH using putty to your Worker node at IP address -<b>{{data.pod_node2_ip}}</b> using the following credentials <br>
+Username: ccpuser <br>
+Password: C1sco123
+
 <p>
 Similar to kubernetes master, you will install some utilities that are required for the worker
 </p>
