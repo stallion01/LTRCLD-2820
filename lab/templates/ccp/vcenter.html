@@ -93,10 +93,15 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Explore the '{{data.apic_stdnt_uname}}' tenant details</h3>
 <p>
-    Expand Application Profiles and Applicaton EPGs.
+    Expand Application Profiles and Applicaton EPGs under kubernetes. Click on kubernetes.
     </p>
     <p>Click on the Topology view that shows the EPGs and Contracts</p>
     <p>Explore the relationship between the EGPs by clicking on 'kube-default' in the image</p>
+    <p>Cisco ACI uses EPGs (End Point Groups - dark blue bubbles in the bottom of the image) as a boundary to seperate devices into groups based on their security requirements.
+    If this is the first time you are seeing ACI, you may think of EGP as a VLAN. There is no communication allowed between EPGs
+  by default. To facilitate communication between EPGs, you must configure contracts (light blue bubbles in the image). CCP has automatically
+built both the EPGs and the relevant contracts for Kubernetes within ACI using API calls. CCP also configures vCenter with the corresponding
+port groups via ACI and puts the kubernetes nodes in them.</p>
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/12" class="img-responsive">
 
