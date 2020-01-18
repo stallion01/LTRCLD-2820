@@ -37,7 +37,8 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Delete the {{data.vmware_cred_username}}-mysql consumed contract from the 'api' EPG</h3>
 <p>
 <p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'livewall' then 'api' <br>
-Select the {{data.vmware_cred_username}}-mysql contract and delete from the menu on top right</p>
+Select the {{data.vmware_cred_username}}-mysql contract and delete from the menu on top right
+<br>Click Delete on the pop-up window</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/15" class="img-responsive">
 <!--
 ##############################################################################################################################
@@ -66,7 +67,12 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Select '{{data.vmware_cred_username}}-mysql' from the drop down menu</h3>
 <p>Click Submit</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/17" class="img-responsive">
-
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check if the Livewall App is funtioning again</h3>
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}
