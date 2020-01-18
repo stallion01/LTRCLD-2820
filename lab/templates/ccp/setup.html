@@ -26,8 +26,13 @@
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Copy your public key from the jumphost</h3>
-<p>SSH using putty to your jumphost at IP address -<b>{{data.pod_master_ip}}</b> using the following credentials
+<h3>Step {{ step }} - Create and copy your public key from the jumphost</h3>
+<p>Public key authentication allows for stronger cryptographic security over any password. In this step, you are first
+  creating a key pair. A key pair consists of a public key and a private key. You would copy your public key to a
+  server that you would like secure access to. This allows for both encrypted communications and password free remote access.
+  The server adds this key to it's 'authorized keys' file. Only the person with the corresponding private key can now authenticate without
+  a password. 
+<br>SSH using putty to your jumphost at IP address -<b>{{data.pod_master_ip}}</b> using the following credentials
 <br>Username: ccpuser<br>
 Password: C1sco123
  </p>
