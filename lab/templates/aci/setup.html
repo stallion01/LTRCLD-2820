@@ -13,8 +13,9 @@
 
 <h1>Lab Toplogy</h1>
 <p>
-    For this lab you will have admin access to the APIC. <b>Excercise caution</b>
-    as you navigate and make changes. Each pod has access to the common CCP control plane
+    For this lab you will have admin access to the ACI control plane. ACI uses APIC
+     (Applicaton Policy Infrastructure Controller) as the controller for building and managing the Fabric. <b>Excercise caution</b>
+    as you navigate and make changes in APIC. Each pod has access to the common CCP control plane
     cluster which will be used to deploy the tenant clusters. Each pod also has ssh access
     to a linux jumpbox. Each pod also has a dedicated mySQL server running on centos7.
 </p>
@@ -27,7 +28,7 @@
 <h1>Creating ACI Tenant manually</h1>
 <p>
     Cisco Cloud Platform  <code>(CCP)</code> using the CNI (Container Network Interface) plugin is able to automatically build
-    a tenant and configure the Kubernetes application profile. In this section, we'll manually build a
+    a tenant and configure the Kubernetes application profile in ACI. In this section, we'll manually build a
     tenant and expore the Kubernetes integration components. We'll in a later step remove
     this configuration and monitor how CCP automates this process. <b>The purpose of this section is to highlight that you are starting from a clean ACI fabric for your pod. This is a live fabric!</b>
 </p>
@@ -106,11 +107,11 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Explore any existing VMM integration</h3>
+<h3>Step {{ step }} - Explore existing VMM integrations</h3>
 <p>
-    Click on 'Virtual Networking' and open 'Container Domains'
+    Click on 'Virtual Networking' and expand 'Container Domains'. Click on 'Kubernetes'
 </p>
-<p><b>Take note that there aren't any kubernetes integrations yet; later in the lab you'll see CCP adds elements to this section</b></p>
+<p><b>Take note that there are no kubernetes integrations yet; later in the lab you'll see CCP (Cisco Container Platform) add elements to this section via the API</b></p>
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/6" class="img-responsive img-shadow">
 
