@@ -10,8 +10,7 @@
     <div class="title_section">The Basics</div>
 </div>
 <p>
-    Now that we have covered the basic history and technology of containers, we want leverage some of those concepts in this
-    lab. First we need to understand the concept of Docker Hub.
+    Now that we have installed Docker which is a container runtime engine, we need to understand the concept of Docker Hub.
 </p>
 
 <h1>Docker Hub</h1>
@@ -109,7 +108,7 @@ docker images
 <pre>
 {{ data.master_prompt}} docker images
 REPOSITORY TAG IMAGE ID CREATED SIZE
-ubuntu 16.04 f975c5035748 2 weeks ago 112MB
+ubuntu 16.04 f975c5035748 2 weeks ago 124MB
 </pre>
 <p>
     For every Docker image you download, the Docker client will tag it with an image id. This is what you
@@ -149,7 +148,7 @@ Status: Downloaded newer image for ubuntu:16.04
 <img src="/lab/static/images/containers/container-layers.png" class="img-responsive">
 <p>
     The <code>docker history</code> command provides the details of what each of these various
-    layers consist of. To get this first issue the command <code>docker images</code>.
+    layers consist of. To get this lets issue the command <code>docker history '{image_name}'</code>.
 </p>
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-15">
@@ -159,24 +158,11 @@ docker history ubuntu:16.04
 </pre>
 </div>
 <p>
-    The output contains the images that have been downloaded, one that you pulled and one that
-    was downloaded when you issued the <code>docker run</code> command.
-</p>
-<pre>
-{{ data.master_prompt}} docker images
-REPOSITORY TAG IMAGE ID CREATED SIZE
-ubuntu latest <b>
-    <font color="green">f975c5035748</font>
-</b> 2 weeks ago 112MB
-</pre>
-<p>
-    Copy the docker image ID from the downloaded ubuntu image and then use this ID for the
-    <code>docker history</code> command. Below is the sample to follow:
+    The output shows the various layers of the image that have been downloaded
 </p>
 
 <pre>
-{{data.master_prompt}} docker history <b>
-    <font color="green">f975c5035748</font>
+{{data.master_prompt}} docker history ubuntu:16.04 <b>
 </b>
 IMAGE CREATED CREATED BY SIZE COMMENT
 f975c5035748 2 weeks ago /bin/sh -c #(nop) CMD ["/bin/bash"] 0B
@@ -212,7 +198,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Start Ubuntu container</h3>
 <p>
-    The first exercise you will do is to start a very small alpine container from docker hub.
+    The first exercise you will do is to play with the ubuntu container you downloaded from docker hub.
 </p>
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">

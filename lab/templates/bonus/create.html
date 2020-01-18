@@ -22,7 +22,7 @@
     If you go to <a href="https://hub.docker.com/_/busybox/" target="_blank">busybox repository in Docker Hub ( https://hub.docker.com/_/busybox/ ) </a>
     you will start to see significant differences between busybox and Ubuntu. For example if you click on the Tags you will notice that
     the compressed size is around 800KB ( compared to Ubuntu's 43MB ). Using these small containers will lead to smaller download times from
-    registries, easier manipulation and a more secure environment ( less processes running in the containers ). Yet the challenge with
+    registries, easier manipulation and a more secure environment ( fewer processes running in the containers ). Yet the challenge with
     these containers is, because they have been brought down to a bare minimum, they are not well suited for human interaction. They miss
     many of the amenities of a normal Linux installation ( e.g. Alpine doesn't even include bash, only sh )
 </p>
@@ -47,7 +47,7 @@ docker pull busybox
 </pre>
 </div>
 <p>
-    Running the command docker images will give you an immediate view of the different between these two
+    Running the command docker images will give you an immediate view of the difference between these two
     containers as it relates to size.
 </p>
 
@@ -87,6 +87,7 @@ docker run -it --rm busybox
 </pre>
 </div>
 <br>
+<p>Let's type in a few linux commands to get the responses</p>
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{ data.container_alpine_prompt}}" data-output="2-4">
 <code class="language-bash">
@@ -269,7 +270,7 @@ docker run -d -p 80:80 --rm -it go-server
 </div>
 
     <p>
-      The application should be viewable in your browser at:
+      <code>The application should be viewable in your browser at:</code>
       <a href="http://{{data.pod_node1_ip}}/Pod{{data.pod_numstr}}" target="_blank">POD{{data.pod_numstr}} My New Web Server</a>
     </p>
 
@@ -278,7 +279,7 @@ docker run -d -p 80:80 --rm -it go-server
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Let's look at all the image list again</h3>
+<h3>Step {{ step }} - Let's look at the image list again</h3>
 <p></p>
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-12">
