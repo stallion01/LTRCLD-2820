@@ -116,7 +116,7 @@ Step {% set step = step +  1 %}
 </p>
 
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-9">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-9">
 <code class="language-bash">
 repoquery --show-duplicates docker-ce
 </code>
@@ -185,7 +185,7 @@ docker-ce-3:19.03.5-3.el7.x86_64
     In this particular lab we will be leveraging version <code>{{data.docker_ce_version}}</code>.
 </p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-9">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-9">
 <code class="language-bash">
 yum install -y {{data.docker_ce_version}}
 </code>
@@ -204,7 +204,7 @@ Step {% set step = step +  1 %}
     With all these modifications you can now enable the docker service and start the docker service
 </p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{data.master_prompt}}" data-output="2-9">
+    <pre class="command-line language-bash" data-prompt="{{data.master_prompt_ksroot}}" data-output="2-9">
 <code class="language-bash">
 systemctl enable docker.service
 </code>
@@ -212,7 +212,7 @@ systemctl enable docker.service
 </div>
 
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{data.master_prompt}}" data-output="2-9">
+    <pre class="command-line language-bash" data-prompt="{{data.master_prompt_ksroot}}" data-output="2-9">
 <code class="language-bash">
 systemctl start docker.service
 </code>
@@ -224,7 +224,7 @@ systemctl start docker.service
     Verify that the service is started and working properly.
 </p>
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-9">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-9">
 <code class="language-bash">
 systemctl status docker.service
 </code>
@@ -232,7 +232,7 @@ systemctl status docker.service
 </div>
 
 <pre>
-{{data.master_prompt}} systemctl status docker.service
+{{data.master_prompt_ksroot}} systemctl status docker.service
 docker.service - Docker Application Container Engine
 Loaded: loaded (/usr/lib/systemd/system/docker.service; enabled; vendor preset: disabled)
 Active: <b>
@@ -247,14 +247,14 @@ CGroup: /system.slice/docker.service
 </p>
 
 <div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}" data-output="2-9">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-9">
 <code class="language-bash">
 docker info | grep -i cgroup
 </code>
 </pre>
 </div>
 <pre>
-{{data.master_prompt}} docker info | grep -i cgroup
+{{data.master_prompt_ksroot}} docker info | grep -i cgroup
 <b>
     <font color="green">Cgroup Driver: cgroupfs </font>
 </b>
