@@ -501,6 +501,8 @@ def get_pod_data(pod):
         # All Linux prompts for CLI mimick on document
         "home_prompt":                  "pod%02d ~ " % pod ,
         "master_prompt":                "[ccpuser@pod%02d ~]$" % pod ,
+        "master_prompt_ks":             "[ccpuser@pod%02d-k8s-master ~]$" % pod ,
+        "master_prompt_ksroot":         "[ccpuser@pod%02d-k8s-master ccpuser]#" % pod ,
         "master_prompt_my_app":         "[root@pod%02d-master my_app]#" % pod ,
         "master_prompt_dockerplay":     "[root@pod%02d-master dockerplay]#" % pod ,
         "master_prompt_wp":             "[root@pod%02d-master wp_local]#" % pod ,
