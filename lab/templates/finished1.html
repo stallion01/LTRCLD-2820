@@ -1,0 +1,46 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+<div class="section_header" style="margin-bottom:50px;">
+    <div class="title">Finished!</div>
+</div>
+<p>
+    We hope this lab was beneficial to you! It took months of detailed oriented work to complete this lab. While
+    we can't cover all the topics of ACI integration of Kubernetes, we believe that these four hours you
+    have picked to spend with us it have been valuable to you.
+</p>
+<p>
+    Please fill out your surveys! You lab guide is available here for reference:
+</p>
+<div style="font-size:34px;text-align: center">
+    <a href="http://livelab.reqdemo.com" target="_blank">http://livelab.reqdemo.com</a>
+</div>
+
+<div class="row" style="margin-top:50px;">
+    <div class="col-sm-6 col-xs-12">
+        <h1>Complete your session evaluation!</h1>
+        <br>
+        <ul style="font-size:20px;">
+            <li>
+                Give us your feedback to be entered into a Daily Survey Drawing.
+            </li>
+            <li>
+                Complete your session surveys through the Cisco Live mobile app or
+                on <a href="http://ciscolive.com/emea.html">www.ciscolive.com/emea</a>
+            </li>
+            <li>
+                Don’t forget: Cisco Live sessions will be available for viewing on demand
+                after the event at <a href="http://ciscolive.com/online">www.ciscolive.com/online</a>.
+            </li>
+        </ul>
+        <br>
+        <br><br><br>
+    </div>
+    <div class="col-sm-6 col-xs-12">
+        <img src="/lab/static/images/market/finished-session-eval.png" class="img-responsive">
+    </div>
+</div>
+
+
+{{ end_of_page(page_position,data) }}
+{% endblock %}

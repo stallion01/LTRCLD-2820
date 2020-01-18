@@ -281,3 +281,11 @@
       weburl: "node"
       file: "bonus/node.html"
       title: "Accessing Kuberntes"
+    finished:
+      line: 'data'
+      step: 8
+      pos: 108
+      ls: True
+      weburl: "finished"
+      file: "finished1.html"
+      title: "Finished"
