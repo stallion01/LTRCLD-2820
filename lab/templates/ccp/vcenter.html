@@ -49,8 +49,9 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Check the status of your VM deployment</h3>
 <p>
-    Expand the view to your resource group. <br>You sould see a {{data.vmware_cred_username}}-0-master-0 master VM and a {{data.vmware_cred_username}}-1-node-gr-0 node VM
-    being deployed in the Recent Tasks under your resource pool
+    Expand the view to your resource group. <br>You sould see a <code>{{data.vmware_cred_username}}-0-master-0</code> master
+    VM and a <code>{{data.vmware_cred_username}}-1-node-gr-0</code> node VM
+    being deployed in the recent Tasks under your resource pool.
 </p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/14" class="img-responsive img-shadow ">
 
@@ -152,7 +153,7 @@ Step {% set step = step +  1 %}
 <p>At this point, your kubernetes tenant cluster is deployed and ready for use.
   Notice the button which says <code>DOWNLOAD KUBECONFIG</code> in the image? This is the file that you would handover to
 any user(s) that would want to use the cluster. The file contains the authenication key (token) and other parameters necessary
-to connect to the cluster and start using it. In the next section, we'll use a different method to get this file (Developers don't use Web U.I toos!)</p>
+to connect to the cluster and start using it. In the next section, we'll use a different method to get this file (Developers don't use Web U.I. toos!)</p>
 <img src="/lab/static/images/ccp/ccp10.png" class="img-responsive img-shadow">
 
 
