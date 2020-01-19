@@ -12,7 +12,8 @@
 {{ html_for_step_status|safe }}
 
 <h1>CCP Lab Toplogy</h1>
-
+<p>In this section, you will be configuring an Application Proflie in ACI for a new application called 'Livewall' and then deploying
+ the application to your CCP cluster.</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
 
 
@@ -25,7 +26,11 @@ Step {% set step = step +  1 %}
 <p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}}
 
 </p>
-<p>To save time, we will be using a script to quickly install the App Profile</p>
+<p>To save time, we will be using a script to quickly install the ACI App Profile. What we are doing in this step
+  is to define and build the <code>network and security</code> configuration necessary for the application to run on ACI. This
+step can also be performed manually by going into ACI and building the Application Profile, and creating the EPGs and the necessary
+contracts. We are using API calls and a backend script to automate this process. In most production enviroments, people choose
+various automation tools like ansible, puppet etc. or python and other programming language to interact with ACI's API.</p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -44,7 +49,9 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Examine the changes in APIC</h3>
 <p>
-Take notice that we have deployed three new EPGs (collector, api, and frontend) and contracts between them
+Take notice that we have deployed three new EPGs (collector, api, and frontend) and contracts between them. We have not yet
+deployed the application, this is just the ACI configuraiton. If you click on one of the three EPGs and then click on 'Operational'
+ tab, you will notice that there are no endpoints. Once we deploy the application, you will see new endpoints show up in the EPG.
 
 <img src="/lab/static/images/ccp/lwall2.png" class="img-responsive img-shadow">
 
@@ -56,6 +63,11 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Log back to CCP to install CSI support Add-on</h3>
 <p>
 Go back to the tab/window with Cisco Container Platform <br>Log back in with 'admin/admin' if your session has expired </p>
+<p>CSI or 'Container Storage Interface' was developed as a standard for exposing arbitrary block and file storage storage
+  systems to containerized workloads on Container Orchestration Systems (COs) like Kubernetes. Using CSI, third-party
+  storage providers like Cisco can write and deploy plugins exposing new storage systems in Kubernetes without ever
+  having to touch the core Kubernetes code. This gives Kubernetes users more options for storage and makes the system
+  more secure and reliable.</p>
 <p>For {{data.vmware_cred_username}}, click on the icon below 'Actions' and click 'Add-ons' </p>
 <img src="/lab/static/images/ccp/ccp9.png" class="img-responsive img-shadow">
 
@@ -78,7 +90,9 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - SSH to your jumpbox and deploy the containerized application</h3>
 <p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}}
-<br>Run the following commands from CLI; the shell script fires off a few kubernetes yaml manifests from the folder
+<br>Run the following commands from CLI; the shell script fires off a few kubernetes yaml manifests from the folder. If you are
+ familiar with linux navigation and text viewing tools like 'cat' feel free to explore the folder where you will see a set of
+ small yaml manifests that describe the application.
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -93,7 +107,10 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Log back into ACI, open Operational tab under livewall app EPGs</h3>
-<b>Notice anything different?</b><p></p>
+<p><b>Notice anything different?</b><br>Now that we have deployed the actual application on kubernetes with the right annotations
+for each pod to their respective EPG, you are able to see them in the operational tab. We use 'annotations', a kubernetes construct
+designed to add identifiers based on a key/value pair as the mechanism to tell ACI which pods belong to which EPG. ACI is able
+to provide microsegmentation based on PODs, Namespaces, Deployments and Clusters</p>
 <img src="/lab/static/images/ccp/lwall4.png" class="img-responsive img-shadow">
 <!--
 ##############################################################################################################################
@@ -103,7 +120,9 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Examine the additions in the VMM domain section</h3>
 <p>
 Click on 'Virtual Networking' and Expand Kubernetes under 'Container Domains'</p>
-<p>Expand {{data.vmware_cred_username}} and look for any pods in the 'default' namespace</p>
+<p>Expand {{data.vmware_cred_username}} and look for any pods in the 'default' namespace. An applicaiton can be deployed into the
+default namespace or you can create a new namespace for it by defining it in the manifest. You can always move application tiers
+to a different namespace at a later time.</p>
 <img src="/lab/static/images/ccp/ccp203.png" class="img-responsive img-shadow">
 <!--
 ##############################################################################################################################
@@ -111,8 +130,11 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - SSH back to your jumpbox to see the Deployment</h3>
-<br>
-<p>From your jumphost, execute
+<p>
+  A deployment in kubernetes is essentially a mechanism
+  to describe the 'desired state' of a pod or set of pods. For example, in an deployment you cold mention tha you need 3 replicas for
+  an application tier. kubernetes will honor that and make sure that there will be three copies of it running at all times.<br><br>
+  From your jumphost, execute the following command to examine the deployments. </p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -128,7 +150,7 @@ kubectl get deployments
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Find the frontend IP address from kubernetes</h3>
+<h3>Step {{ step }} - Find the 'frontend' IP address from kubernetes</h3>
 <br>
 <p>From your jumphost, execute
 <div class="fancy-terminal">

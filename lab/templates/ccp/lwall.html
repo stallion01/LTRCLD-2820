@@ -21,10 +21,14 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Use CCP API to export kubeconfig file</h3>
-<p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}}
-<p>Click 'Copy' on the right to copy the command into your clipboard<br>
+<p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}} (Click on the Credentials tab on top of the page to get the username/password)
+
 <p>The first two commands below get the 'Token' from CCP which in turn is used to extract your pod specific Kubeconfig file.
-  The last two commands are for adding the kubeconfig file to your environment variable<br>
+  The last two commands are for adding the kubeconfig file to your environment variable on the jumphost. The command line utility called 'kubectl' is
+  used to interact with a kubernetes cluster. This tool looks for an environment variable called 'KUBECONFIG' on the device it is running on. kubectl
+  is already installed in your jumphost, but if you want to see the full step-by-step manual installation of Kuberentes, please run through the Bonus section.
+  In the Bonus section, we will also be using an alternate method of extracting the 'KUBECONFIG' variable.<br>
+<p>Click 'Copy' on the right to copy the command into your clipboard<br>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -42,17 +46,24 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Test kubernetes connection from Jumphost</h3>
-<b>Use 'kubectl' to get node and pod information</b>
+<b>Use 'kubectl' to get node and pod information</b> Kubectl can be installed on a Windows PC, or a MAC just as easily as on a Linux machine.
+Kubectl (sometimes pronounced as 'cube-cuttle') is the primary mechanism to interface with a Kubernetes cluster and gets installed on all Master and Nodes.
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
 kubectl get nodes -o wide
+kubectl get namespace
 kubectl get pods --all-namespaces
 </code>
 </pre>
 </div>
-<p>The output should look something similar to this.</p>
-  <img src="/lab/static/images/ccp/lwall1.png" class="img-responsive img-shadow">
+<p>The output should look something similar to this. Let's examine the output in more detail. 'kubectl get nodes' gives you the basic information
+  on your Master and Worker nodes, their status and version information. The '-o wide' key is used to change the display to be more verbose.
+  'kubectl get pods' displays all the pods on the 'default' namespace. Furnishing the '--all-namespaces' key allows you to view all the pods in
+  all the namespaces. Namespaces are intended for use in environments with many users spread across multiple teams, or projects.
+  Namespaces are a way to divide cluster resources between multiple users.
+</p>
+<img src="/lab/static/images/ccp/lwall1.png" class="img-responsive img-shadow">
 
 
 

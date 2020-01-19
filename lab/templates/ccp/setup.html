@@ -26,7 +26,7 @@
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Create and copy your public key from the jumphost</h3>
+<h3>Step {{ step }} - Create a public key on the jumphost</h3>
 <p>Public key authentication allows for stronger cryptographic security over any password. In this step, you are first
   creating a key pair. A key pair consists of a public key and a private key. You would copy your public key to a
   server that you would like secure access to. This allows for both encrypted communications and password free remote access.
@@ -47,7 +47,13 @@ ssh-keygen -t ecdsa -N '' -f ~/.ssh/id_ecdsa <<< y
 </div>
 <p>The output you see should be similar to the image as shown below</p>
 <img src="/lab/static/images/ccp/ccp5.png" class="img-responsive img-shadow">
-<p>Display the public key using 'cat'</p>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Copy your public key from the jumphost</h3>
+<p>Display the public key using 'cat'. This key will be used on your kubernetes master and nodes so that you may be able to ssh to them if necessary.</p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
