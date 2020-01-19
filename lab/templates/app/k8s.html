@@ -12,7 +12,7 @@
 
 
 <h1>CCP Lab Toplogy</h1>
-
+<p>This section of the lab is designed to help you understand how ACI allows security policies to permeate between the Kubernetes world and the physical/logical Baremetal/VM world. Here you will change security policies (contracts) in ACI and examine the impact on the application.</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
 <!--
 ##############################################################################################################################
@@ -23,9 +23,9 @@ Step {% set step = step +  1 %}
 <p>Keep in mind that this database is running in a 'bare-metal' mode outside of Kubernetes <br>
 ACI is able to enfore security between all tiers of the application including Bare Metal and VMs</p>
 <p></p>
-<p>Log back into ACI, goto {{data.vmware_cred_username}}, select livewall App Profile and Click on Topology </p>
+<p>Log back into ACI, go to {{data.vmware_cred_username}}, select livewall App Profile and Click on Topology </p>
 <p>Click on 'mysql(database)' EPG once <br>
-  Notice the {{data.vmware_cred_username}}-mysql(common) contract between Kubernetes and Baremetal workload</p>
+  Notice the {{data.vmware_cred_username}}-mysql(common) contract between Kubernetes and Baremetal workload in the green bubble?</p>
 <img src="/lab/static/images/ccp/lwall8.png" class="img-responsive img-shadow">
 
 
@@ -35,7 +35,10 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Delete the {{data.vmware_cred_username}}-mysql consumed contract from the 'api' EPG</h3>
-<p>
+<p>Contracts provide a way for the Cisco Application Centric Infrastructure (ACI) administrator to control
+  traffic flow within the ACI fabric between endpoint groups. These contracts are built using a
+  provider-consumer model where one endpoint group provides the services it wants to offer and
+  another endpoint group consumes them.<br>
 <p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'livewall' then 'api' <br>
 Select the {{data.vmware_cred_username}}-mysql contract and delete from the menu on top right
 <br>Click Delete on the pop-up window</p>
