@@ -51,7 +51,9 @@ Step {% set step = step +  1 %}
 <p>
     Expand the view to your resource group. <br>You sould see a <code>{{data.vmware_cred_username}}-0-master-0</code> master
     VM and a <code>{{data.vmware_cred_username}}-1-node-gr-0</code> node VM
-    being deployed in the recent Tasks under your resource pool.
+    being deployed in the Recent Tasks under your resource pool. As the name suggests, these two VMs are being deployed by CCP
+    with kubernetes configured as master and nodes. CCP allows you to expand the cluster to add more nodes from the U.I. at a
+    later time.
 </p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/14" class="img-responsive img-shadow ">
 
