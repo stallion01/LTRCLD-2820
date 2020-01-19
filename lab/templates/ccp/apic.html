@@ -132,8 +132,8 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - SSH back to your jumpbox to see the Deployment</h3>
 <p>
   A deployment in kubernetes is essentially a mechanism
-  to describe the 'desired state' of a pod or set of pods. For example, in an deployment you cold mention tha you need 3 replicas for
-  an application tier. kubernetes will honor that and make sure that there will be three copies of it running at all times.<br><br>
+  to describe the 'desired state' of a pod or set of pods. For example, in an deployment you could mention that you need 3 replicas for
+  an application tier. Kubernetes will honor that and make sure that there will be three copies of it running at all times.<br><br>
   From your jumphost, execute the following command to examine the deployments. </p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
@@ -151,8 +151,14 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Find the 'frontend' IP address from kubernetes</h3>
-<br>
-<p>From your jumphost, execute
+<p>A 'service' is way to expose an application running on a set of Pods as a network service. Kubernetes Pods are mortal. They are born and when they die, they are not resurrected. If you use a Deployment to run your app, it can create and destroy Pods dynamically.
+
+Each Pod gets its own IP address, however in a Deployment, the set of Pods running in one moment in time could be different from the set of Pods running that application a moment later.
+
+This leads to a problem: if some set of Pods (call them “backends”) provides functionality to other Pods (call them “frontends”) inside your cluster, how do the frontends find out and keep track of which IP address to connect to, so that the frontend can use the backend part of the workload?
+
+This is why services are important! Let's find out what services are available and exposed in our 'default' namespace. (if you don't define a namespace in kubectl, kubernetes assumes default)
+</p>From your jumphost, execute
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
