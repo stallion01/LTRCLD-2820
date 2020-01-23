@@ -20,7 +20,8 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Let's break the application connection to the backend Database</h3>
-<p>Keep in mind that this database is running in a 'bare-metal' mode outside of Kubernetes <br>
+<p>Keep in mind that this database is running in a 'VM' outside of Kubernetes. We chose to use a VM to run
+  the SQL database, but this could very well be a bare-metal installation<br>
 ACI is able to enfore security between all tiers of the application including Bare Metal and VMs</p>
 <p></p>
 <p>Log back into ACI, go to {{data.vmware_cred_username}}, select livewall App Profile and Click on Topology </p>

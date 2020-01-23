@@ -26,8 +26,8 @@ Step {% set step = step +  1 %}
 <p>The first two commands below get the 'Token' from CCP which in turn is used to extract your pod specific Kubeconfig file.
   The last two commands are for adding the kubeconfig file to your environment variable on the jumphost. The command line utility called 'kubectl' is
   used to interact with a kubernetes cluster. This tool looks for an environment variable called 'KUBECONFIG' on the device it is running on. kubectl
-  is already installed in your jumphost, but if you want to see the full step-by-step manual installation of Kuberentes, please run through the Bonus section.
-  In the Bonus section, we will also be using an alternate method of extracting the 'KUBECONFIG' variable.<br>
+  is already installed in your jumphost.
+  In the Intro section, we used an alternate method of extracting the 'KUBECONFIG' file, which was not ideal because you had to ssh into the master node.(Developers don't need ssh access to the K8s nodes!)<br>
 <p>Click 'Copy' on the right to copy the command into your clipboard<br>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
