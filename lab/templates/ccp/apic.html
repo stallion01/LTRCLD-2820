@@ -62,7 +62,8 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Log back to CCP to install CSI support Add-on</h3>
 <p>
-Go back to the tab/window with Cisco Container Platform <br>Log back in with 'admin/admin' if your session has expired </p>
+Go back to the tab/window with Cisco Container Platform <br>Log back in with 'admin/admin' if your session has expired,
+otherwise click on 'Clusters' on the top left of navigation</p>
 <p>CSI or 'Container Storage Interface' was developed as a standard for exposing arbitrary block and file storage storage
   systems to containerized workloads on Container Orchestration Systems (COs) like Kubernetes. Using CSI, third-party
   storage providers like Cisco can write and deploy plugins exposing new storage systems in Kubernetes without ever
@@ -76,7 +77,7 @@ Go back to the tab/window with Cisco Container Platform <br>Log back in with 'ad
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Click on 'INSTALL ADD-ON' and install 'HyperFlex Storage(CSI)'</h3>
+<h3>Step {{ step }} - Click on 'INSTALL FIRST ADD-ON' and install 'HyperFlex Storage(CSI)'</h3>
 
 <img src="/lab/static/images/ccp/ccp14.png" class="img-responsive img-shadow">
 <p>Click 'INSTALL' at the bottom right</p>
@@ -90,9 +91,18 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - SSH to your jumpbox and deploy the containerized application</h3>
 <p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}}
-<br>Run the following commands from CLI; the shell script fires off a few kubernetes yaml manifests from the folder. If you are
- familiar with linux navigation and text viewing tools like 'cat' feel free to explore the folder where you will see a set of
- small yaml manifests that describe the application.
+<br>Run the following commands from CLI to see the files necessary to install the application. (If you are
+ familiar with linux navigation and text viewing tools like 'vi' & 'cat', feel free to explore the files in this folder)
+  <div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+  <code class="language-bash">
+  cd $HOME/clemea20/01-livewall
+  ls -lr
+  </code>
+  </pre>
+  </div>
+
+<br>Run the following commands from CLI; the shell script fires off a few kubernetes yaml manifests from the folder.
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -174,6 +184,7 @@ kubectl get svc
   ##############################################################################################################################
   -->
 <h3>Step {{ step }} - Copy the EXTERNAL-IP address of the frontend LoadBalancer and open it in Chrome</h3>
+<p>Please be patient as the server fetches data from various sites using API calls to build the frontend</p>
 <img src="/lab/static/images/ccp/lwall7.png" class="img-responsive img-shadow">
 
 {{ end_of_page(page_position,data) }}

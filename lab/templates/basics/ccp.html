@@ -27,7 +27,7 @@
            </p>
            <p>
           The next layer up is the Cisco Container Platform Control Plane and Data Plane.
-          In the preceeding figure, Cisco Container Platform Control Plane runs on the four VMs on the left.
+          In the figure on the right, Cisco Container Platform Control Plane runs on the four VMs on the left.
           </p>
           <p>
           Kubernetes tenant clusters are preconfigured to support Persistent Volumes using vSphere
@@ -104,21 +104,21 @@
 
   <p><h4><b>Installing Cisco Container Platform is a three-step process:</b></h4>
 </p>
-  <p>Importing CCP Tenant base VM</p>
+  <p><b>1. Import CCP Tenant base VM</b></p>
 <p>
   The Cisco Container Platform tenant base VM contains the container image and the
   files that are necessary to create the tenant Kubernetes clusters
   that are used for configuring monitoring, logging, container network interfaces (CNI),
    and persistent volumes.
 </p>
-  <p>Deploying Installer VM</p>
+  <p><b>2. Deploy Installer VM</b></p>
 <p>
   The Installer VM contains the VM image and the files for installing other components
   such as Kubernetes and the Cisco Container Platform application.
 </p>
-  <p>Deploying Cisco Container Platform</p>
+  <p><b>3. Deploy Cisco Container Platform</b></p>
 <p>
-  The Cisco Container Platform Control Plane is set up using an installer UI.
+  The Cisco Container Platform Control Plane is set up using an installer user interface.
   After the installer VM is switched on, the URL of the installer
   appears on the vCenter <strong>Web console</strong>.
 

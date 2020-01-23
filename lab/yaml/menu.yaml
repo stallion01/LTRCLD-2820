@@ -40,30 +40,62 @@
       weburl: "kubernetes"
       file: "basics/k8s.html"
       title: "Kubernetes"
-    ccp:
+    docker:
       line: 'data'
       step: 2
       pos: 12
       ls: True
-      weburl: "ccp"
-      file: "basics/ccp.html"
-      title: "CCP Overview"
-    hx:
+      weburl: "docker"
+      file: "bonus/docker.html"
+      title: "Installing Docker"
+    cont-basics:
       line: 'data'
       step: 3
       pos: 13
       ls: True
-      weburl: "hx"
-      file: "basics/hx.html"
-      title: "Cisco Hyperflex"
-    aci:
+      weburl: "cont-basics"
+      file: "bonus/basics.html"
+      title: "Using Docker Images"
+    cont-create:
       line: 'data'
       step: 4
       pos: 14
       ls: True
-      weburl: "aci"
-      file: "basics/aci.html"
-      title: "Cisco ACI"
+      weburl: "cont-create"
+      file: "bonus/create.html"
+      title: "Build, Deploy Container App"
+    cont-nets:
+      line: 'data'
+      step: 5
+      pos: 15
+      ls: True
+      weburl: "cont-nets"
+      file: "bonus/host-net.html"
+      title: "Container Host Networks"
+    myapp:
+      line: 'data'
+      step: 6
+      pos: 16
+      ls: True
+      weburl: "myapp"
+      file: "bonus/cont-compose-myapp.html"
+      title: "Container App Networking"
+    kube:
+      line: 'data'
+      step: 7
+      pos: 17
+      ls: True
+      weburl: "kube"
+      file: "bonus/kube.html"
+      title: "Installing Kuberntes"
+    node:
+      line: 'data'
+      step: 8
+      pos: 18
+      ls: True
+      weburl: "node"
+      file: "bonus/node.html"
+      title: "Accessing Kuberntes"
 - aci:
     head:
       line: 'head'
@@ -73,18 +105,26 @@
       weburl: "head"
       file: None
       title: "Configuring ACI"
-    apic:
+    aci:
       line: 'data'
       step: 1
       pos: 21
+      ls: True
+      weburl: "aci"
+      file: "basics/aci.html"
+      title: "Cisco ACI"
+    apic:
+      line: 'data'
+      step: 2
+      pos: 22
       ls: True
       weburl: "apic"
       file: "aci/setup.html"
       title: "Explore ACI"
     clean:
       line: 'data'
-      step: 2
-      pos: 22
+      step: 3
+      pos: 23
       ls: True
       weburl: "clean"
       file: "aci/clean.html"
@@ -98,10 +138,18 @@
       weburl: "head"
       file: None
       title: "Installing CCP"
-    tenant:
+    ccp:
       line: 'data'
       step: 1
       pos: 31
+      ls: True
+      weburl: "ccp"
+      file: "basics/ccp.html"
+      title: "CCP Overview"
+    tenant:
+      line: 'data'
+      step: 2
+      pos: 32
       ls: True
       weburl: "tenant"
       file: "ccm/setup.html"
@@ -139,7 +187,6 @@
       weburl: "lwapp"
       file: "ccp/lwall.html"
       title: "Setup Kubernetes Connection"
-
 - app:
     head:
       line: 'head'
@@ -174,18 +221,26 @@
       weburl: "head"
       file: None
       title: "Hyperflex Storage"
-    pers:
+    hx:
       line: 'data'
       step: 1
       pos: 61
       ls: True
-      weburl: "pers"
-      file: "hx/setup.html"
-      title: "HX Persistent Storage"
-    mb:
+      weburl: "hx"
+      file: "basics/hx.html"
+      title: "Cisco Hyperflex"
+    pers:
       line: 'data'
       step: 2
       pos: 62
+      ls: True
+      weburl: "pers"
+      file: "hx/setup.html"
+      title: "Persistent Storage"
+    mb:
+      line: 'data'
+      step: 3
+      pos: 63
       ls: True
       weburl: "mb"
       file: "hx/mb.html"
@@ -215,77 +270,4 @@
       ls: True
       weburl: "finished"
       file: "finished.html"
-      title: "Finished"
-- bonus:
-    head:
-      line: 'head'
-      step: 0
-      pos: 100
-      ls: True
-      weburl: "head"
-      file: None
-      title: "Bonus Lab"
-    docker:
-      line: 'data'
-      step: 1
-      pos: 101
-      ls: True
-      weburl: "docker"
-      file: "bonus/docker.html"
-      title: "Installing Docker"
-    cont-basics:
-      line: 'data'
-      step: 2
-      pos: 102
-      ls: True
-      weburl: "cont-basics"
-      file: "bonus/basics.html"
-      title: "Using Docker Images"
-    cont-create:
-      line: 'data'
-      step: 3
-      pos: 103
-      ls: True
-      weburl: "cont-create"
-      file: "bonus/create.html"
-      title: "Build, Deploy Container App"
-    cont-nets:
-      line: 'data'
-      step: 4
-      pos: 104
-      ls: True
-      weburl: "cont-nets"
-      file: "bonus/host-net.html"
-      title: "Container Host Networks"
-    myapp:
-      line: 'data'
-      step: 5
-      pos: 105
-      ls: True
-      weburl: "myapp"
-      file: "bonus/cont-compose-myapp.html"
-      title: "Container App Networking"
-    kube:
-      line: 'data'
-      step: 6
-      pos: 106
-      ls: True
-      weburl: "kube"
-      file: "bonus/kube.html"
-      title: "Installing Kuberntes"
-    node:
-      line: 'data'
-      step: 7
-      pos: 107
-      ls: True
-      weburl: "node"
-      file: "bonus/node.html"
-      title: "Accessing Kuberntes"
-    finished:
-      line: 'data'
-      step: 8
-      pos: 108
-      ls: True
-      weburl: "finished"
-      file: "finished1.html"
       title: "Finished"
