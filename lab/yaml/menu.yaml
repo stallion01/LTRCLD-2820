@@ -87,7 +87,7 @@
       ls: True
       weburl: "kube"
       file: "bonus/kube.html"
-      title: "Installing Kuberntes"
+      title: "Installing Kubernetes"
     node:
       line: 'data'
       step: 8
@@ -95,7 +95,7 @@
       ls: True
       weburl: "node"
       file: "bonus/node.html"
-      title: "Accessing Kuberntes"
+      title: "Accessing Kubernetes"
 - aci:
     head:
       line: 'head'
@@ -170,7 +170,7 @@
       ls: True
       weburl: "tenant"
       file: "ccp/setup.html"
-      title: "Setup CCP Cluster"
+      title: "Create Tenant Cluster"
     vcenter:
       line: 'data'
       step: 2
@@ -178,7 +178,7 @@
       ls: True
       weburl: "vcenter"
       file: "ccp/vcenter.html"
-      title: "Monitor CCP Cluster Progress"
+      title: "Monitor Cluster Creation"
     lwapp:
       line: 'data'
       step: 3
@@ -186,7 +186,7 @@
       ls: True
       weburl: "lwapp"
       file: "ccp/lwall.html"
-      title: "Setup Kubernetes Connection"
+      title: "Connect to K8s Cluster"
 - app:
     head:
       line: 'head'
