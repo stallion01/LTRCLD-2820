@@ -310,7 +310,7 @@ def get_pod_data(pod):
     data = {
         "credential_popover_data":      credential_popover,
         "credential_popover_show":      True,
-        "lab_id":                       "LTRACI-2967",
+        "lab_id":                       "LTRCLD-2820",
         "infra_vlan":                   3967,
         # POD identifiers
         "pod_id":                       pod,
