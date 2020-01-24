@@ -13,7 +13,7 @@ def get_lab_data():
         and want to see how ACI can provide operational benefits, this is the session you need to sign up for!
         '''
     data= {
-        "cl_id":                    "LTRCLD-2820",
+        "cl_id":                    "LTRACI-2967",
         "cl_title":                 "Kubernetes, Hyperflex, ACI OH MY!",
         "cl_abstract":              abstract,
         "cl_lab_proctors":          ["Raj Chacko","Justin Barksdale"],
@@ -310,7 +310,7 @@ def get_pod_data(pod):
     data = {
         "credential_popover_data":      credential_popover,
         "credential_popover_show":      True,
-        "lab_id":                       "LTRACI-2967",
+        "lab_id":                       "LTRCLD-2820",
         "infra_vlan":                   3967,
         # POD identifiers
         "pod_id":                       pod,
