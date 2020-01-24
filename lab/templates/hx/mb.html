@@ -14,8 +14,9 @@
 <h1>Using Persistent Volumes in HX</h1>
 <p>
 The purpose of this section is to demonstrate how Kubernetes is able to use
-backend storage using CSI plugins, and how Cisco Hyperflex is able to provide
-persistent connection to pods between application version changes
+backend storage using CSI (Container Storage Interface) plugins, and how Cisco Hyperflex is able to provide
+persistent connection to pods between application version changes. CSI is an open standard that vendors can
+write drivers to.
 </p>
 <div class="row">
     <div class="col-md-8 col-sm-10 col-xs-12 col-md-offset-2 col-sm-offset-1">
@@ -271,7 +272,11 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Open or refresh the Messageboard application on your browser</h3>
-<p>Notice that the version has changed to 2.0 with a different log<br><b>Is your message still there?</b></p>
+<p>Notice that the version has changed to 2.0 with a different logo<br><b>Is your message still there?</b><br>
+When you upgraded the image, the container was destroyed and a new container was built up from scratch using a new image.
+If the data was written to or saved on the container, you would have lost the data. Since we wrote the data to a backend
+HyperFlex volume, we are able to delete/upgrade and create new containers for the application while keeping the backend
+data safe and accessible across all nodes.</p>
 
 <img src="/lab/static/images/hx/hx14.png" class="img-responsive">
 

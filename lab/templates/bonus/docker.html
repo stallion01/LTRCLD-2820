@@ -24,7 +24,8 @@ Username: ccpuser <br>
 Password: C1sco123
 
 <p>
-    Before we install docker, you will install some utilities that are required for docker to run on the OS. <code><b>Enter 'C1sco123' for sudo password</b></code>
+    Before we install docker, you will install some utilities that are required for docker to run on the OS. <b>Enter 'C1sco123' for sudo password</b> <br>
+    The VM that you are working with is a Centos7 minimal image, with only python and golang (google programmimg language 'go') packages installed.
 </p>
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ks}}">
@@ -47,6 +48,10 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Install EPEL repository</h3>
+<p><EPEL repo stands for Extra Packages for Enterprise Linux Repository.
+  It is a free and open source repository project made available to everybody by Fedora.
+   It is well known for providing 100% high quality add-ons for Linux based software's
+    including CentOs and RHEL./p>
 <div class="fancy-terminal">
     <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}">
 <code class="language-bash">
@@ -54,20 +59,7 @@ yum -y install epel-release
 </code>
 </pre>
 </div>
-<!--
-##############################################################################################################################
-Step {% set step = step +  1 %}
-##############################################################################################################################
--->
-<h3>Step {{ step }} - Install Python Package management tools</h3>
-<div class="fancy-terminal">
-    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}">
-<code class="language-bash">
-yum -y install python-wheel python-pip
-pip install --upgrade pip
-</code>
-</pre>
-</div>
+
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
