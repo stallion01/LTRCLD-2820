@@ -13,7 +13,7 @@ def get_lab_data():
         and want to see how ACI can provide operational benefits, this is the session you need to sign up for!
         '''
     data= {
-        "cl_id":                    "LTRCLD-2820",
+        "cl_id":                    "LTRACI-2967",
         "cl_title":                 "Kubernetes, Hyperflex, ACI OH MY!",
         "cl_abstract":              abstract,
         "cl_lab_proctors":          ["Raj Chacko","Justin Barksdale"],
