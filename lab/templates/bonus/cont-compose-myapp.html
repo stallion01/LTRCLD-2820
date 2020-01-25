@@ -21,7 +21,8 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Examine the interfaces and ip addresses of the host</h3>
-<p>Notice the 'docker0' interface and it's ip address</p>
+<p>Notice the 'docker0' interface and it's ip address? How about the interface beneath it? Look at the interface id and then compare that with
+the output of Step 5. in this page. You will see that this is an interface "pair" between the bridge and the container. </p>
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
@@ -80,8 +81,22 @@ CONTAINER ID        IMAGE               COMMAND                  CREATED        
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Display all the networks availabe for docker</h3>
-<p>Notice the presence of 'Bridge' and 'Host' networks similar to what you would see in a virtualized enviroment</p>
+<h3>Step {{ step }} - Display all the networks available for docker</h3>
+<p>Notice the presence of 'Bridge' and 'Host' networks similar to what you would see in a virtualized enviroment. In addition to these
+three default networks, there are two more networks that docker makes available for use, 'overlay' and 'macvlan'
+<br>Here is a brief synopsys of these from docker.com </p>
+<ul>
+
+<li>bridge: The default network driver. If you don’t specify a driver, this is the type of network you are creating. Bridge networks are usually used when your applications run in standalone containers that need to communicate. See bridge networks.
+</li>
+<li>host: For standalone containers, remove network isolation between the container and the Docker host, and use the host’s networking directly. host is only available for swarm services on Docker 17.06 and higher. See use the host network.
+</li>
+<li>overlay: Overlay networks connect multiple Docker daemons together and enable swarm services to communicate with each other. You can also use overlay networks to facilitate communication between a swarm service and a standalone container, or between two standalone containers on different Docker daemons. This strategy removes the need to do OS-level routing between these containers. See overlay networks.
+</li>
+<li>macvlan: Macvlan networks allow you to assign a MAC address to a container, making it appear as a physical device on your network. The Docker daemon routes traffic to containers by their MAC addresses. Using the macvlan driver is sometimes the best choice when dealing with legacy applications that expect to be directly connected to the physical network, rather than routed through the Docker host’s network stack. See Macvlan networks.
+</li>
+<li>none: For this container, disable all networking. Usually used in conjunction with a custom network driver. none is not available for swarm services. See disable container networking.
+</li></ul>
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
@@ -102,8 +117,7 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Explore the 'bridge' network in detail</h3>
-<p>Notice the presense of 'Bridge' and 'Host' networks similar to what you would see in a Virtualized enviroment</p>
-<br>Can you find the IP address of your container?
+Can you find the IP address of your container? <br>
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
@@ -166,7 +180,7 @@ docker network inspect bridge
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Get the ip address of the container</h3>
+<h3>Step {{ step }} - Getting the ip address of the container</h3>
 
 <p>
   We can quickly look in the container and see the IP (<code>use the <b>'CONTAINER ID'</b> from step 2</code>).
@@ -189,8 +203,35 @@ docker exec -it {'CONTAINER ID'} ip a
       inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
          valid_lft forever preferred_lft forever
 </pre>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Add another container to this setup</h3>
+
+<p>
+  Let's try running the same command as before using the same image that we built earlier...
+  <br>Notice, "port is already allocated" error? We are already running another container exposing the same ports.
+</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
+<code class="language-bash">
+  docker run -d -p 80:80 --rm -it go-server
+</code>
+</pre>
+</div>
 
 
-
+<h3>Step {{ step }} - Change the port and try again!</h3>
+<p>
+Change the port to 8080 and try again, see if you can access the website on the new port - <a href="http://{{data.pod_node1_ip}}:8080/Pod{{data.pod_numstr}}, Here is your 2nd Web Server on port 8080" target="_blank">POD{{data.pod_numstr}} My 2nd  Web Server</a></p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
+<code class="language-bash">
+  docker run -d -p 8080:80 --rm -it go-server
+</code>
+</pre>
+</div>
 {{ end_of_page(page_position,data) }}
 {% endblock %}
