@@ -221,6 +221,8 @@ Step {% set step = step +  1 %}
 </code>
 </pre>
 </div>
+<pre>docker: Error response from daemon: driver failed programming external connectivity on endpoint elegant_hawking
+   (3e1a8082008cadf07c4225060d4f63c854bc99452811409295044812483cd28a): Bind for 0.0.0.0:80 failed: port is already allocated.</pre>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
@@ -255,6 +257,39 @@ Step {% set step = step +  1 %}
 </code>
 </pre>
 </div>
+<pre>
+  [root@pod13-k8s-master ccpuser]# ip a
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+      inet6 ::1/128 scope host
+         valid_lft forever preferred_lft forever
+  2: ens192: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc mq state UP group default qlen 1000
+      link/ether 00:50:56:8f:56:25 brd ff:ff:ff:ff:ff:ff
+      inet 10.139.14.155/24 brd 10.139.14.255 scope global noprefixroute ens192
+         valid_lft forever preferred_lft forever
+      inet6 fe80::250:56ff:fe8f:5625/64 scope link noprefixroute
+         valid_lft forever preferred_lft forever
+  3: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+      link/ether 02:42:0d:64:aa:a6 brd ff:ff:ff:ff:ff:ff
+      inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+         valid_lft forever preferred_lft forever
+      inet6 fe80::42:dff:fe64:aaa6/64 scope link
+         valid_lft forever preferred_lft forever
+  9: veth01e237b@if8: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default
+      link/ether d2:a8:2e:77:ac:ac brd ff:ff:ff:ff:ff:ff link-netnsid 0
+      inet6 fe80::d0a8:2eff:fe77:acac/64 scope link
+         valid_lft forever preferred_lft forever
+  17: veth4d73cea@if16: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default
+      link/ether d6:1d:9c:b0:c7:4b brd ff:ff:ff:ff:ff:ff link-netnsid 1
+      inet6 fe80::d41d:9cff:feb0:c74b/64 scope link
+         valid_lft forever preferred_lft forever
+  [root@pod13-k8s-master ccpuser]# docker ps
+  CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                  NAMES
+  526b07273a4a        go-server           "/bin/sh -c /home/seâ¦"   15 minutes ago      Up 15 minutes       0.0.0.0:8080->80/tcp   heuristic_lamport
+  dd84e3857eb2        go-server           "/bin/sh -c /home/seâ¦"   24 hours ago        Up 24 hours         0.0.0.0:80->80/tcp     heuristic_mcnulty
+</pre>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
@@ -272,6 +307,25 @@ docker exec -it {'CONTAINER ID'} ip a
 </code>
 </pre>
 </div>
-
+<pre>
+  [root@pod13-k8s-master ccpuser]# docker exec -it 526b07273a4a ip a
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+  16: eth0@if17: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
+      link/ether 02:42:ac:11:00:03 brd ff:ff:ff:ff:ff:ff
+      inet 172.17.0.3/16 brd 172.17.255.255 scope global eth0
+         valid_lft forever preferred_lft forever
+  [root@pod13-k8s-master ccpuser]# docker exec -it dd84e3857eb2 ip a
+  1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue qlen 1000
+      link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+      inet 127.0.0.1/8 scope host lo
+         valid_lft forever preferred_lft forever
+  8: eth0@if9: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
+      link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff
+      inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+         valid_lft forever preferred_lft forever
+       </pre>
 {{ end_of_page(page_position,data) }}
 {% endblock %}
