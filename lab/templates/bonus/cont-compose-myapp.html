@@ -221,9 +221,13 @@ Step {% set step = step +  1 %}
 </code>
 </pre>
 </div>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
 
-
-<h3>Step {{ step }} - Change the port and try again!</h3>
+<h3>Step {{ step }} - Let's change the port and try again!</h3>
 <p>
 Change the port to 8080 and try again, see if you can access the website on the new port - <a href="http://{{data.pod_node1_ip}}:8080/Pod{{data.pod_numstr}}, Here is your 2nd Web Server on port 8080" target="_blank">POD{{data.pod_numstr}} My 2nd  Web Server</a></p>
 <div class="fancy-terminal">
@@ -233,5 +237,41 @@ Change the port to 8080 and try again, see if you can access the website on the 
 </code>
 </pre>
 </div>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+
+<h3>Step {{ step }} - Let's analyze the network setup now</h3>
+<p>Let's first get the IP address and interface details of the host. Next, inspect the docker processes running.
+  Notice the two different ports, 8080, and 80 pointing to the image which is listening on port 80</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
+<code class="language-bash">
+  ip address
+  docker ps
+</code>
+</pre>
+</div>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Getting the ip address of the both the containers</h3>
+
+<p>
+  Copy the container ID from the previous step and run the command <b>twice!</b>.
+</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
+<code class="language-bash">
+docker exec -it {'CONTAINER ID'} ip a
+</code>
+</pre>
+</div>
+
 {{ end_of_page(page_position,data) }}
 {% endblock %}
