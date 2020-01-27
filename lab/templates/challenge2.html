@@ -1,0 +1,304 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+<div class="section_header">
+  <div class="title">Installing Kubernetes</div>
+  <div class="title_section"></div>
+</div>
+
+
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/992" class="img-responsive">
+<p>
+<<h1>Steps 1 through 4 are the prep work necessary to get our machine ready for kubernetes!</h1>
+</p>
+
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Lets disable the firewall first!</h3>
+<p>For ease of installation, let's stop the iptables service! (In production, you'll punch holes in the firewall instead of disabling it altogether!)</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
+<code class="language-bash">
+systemctl stop firewalld
+</code>
+</pre>
+</div>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Lets change the default cgroup driver to systemd</h3>
+<p>This is a recommendation for a stable system, but first make a 'docker' directory in /etc' (if it doesn't exist)</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
+<code class="language-bash">
+  mkdir /etc/docker
+  cd /etc/docker
+</code>
+</pre>
+</div>
+<p>Next, let's create a file that tells docker to use systemd for cgroup driver</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+cat &lt;&lt; EOF &gt; daemon.json
+{
+  "exec-opts": ["native.cgroupdriver=systemd"],
+  "log-driver": "json-file",
+  "log-opts": {
+    "max-size": "100m"
+  },
+  "storage-driver": "overlay2",
+  "storage-opts": [
+    "overlay2.override_kernel_check=true"
+  ]
+}
+EOF
+</code>
+</pre>
+</div>
+<p>Next, we create a new folder for docker service, and reload the service</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+mkdir -p /etc/systemd/system/docker.service.d
+
+systemctl daemon-reload
+
+</code>
+</pre>
+</div>
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Restart docker and check the cgroup driver has been set to systemd</h3>
+<p>Restart docker process</p>
+<div class="fancy-terminal">
+    <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-9">
+<code class="language-bash">
+systemctl restart docker
+
+</code>
+</pre>
+</div>
+<p>Check if systemd is the new driver</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+docker info | grep -i cgroup
+</code>
+</pre>
+</div>
+<pre>
+{{data.master_prompt}} docker info | grep -i cgroup
+<b>
+    <font color="green">Cgroup Driver: systemd </font>
+</b>
+</pre>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Turn off Swap</h3>
+<p>swap is inefficient way of handling memory, kubernetes does a great job and we don't need swap</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+swapoff -a
+</code>
+</pre>
+</div>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Configure Kubernetes Repository</h3>
+<p>Kubernetes packages are not available from official CentOS 7 repositories.
+Enter the following command to retrieve the Kubernetes repositories.</p>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+cat &lt;&lt; EOF &gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF
+</code>
+</pre>
+</div>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Let's install the three basic packages required for Kubernetes</h3>
+<pre>
+<b>Kubeadm:</b> the command to bootstrap the cluster (the installer itself)
+<b>kubelet:</b> the component that runs on all nodes and manages pods and containers
+<b>kubectl:</b> the command line utility to interact with your cluster
+</pre>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+yum install -y kubelet kubeadm kubectl
+</code>
+</pre>
+</div>
+<p>enable kubelet service; kubelet is the 'agent' that watches for pod specs from kuberetes API server</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+systemctl enable kubelet
+</code>
+</pre>
+</div>
+<p>Start the kubelet service!</p>
+
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+systemctl start kubelet
+</code>
+</pre>
+</div>
+
+<p>Set SElinux into permissive mode. This is required to allow containers to access the host filesystem, which is needed by pod network for example</p>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+setenforce 0
+</code>
+</pre>
+</div>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - The prep work is done! Let's initialize the cluster</h3>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+kubeadm init --pod-network-cidr=10.244.0.0/16
+</code>
+</pre>
+</div>
+<pre>
+<b>You should see an output similar to this</b>
+  [kubelet-start] Writing kubelet environment file with flags to file "/var/lib/kubelet/kubeadm-flags.env"
+  [kubelet-start] Writing kubelet configuration to file "/var/lib/kubelet/config.yaml"
+  [kubelet-start] Starting the kubelet
+  [certs] Using certificateDir folder "/etc/kubernetes/pki"
+<===========TRUNCATED ==============>
+  [bootstrap-token] Configuring bootstrap tokens, cluster-info ConfigMap, RBAC Roles
+  [bootstrap-token] configured RBAC rules to allow Node Bootstrap tokens to post CSRs in order for nodes to get long term certificate credentials
+  [bootstrap-token] configured RBAC rules to allow the csrapprover controller automatically approve CSRs from a Node Bootstrap Token
+  [bootstrap-token] configured RBAC rules to allow certificate rotation for all node client certificates in the cluster
+  [bootstrap-token] Creating the "cluster-info" ConfigMap in the "kube-public" namespace
+  [kubelet-finalize] Updating "/etc/kubernetes/kubelet.conf" to point to a rotatable kubelet client certificate and key
+  [addons] Applied essential addon: CoreDNS
+  [addons] Applied essential addon: kube-proxy
+
+  Your Kubernetes control-plane has initialized successfully!
+
+  To start using your cluster, you need to run the following as a regular user:
+
+    mkdir -p $HOME/.kube
+    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+  You should now deploy a pod network to the cluster.
+  Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
+    https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+  Then you can join any number of worker nodes by running the following on each as root:
+
+  <b>kubeadm join 10.139.14.22:6443 --token vb0wh7.b1l095y6lkpqfnl2 \
+      --discovery-token-ca-cert-hash sha256:a4f8c12df570ca901feffd378a4e743b3ad6bdd0098cfa7e266dbd4a9fcd64df</b>
+</pre>
+<br>
+<h4>The highlighted, last line in the above output <code>(from your own output)</code>is how we add worker nodes to the cluster</h4>
+<h4><code>Please copy this to notepad, we'll use this in the next section</code><h4>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Download kubeconfig file to access our cluster</h3>
+
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+</code>
+</pre>
+</div>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - We haven't defined a CNI for networking, let's use flannel!</h3>
+
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+sudo kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+</code>
+</pre>
+</div>
+<pre>
+<b>You should see an output similar to this</b>
+podsecuritypolicy.policy/psp.flannel.unprivileged created
+clusterrole.rbac.authorization.k8s.io/flannel created
+clusterrolebinding.rbac.authorization.k8s.io/flannel created
+serviceaccount/flannel created
+configmap/kube-flannel-cfg created
+daemonset.apps/kube-flannel-ds-amd64 created
+daemonset.apps/kube-flannel-ds-arm64 created
+daemonset.apps/kube-flannel-ds-arm created
+daemonset.apps/kube-flannel-ds-ppc64le created
+daemonset.apps/kube-flannel-ds-s390x created
+</pre>
+
+<h3>Let's check if we have our kubernetes master up and running</h3>
+<div class="fancy-terminal">
+  <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
+<code class="language-bash">
+kubectl get nodes
+</code>
+</pre>
+</div>
+<pre>
+  NAME          STATUS   ROLES    AGE    VERSION
+  master-node   Ready    master   5m8s   v1.17.1
+</pre>
+
+
+
+{{ end_of_page(page_position,data) }}
+{% endblock %}

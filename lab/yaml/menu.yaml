@@ -286,5 +286,13 @@
       pos: 94
       ls: True
       weburl: "challenge"
-      file: "challenge.html"
-      title: "Challenge Lab"
+      file: "challenge1.html"
+      title: "Challenge Lab 1"
+    challenge2:
+      line: 'data'
+      step: 1
+      pos: 95
+      ls: True
+      weburl: "challenge2"
+      file: "challenge2.html"
+      title: "Challenge Lab 2"

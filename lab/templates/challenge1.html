@@ -1,0 +1,71 @@
+{% extends "base_cisco.html" %}
+{% from "macros.html" import file, warn, info, cmd_blk_end, cmd_blk_start, term_end, topxterm, term_start, end_of_page,top_instance, copythis %}
+{% block content %}
+{% set step =  0 %}
+{% set innerstep =  0 %}
+
+
+<div class="section_header">
+    <div class="title">Access Kubernetes</div>
+    <div class="title_section">Cluster</div>
+</div>
+{{ html_for_step_status|safe }}
+
+<p>In this section, you will use Cisco Container Platform API to download 'KUBECONFIG' to the Jumphost.</p>
+
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Use CCP API to export kubeconfig file</h3>
+<p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}} (Click on the Credentials tab on top of the page to get the username/password)
+
+<p>The first two commands below get the 'Token' from CCP which in turn is used to extract your pod specific Kubeconfig file.
+  The last two commands are for adding the kubeconfig file to your environment variable on the jumphost. The command line utility called 'kubectl' is
+  used to interact with a kubernetes cluster. This tool looks for an environment variable called 'KUBECONFIG' on the device it is running on. kubectl
+  is already installed in your jumphost.
+  In the Intro section, we used an alternate method of extracting the 'KUBECONFIG' file, which was not ideal because you had to ssh into the master node.(Developers don't need ssh access to the K8s nodes!)<br>
+<p>Click 'Copy' on the right to copy the command into your clipboard<br>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+export TOKEN=$(curl -v -k -X POST -H "Content-Type:application/x-www-form-urlencoded" -d "username=admin&password=admin" https://ccp-aci/v3/system/login  2> >(grep X-Auth-Token) | grep X-Auth-Token | awk -F ":" '{print $2}' | tr -d '\n\r')
+export {{data.apic_stdnt_uname}}id=$(curl -ksSL --request GET -H "X-Auth-Token":"$TOKEN" https://ccp-aci/v3/clusters/ | jq '.[] | {id: .id, name: .name}' | grep -B1 "{{data.apic_stdnt_uname}}" | awk '/id/{print $2}' | tr -d '\"\,')
+curl -ksSL --request GET -H "X-Auth-Token":"$TOKEN" https://ccp-aci/v3/clusters/${{data.apic_stdnt_uname}}id | jq -r '.kubeconfig' | sed 's/\n/\n/g' > ~/KUBECONFIG.env
+export KUBECONFIG=~/KUBECONFIG.env
+</code>
+</pre>
+</div>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Test kubernetes connection from Jumphost</h3>
+<b>Use 'kubectl' to get node and pod information</b> Kubectl can be installed on a Windows PC, or a MAC just as easily as on a Linux machine.
+Kubectl (sometimes pronounced as 'cube-cuddle') is the primary mechanism to interface with a Kubernetes cluster and gets installed on all Master and Nodes.
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+kubectl get nodes -o wide
+kubectl get namespace
+kubectl get pods --all-namespaces
+</code>
+</pre>
+</div>
+<p>The output should look something similar to this. Let's examine the output in more detail. 'kubectl get nodes' gives you the basic information
+  on your Master and Worker nodes, their status and version information. The '-o wide' key is used to change the display to be more verbose.
+  'kubectl get pods' displays all the pods on the 'default' namespace. Furnishing the '--all-namespaces' key allows you to view all the pods in
+  all the namespaces. Namespaces are intended for use in environments with many users spread across multiple teams, or projects.
+  Namespaces are a way to divide cluster resources between multiple users.
+</p>
+<img src="/lab/static/images/ccp/lwall1.png" class="img-responsive img-shadow">
+
+
+
+{{ end_of_page(page_position,data) }}
+{% endblock %}
