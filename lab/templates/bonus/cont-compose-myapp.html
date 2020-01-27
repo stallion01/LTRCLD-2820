@@ -84,18 +84,18 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Display all the networks available for docker</h3>
 <p>Notice the presence of 'Bridge' and 'Host' networks similar to what you would see in a virtualized enviroment. In addition to these
 three default networks, there are two more networks that docker makes available for use, 'overlay' and 'macvlan'
-<br>Here is a brief synopsys of these from docker.com </p>
+<br>Here is a brief synopsys of these from docker's documentation</p>
 <ul>
 
-<li>bridge: The default network driver. If you don’t specify a driver, this is the type of network you are creating. Bridge networks are usually used when your applications run in standalone containers that need to communicate. See bridge networks.
+<li>bridge: The default network driver. If you don’t specify a driver, this is the type of network you are creating. Bridge networks are usually used when your applications run in standalone containers that need to communicate.
 </li>
-<li>host: For standalone containers, remove network isolation between the container and the Docker host, and use the host’s networking directly. host is only available for swarm services on Docker 17.06 and higher. See use the host network.
+<li>host: For standalone containers, remove network isolation between the container and the Docker host, and use the host’s networking directly.
 </li>
-<li>overlay: Overlay networks connect multiple Docker daemons together and enable swarm services to communicate with each other. You can also use overlay networks to facilitate communication between a swarm service and a standalone container, or between two standalone containers on different Docker daemons. This strategy removes the need to do OS-level routing between these containers. See overlay networks.
+<li>overlay: Overlay networks connect multiple Docker daemons together and enables them to communicate with each other. You can also use overlay networks to facilitate communication between two standalone containers on different Docker daemons. This strategy removes the need to do OS-level routing between these containers.
 </li>
-<li>macvlan: Macvlan networks allow you to assign a MAC address to a container, making it appear as a physical device on your network. The Docker daemon routes traffic to containers by their MAC addresses. Using the macvlan driver is sometimes the best choice when dealing with legacy applications that expect to be directly connected to the physical network, rather than routed through the Docker host’s network stack. See Macvlan networks.
+<li>macvlan: Macvlan networks allow you to assign a MAC address to a container, making it appear as a physical device on your network. The Docker daemon routes traffic to containers by their MAC addresses. Using the macvlan driver is sometimes the best choice when dealing with legacy applications that expect to be directly connected to the physical network, rather than routed through the Docker host’s network stack.
 </li>
-<li>none: For this container, disable all networking. Usually used in conjunction with a custom network driver. none is not available for swarm services. See disable container networking.
+<li>none: For this container, disable all networking. Usually used in conjunction with a custom network driver.
 </li></ul>
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
@@ -252,6 +252,7 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
 <code class="language-bash">
+  clear
   ip address
   docker ps
 </code>

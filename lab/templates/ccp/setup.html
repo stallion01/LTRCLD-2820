@@ -88,7 +88,8 @@ Step {% set step = step +  1 %}
 
 </ul>
 </p>
-<img src="/lab/static/images/ccp/ccp_01.png" class="img-responsive img-shadow">
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/19" class="img-responsive img-shadow">
+
 
 
 
@@ -117,7 +118,7 @@ Step {% set step = step +  1 %}
     <p>ACI CNI profile - 'cloud-aci' which contains ACI specific settings</p>
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/8" class="img-responsive">
-<p>Click 'NEXT'</p>
+<p><b>Click 'NEXT'</b></p>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
@@ -149,7 +150,7 @@ CCP control plane comes with this built-in if you chose to install it on your CC
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/9" class="img-responsive">
 <p>Input NTP and Registry as shown below (At least one entry for NTP)</p>
 <img src="/lab/static/images/ccp/ccp7.png" class="img-responsive img-shadow">
-<p>Double-check the settings and then, Click 'NEXT', and 'FINISH'</p>
+<p>Double-check the settings and then, Click <b>'NEXT'</b>, and <b>'FINISH'</b></p>
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}

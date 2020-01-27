@@ -24,6 +24,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Install repo utilities to Worker</h3>
 SSH using putty to your Worker node at IP address -<b>{{data.pod_node2_ip}}</b> using the following credentials <br>
+ Type in 'yes' if you are asked to trust/install the ssh key <br>
 Username: ccpuser <br>
 Password: C1sco123
 
@@ -324,6 +325,9 @@ systemctl enable kubelet
 </code>
 </pre>
 </div>
+<pre>
+Created symlink from /etc/systemd/system/multi-user.target.wants/kubelet.service to /usr/lib/systemd/system/kubelet.service.
+</pre>
 <p>Start the kubelet service!</p>
 
 <div class="fancy-terminal">
@@ -370,7 +374,7 @@ Run 'kubectl get nodes' on the control-plane to see this node join the cluster.
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Log back into the master node and check status</h3>
+<h3>Step {{ step }} - Log back into the <b>master</b> node and check status</h3>
 <p>Since we have already setup access to the cluster on the master via kubeconfig, lets run a few commands to check status</p>
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_ksroot}}" data-output="2-4">
