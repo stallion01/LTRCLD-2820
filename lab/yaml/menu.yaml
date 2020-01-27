@@ -271,3 +271,20 @@
       weburl: "finished"
       file: "finished.html"
       title: "Finished"
+- challenge:
+    head:
+      line: 'head'
+      step: 0
+      pos: 93
+      ls: True
+      weburl: "head"
+      file: None
+      title: "Challenge Lab"
+    challenge:
+      line: 'data'
+      step: 1
+      pos: 94
+      ls: True
+      weburl: "challenge"
+      file: "challenge.html"
+      title: "Challenge Lab"
