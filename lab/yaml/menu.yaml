@@ -296,3 +296,11 @@
       weburl: "challenge2"
       file: "challenge2.html"
       title: "Challenge Lab 2"
+    finished:
+      line: 'data'
+      step: 1
+      pos: 96
+      ls: True
+      weburl: "finished"
+      file: "finished1.html"
+      title: "Finished"
