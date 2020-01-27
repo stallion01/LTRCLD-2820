@@ -382,22 +382,22 @@ kubectl get pods -o wide --all-namespaces
 </pre>
 </div>
 <pre>
-  [root@pod13-k8s-master docker]# kubectl get nodes
+  [root@{{data.apic_stdnt_uname}}-k8s-master docker]# kubectl get nodes
   NAME               STATUS   ROLES    AGE     VERSION
-  pod13-k8s-master   Ready    master   6m36s   v1.17.2
-  pod13-k8s-worker   Ready    <none>   53s     v1.17.2
-  [root@pod13-k8s-master docker]# kubectl get pods -o wide --all-namespaces
+  {{data.apic_stdnt_uname}}-k8s-master   Ready    master   6m36s   v1.17.2
+  {{data.apic_stdnt_uname}}-k8s-worker   Ready    <none>   53s     v1.17.2
+  [root@{{data.apic_stdnt_uname}}-k8s-master docker]# kubectl get pods -o wide --all-namespaces
   NAMESPACE     NAME                                       READY   STATUS    RESTARTS   AGE     IP              NODE               NOMINATED NODE   READINESS GATES
-  kube-system   coredns-6955765f44-m4vnp                   1/1     Running   0          6m20s   10.244.0.2      pod13-k8s-master   <none>           <none>
-  kube-system   coredns-6955765f44-s5p2f                   1/1     Running   0          6m20s   10.244.0.3      pod13-k8s-master   <none>           <none>
-  kube-system   etcd-pod13-k8s-master                      1/1     Running   0          6m17s   10.139.14.155   pod13-k8s-master   <none>           <none>
-  kube-system   kube-apiserver-pod13-k8s-master            1/1     Running   0          6m17s   10.139.14.155   pod13-k8s-master   <none>           <none>
-  kube-system   kube-controller-manager-pod13-k8s-master   1/1     Running   0          6m17s   10.139.14.155   pod13-k8s-master   <none>           <none>
-  kube-system   kube-flannel-ds-amd64-929ff                1/1     Running   0          6m20s   10.139.14.155   pod13-k8s-master   <none>           <none>
-  kube-system   kube-flannel-ds-amd64-zjf9z                1/1     Running   0          57s     10.139.14.156   pod13-k8s-worker   <none>           <none>
-  kube-system   kube-proxy-644kt                           1/1     Running   0          57s     10.139.14.156   pod13-k8s-worker   <none>           <none>
-  kube-system   kube-proxy-k5wff                           1/1     Running   0          6m20s   10.139.14.155   pod13-k8s-master   <none>           <none>
-  kube-system   kube-scheduler-pod13-k8s-master            1/1     Running   0          6m16s   10.139.14.155   pod13-k8s-master   <none>           <none>
+  kube-system   coredns-6955765f44-m4vnp                   1/1     Running   0          6m20s   10.244.0.2      {{data.apic_stdnt_uname}}-k8s-master   <none>           <none>
+  kube-system   coredns-6955765f44-s5p2f                   1/1     Running   0          6m20s   10.244.0.3      {{data.apic_stdnt_uname}}-k8s-master   <none>           <none>
+  kube-system   etcd-{{data.apic_stdnt_uname}}-k8s-master                      1/1     Running   0          6m17s   10.139.14.155   {{data.apic_stdnt_uname}}-k8s-master   <none>           <none>
+  kube-system   kube-apiserver-{{data.apic_stdnt_uname}}-k8s-master            1/1     Running   0          6m17s   10.139.14.155   {{data.apic_stdnt_uname}}-k8s-master   <none>           <none>
+  kube-system   kube-controller-manager-{{data.apic_stdnt_uname}}-k8s-master   1/1     Running   0          6m17s   10.139.14.155   {{data.apic_stdnt_uname}}-k8s-master   <none>           <none>
+  kube-system   kube-flannel-ds-amd64-929ff                1/1     Running   0          6m20s   10.139.14.155   {{data.apic_stdnt_uname}}-k8s-master   <none>           <none>
+  kube-system   kube-flannel-ds-amd64-zjf9z                1/1     Running   0          57s     10.139.14.156   {{data.apic_stdnt_uname}}-k8s-worker   <none>           <none>
+  kube-system   kube-proxy-644kt                           1/1     Running   0          57s     10.139.14.156   {{data.apic_stdnt_uname}}-k8s-worker   <none>           <none>
+  kube-system   kube-proxy-k5wff                           1/1     Running   0          6m20s   10.139.14.155   {{data.apic_stdnt_uname}}-k8s-master   <none>           <none>
+  kube-system   kube-scheduler-{{data.apic_stdnt_uname}}-k8s-master            1/1     Running   0          6m16s   10.139.14.155   {{data.apic_stdnt_uname}}-k8s-master   <none>           <none>
 
 </pre>
 <h4>At this point, you have a fully functional Kubernetes cluster deployed. In the challenge lab section, we'll use this cluster to advance our learning.</h4>

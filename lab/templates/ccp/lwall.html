@@ -65,9 +65,9 @@ kubectl get pods --all-namespaces
 </p>
 <pre>
   NAME                STATUS   ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
-  podxx-0-master-0    Ready    master   8h    v1.14.8   10.139.162.139   10.139.162.139   Ubuntu 18.04.3 LTS   4.15.0-64-generic   docker://18.9.9
-  podxx-1-node-gr-0   Ready    <none>   8h    v1.14.8   10.139.162.141   10.139.162.141   Ubuntu 18.04.3 LTS   4.15.0-64-generic   docker://18.9.9
-  [ccpuser@podxx ~]$ kubectl get namespace
+  {{data.apic_stdnt_uname}}-0-master-0    Ready    master   8h    v1.14.8   10.139.162.139   10.139.162.139   Ubuntu 18.04.3 LTS   4.15.0-64-generic   docker://18.9.9
+  {{data.apic_stdnt_uname}}-1-node-gr-0   Ready    <none>   8h    v1.14.8   10.139.162.141   10.139.162.141   Ubuntu 18.04.3 LTS   4.15.0-64-generic   docker://18.9.9
+  [ccpuser@{{data.apic_stdnt_uname}} ~]$ kubectl get namespace
   NAME                    STATUS   AGE
   aci-containers-system   Active   8h
   ccp                     Active   8h
@@ -75,10 +75,10 @@ kubectl get pods --all-namespaces
   kube-node-lease         Active   8h
   kube-public             Active   8h
   kube-system             Active   8h
-  [ccpuser@podxx ~]$ kubectl get pods --all-namespaces
+  [ccpuser@{{data.apic_stdnt_uname}} ~]$ kubectl get pods --all-namespaces
   NAMESPACE     NAME                                             READY   STATUS    RESTARTS   AGE
   ccp           ccp-helm-operator-96c65df4c-8rd5j                1/1     Running   0          8h
-  ccp           ccp-vip-manager-podxx-0-master-0                 1/1     Running   0          8h
+  ccp           ccp-vip-manager-{{data.apic_stdnt_uname}}-0-master-0                 1/1     Running   0          8h
   ccp           cert-manager-799695b5bc-9p66x                    1/1     Running   0          8h
   ccp           nginx-ingress-controller-fxk24                   1/1     Running   0          8h
   ccp           nginx-ingress-default-backend-74cf5545c6-qrsmg   1/1     Running   0          8h
@@ -89,12 +89,12 @@ kubectl get pods --all-namespaces
   kube-system   aci-containers-openvswitch-wpjpc                 1/1     Running   0          8h
   kube-system   coredns-558c4d9b6-5rhx6                          1/1     Running   0          8h
   kube-system   coredns-558c4d9b6-8p7fx                          1/1     Running   0          8h
-  kube-system   etcd-podxx-0-master-0                            1/1     Running   0          8h
-  kube-system   kube-apiserver-podxx-0-master-0                  1/1     Running   0          8h
-  kube-system   kube-controller-manager-podxx-0-master-0         1/1     Running   0          8h
+  kube-system   etcd-{{data.apic_stdnt_uname}}-0-master-0                            1/1     Running   0          8h
+  kube-system   kube-apiserver-{{data.apic_stdnt_uname}}-0-master-0                  1/1     Running   0          8h
+  kube-system   kube-controller-manager-{{data.apic_stdnt_uname}}-0-master-0         1/1     Running   0          8h
   kube-system   kube-proxy-7f6nr                                 1/1     Running   0          8h
   kube-system   kube-proxy-q6dvc                                 1/1     Running   0          8h
-  kube-system   kube-scheduler-podxx-0-master-0                  1/1     Running   0          8h
+  kube-system   kube-scheduler-{{data.apic_stdnt_uname}}-0-master-0                  1/1     Running   0          8h
   kube-system   nvidia-device-plugin-daemonset-gf7p2             1/1     Running   0          8h
   kube-system   tiller-deploy-59595ff858-scvq4                   1/1     Running   0          8h
 </pre>
