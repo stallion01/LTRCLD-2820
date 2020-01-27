@@ -21,7 +21,7 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Use CCP API to export kubeconfig file</h3>
-<p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}} (Click on the Credentials tab on top of the page to get the username/password)
+<p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}} (username/password is ccpuser/C1sco123)
 
 <p>The first two commands below get the 'Token' from CCP which in turn is used to extract your pod specific Kubeconfig file.
   The last two commands are for adding the kubeconfig file to your environment variable on the jumphost. The command line utility called 'kubectl' is
@@ -63,8 +63,41 @@ kubectl get pods --all-namespaces
   all the namespaces. Namespaces are intended for use in environments with many users spread across multiple teams, or projects.
   Namespaces are a way to divide cluster resources between multiple users.
 </p>
-<img src="/lab/static/images/ccp/lwall1.png" class="img-responsive img-shadow">
-
+<pre>
+  NAME                STATUS   ROLES    AGE   VERSION   INTERNAL-IP      EXTERNAL-IP      OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+  podxx-0-master-0    Ready    master   8h    v1.14.8   10.139.162.139   10.139.162.139   Ubuntu 18.04.3 LTS   4.15.0-64-generic   docker://18.9.9
+  podxx-1-node-gr-0   Ready    <none>   8h    v1.14.8   10.139.162.141   10.139.162.141   Ubuntu 18.04.3 LTS   4.15.0-64-generic   docker://18.9.9
+  [ccpuser@podxx ~]$ kubectl get namespace
+  NAME                    STATUS   AGE
+  aci-containers-system   Active   8h
+  ccp                     Active   8h
+  default                 Active   8h
+  kube-node-lease         Active   8h
+  kube-public             Active   8h
+  kube-system             Active   8h
+  [ccpuser@podxx ~]$ kubectl get pods --all-namespaces
+  NAMESPACE     NAME                                             READY   STATUS    RESTARTS   AGE
+  ccp           ccp-helm-operator-96c65df4c-8rd5j                1/1     Running   0          8h
+  ccp           ccp-vip-manager-podxx-0-master-0                 1/1     Running   0          8h
+  ccp           cert-manager-799695b5bc-9p66x                    1/1     Running   0          8h
+  ccp           nginx-ingress-controller-fxk24                   1/1     Running   0          8h
+  ccp           nginx-ingress-default-backend-74cf5545c6-qrsmg   1/1     Running   0          8h
+  kube-system   aci-containers-controller-67b7fc4747-tqfzh       2/2     Running   1          8h
+  kube-system   aci-containers-host-bqnk9                        3/3     Running   1          8h
+  kube-system   aci-containers-host-gc9rt                        3/3     Running   1          8h
+  kube-system   aci-containers-openvswitch-6nlxm                 1/1     Running   0          8h
+  kube-system   aci-containers-openvswitch-wpjpc                 1/1     Running   0          8h
+  kube-system   coredns-558c4d9b6-5rhx6                          1/1     Running   0          8h
+  kube-system   coredns-558c4d9b6-8p7fx                          1/1     Running   0          8h
+  kube-system   etcd-podxx-0-master-0                            1/1     Running   0          8h
+  kube-system   kube-apiserver-podxx-0-master-0                  1/1     Running   0          8h
+  kube-system   kube-controller-manager-podxx-0-master-0         1/1     Running   0          8h
+  kube-system   kube-proxy-7f6nr                                 1/1     Running   0          8h
+  kube-system   kube-proxy-q6dvc                                 1/1     Running   0          8h
+  kube-system   kube-scheduler-podxx-0-master-0                  1/1     Running   0          8h
+  kube-system   nvidia-device-plugin-daemonset-gf7p2             1/1     Running   0          8h
+  kube-system   tiller-deploy-59595ff858-scvq4                   1/1     Running   0          8h
+</pre>
 
 
 {{ end_of_page(page_position,data) }}

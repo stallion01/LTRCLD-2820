@@ -281,7 +281,7 @@ def get_pod_data(pod):
                                     <img src="/core/static/images/symbols/http_pointer.png" style="height:25px;" >
                                     </a>
                         </h4>
-                        <ul><li>Username: admin </li><li>Password: admin </li></ul>
+                        <ul><li>Username: %(apic_stdnt_uname)s</li><li>Password: %(apic_stdnt_pass)s</li></ul>
 
                          <h4>Jumphost VM</h4>
                          <ul><li>Address: %(master_ip)s

@@ -49,12 +49,21 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Examine the changes in APIC</h3>
 <p>
+Click on Tenant and expand your pod to the Application Profiles section.
 Take notice that we have deployed three new EPGs (collector, api, and frontend) and contracts between them. We have not yet
-deployed the application, this is just the ACI configuraiton. If you click on one of the three EPGs and then click on 'Operational'
- tab, you will notice that there are no endpoints. Once we deploy the application, you will see new endpoints show up in the EPG.
-
+deployed the application, this is just the ACI configuraiton.
+</p>
 <img src="/lab/static/images/ccp/lwall2.png" class="img-responsive img-shadow">
-
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Are there any endpoints (devices?)</h3>
+<p> If you click on one of the three EPGs and then click on 'Operational'
+ tab, you will notice that there are no endpoints. Once we deploy the application,
+ you will see new endpoints show up in the EPG.</p>
+<img src="/lab/static/images/ccp/lwall22.png" class="img-responsive img-shadow">
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
@@ -62,8 +71,8 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Log back to CCP to install CSI support Add-on</h3>
 <p>
-Go back to the tab/window with Cisco Container Platform <br>Log back in with 'admin/admin' if your session has expired,
-otherwise click on 'Clusters' on the top left of navigation</p>
+Go back to the tab/window with Cisco Container Platform <br>Log back in as '{{data.vmware_cred_username}}/C1sco123' if your session has expired,
+otherwise click on 'Clusters' on the top left of navigation, locate your pod - {{data.vmware_cred_username}}</p>
 <p>CSI or 'Container Storage Interface' was developed as a standard for exposing arbitrary block and file storage storage
   systems to containerized workloads on Container Orchestration Systems (COs) like Kubernetes. Using CSI, third-party
   storage providers like Cisco can write and deploy plugins exposing new storage systems in Kubernetes without ever
@@ -79,13 +88,11 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Click on 'INSTALL FIRST ADD-ON' and install 'HyperFlex Storage(CSI)'</h3>
 
-<img src="/lab/static/images/ccp/ccp14.png" class="img-responsive img-shadow">
+<img src="/lab/static/images/ccp/ccp114.png" class="img-responsive img-shadow">
+<img src="/lab/static/images/ccp/ccp24.png" class="img-responsive img-shadow">
 <p>Click 'INSTALL' at the bottom right</p>
 <p>This process might take a few minutes and the status from 'pending' to 'completed' takes a while;
   let's move on to the next step.</p>
-<img src="/lab/static/images/ccp/ccp24.png" class="img-responsive img-shadow">
-
-
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
