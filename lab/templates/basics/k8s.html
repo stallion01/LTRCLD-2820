@@ -39,27 +39,28 @@
             can communicate with each other through programmatic tools like RPC (remote
             procedure calls) or the newer term, API (application programing interface).
         </p>
+        <p>
+            In the past, people had different processes running on single servers. Then these
+            evolved into running across networks through network RPCs. Complexity and lack
+            of standards made these hard to manage. Then standard protocols where developed
+            like ReST to be able to send data between network services. Different
+            programmatic tooling to simplify creation of API's made it possible to now
+            easily break applications into much smaller chunks.
+        </p>
+        <p>
+            With that in mind, containers have evolved from the original LXC concepts
+            to what they are today. A mechanism for developers to create services
+            that are easy to deploy and manage, that can be orchestrated and managed
+            in such a way that they are small, nimble and fast. Hence the term
+            <strong>micro-services</strong> was coined.
+        </p>
     </div>
     <div class="col-md-6 col-sm-12">
         <img src="/lab/static/images/guide/container-vm.png" class="img-responsive ">
     </div>
 </div>
 
-<p>
-    In the past, people had different processes running on single servers. Then these
-    evolved into running across networks through network RPCs. Complexity and lack
-    of standards made these hard to manage. Then standard protocols where developed
-    like ReST to be able to send data between network services. Different
-    programmatic tooling to simplify creation of API's made it possible to now
-    easily break applications into much smaller chunks.
-</p>
-<p>
-    With that in mind, containers have evolved from the original LXC concepts
-    to what they are today. A mechanism for developers to create services
-    that are easy to deploy and manage, that can be orchestrated and managed
-    in such a way that they are small, nimble and fast. Hence the term
-    <strong>micro-services</strong> was coined.
-</p>
+
 
 <h1>
     Container orchestration
@@ -119,7 +120,7 @@
     managing containers ( Rancher, OpenShift ). The internet can't
     stop asking questions about kubernetes:
 </p>
-<img src="/lab/static/images/kubernetes-trends.png" class="img-responsive img-shadow">
+<img src="/lab/static/images/kubernetes-trends2.png" class="img-responsive img-shadow">
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}
