@@ -45,12 +45,22 @@ kubectl get sc
 </code>
 </pre>
 </div>
+<h3>Get an error? You probably logged out!</h3>
+<b>If you logged out from the SSH session,you might have to re-add the enviroment variable again.</b>
+<div class="fancy-terminal">
+<pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
+<code class="language-bash">
+export KUBECONFIG=~/KUBECONFIG.env
+</code>
+</pre>
+</div>
+
 <br>
 <p>Let's also look for any Persistent Volume Claims</p>
 <p>A PersistentVolumeClaim (PVC) is a request for storage by a user. It is similar to a Pod.
   Pods consume node resources and PVCs consume PV resources. Pods can request specific levels
    of resources (CPU and Memory). Claims can request specific size and access modes
-   (e.g., they can be mounted once read/write or many times read-only).<br><b>Are there any PVCs?</b></p>
+   (e.g., they can be mounted once read/write or many times read-only).<br><b>Are there any PVCs in the 'default' namespace?</b></p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
@@ -65,13 +75,14 @@ kubectl get pvc
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Download the messageboard application files from github</h3>
+<h3>Step {{ step }} - Download & Examine the messageboard application files from github</h3>
 <p>Examine the content of the folder and open the persistent volume claim YAML<br><b>Notice that we will be requesting 100Gig for our application</b></p>
 
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
   cd $HOME/clemea20
+  clear
   git clone https://github.com/stallione/messageboard.git
   ls -l messageboard
   cd messageboard
@@ -99,7 +110,7 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Examine and Deploy the persistent volume claim yaml</h3>
+<h3>Step {{ step }} - Deploy the persistent volume claim yaml</h3>
 <p>When you create an object in Kubernetes, you must provide the object spec that describes its desired state,
    as well as some basic information about the object (such as a name). When you use the Kubernetes API to
    create the object (either directly or via kubectl), that API request must include that information as
@@ -110,7 +121,6 @@ Step {% set step = step +  1 %}
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
   cd $HOME/clemea20/messageboard
-  cat 01-message-board-pvc.yaml
   kubectl apply -f 01-message-board-pvc.yaml
 </code>
 </pre>
@@ -127,6 +137,11 @@ kubectl get pvc
 </code>
 </pre>
 </div>
+<pre>
+  [ccpuser@podxx messageboard]$ kubectl get pvc
+  NAME         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS    AGE
+  mboard-pvc   Bound    pvc-b7ba068f-40f6-11ea-8385-0050568f7012   100Gi      RWO            hyperflex-csi   103s
+</pre>
 <br>
 
 <!--
@@ -143,6 +158,7 @@ Step {% set step = step +  1 %}
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
   cd $HOME/clemea20/messageboard
+  clear
   cat 02-message-board-app.yaml
   kubectl apply -f 02-message-board-app.yaml
 </code>
@@ -247,7 +263,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Notice your message(s) have been posted</h3>
 <p>The backend of this messageboad has a database which reads this from the persistent volume presented earlier in the lab</p>
-
+Before we upgrade the application, take note of the <b>version number</b> under the banner and the <b>banner image</b>. (These will change after the upgrade!)<br>
 
 <img src="/lab/static/images/hx/hx13.png" class="img-responsive">
 
@@ -273,7 +289,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Open or refresh the Messageboard application on your browser</h3>
 <p>Notice that the version has changed to 2.0 with a different logo<br><b>Is your message still there?</b><br>
-When you upgraded the image, the container was destroyed and a new container was built up from scratch using a new image.
+When you upgraded the application's base image, the container was destroyed and a new container was built up from scratch using a new image.
 If the data was written to or saved on the container, you would have lost the data. Since we wrote the data to a backend
 HyperFlex volume, we are able to delete/upgrade and create new containers for the application while keeping the backend
 data safe and accessible across all nodes.</p>
