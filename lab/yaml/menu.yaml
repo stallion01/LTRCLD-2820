@@ -279,7 +279,7 @@
       ls: True
       weburl: "head"
       file: None
-      title: "Challenge Lab"
+      title: "Challenge Labs"
     challenge:
       line: 'data'
       step: 1
