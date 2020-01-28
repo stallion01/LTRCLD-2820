@@ -99,11 +99,16 @@ sudo yum install nano
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Create two storage pvc mainfests</h3>
+<h3>Step {{ step }} - Create and deploy two storage pvc mainfests</h3>
 <p>Using nano, create two yaml files (use your imagination to name them) using the information below. These will create two PVCs. Using nano is easy, just type 'nano yourfilename.yaml'</p>
 <p><b>Task 3: There is a key missing peice of information with regards to 'storage class' here. Add it to the bottom of both yaml files.</b></p>
 <p><code>Hint 1. You have already deployed an application using persistent storage with HX! What you need is in there.</code></p>
-
+Raw file for these manifests are available at: <br>
+<a target="_blank" href="https://raw.githubusercontent.com/stallione/wordpress/master/mysql-db.yaml"> https://raw.githubusercontent.com/stallione/wordpress/master/mysql-db.yaml</a><br>
+and
+<br>
+<a target="_blank" href="https://raw.githubusercontent.com/stallione/wordpress/master/wordpress-db.yaml"> https://raw.githubusercontent.com/stallione/wordpress/master/wordpress-db.yaml</a><br>
+<br>
 <pre>
   apiVersion: v1
   kind: PersistentVolumeClaim
@@ -134,5 +139,150 @@ Step {% set step = step +  1 %}
 </pre>
 <b>Once you have made the changes, go ahead and deploy the two yaml files using <code>kubectl</code></b>
 To test, run '<code>kubectl get pvc</code>' and see if these are ready to be bound.
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Create and deploy the database application</h3>
+<p><b>Task 4: Use the following mainfest to deploy the database</b></p>
+Raw file is available at: <br>
+<a target="_blank" href="https://raw.githubusercontent.com/stallione/wordpress/master/mysql.yaml"> https://raw.githubusercontent.com/stallione/wordpress/master/mysql.yaml</a>
+<br><br>
+<pre>
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: wordpress-mysql
+    labels:
+      app: wordpress
+  spec:
+    ports:
+      - port: 3306
+    selector:
+      app: wordpress
+      tier: mysql
+    clusterIP: None
+  ---
+  apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+  kind: Deployment
+  metadata:
+    name: wordpress-mysql
+    labels:
+      app: wordpress
+  spec:
+    selector:
+      matchLabels:
+        app: wordpress
+        tier: mysql
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: wordpress
+          tier: mysql
+      spec:
+        containers:
+        - image: mysql:5.6
+          name: mysql
+          env:
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-pass
+                key: password
+          ports:
+          - containerPort: 3306
+            name: mysql
+          volumeMounts:
+          - name: mysql-persistent-storage
+            mountPath: /var/lib/mysql
+        volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim
+
+</pre>
+
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Create and deploy the wordpress frontend application</h3>
+<p><b>Task 5: Use the following mainfest to deploy the frontend</b></p>
+Raw file is available at:<br>
+<a target="_blank" href="https://raw.githubusercontent.com/stallione/wordpress/master/wordpress.yaml"> https://raw.githubusercontent.com/stallione/wordpress/master/wordpress.yaml</a>
+<br><br>
+<pre>
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: wordpress
+    labels:
+      app: wordpress
+  spec:
+    ports:
+      - port: 80
+    selector:
+      app: wordpress
+      tier: frontend
+    type: LoadBalancer
+  ---
+  apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+  kind: Deployment
+  metadata:
+    name: wordpress
+    labels:
+      app: wordpress
+  spec:
+    selector:
+      matchLabels:
+        app: wordpress
+        tier: frontend
+    strategy:
+      type: Recreate
+    template:
+      metadata:
+        labels:
+          app: wordpress
+          tier: frontend
+      spec:
+        containers:
+        - image: wordpress:4.8-apache
+          name: wordpress
+          env:
+          - name: WORDPRESS_DB_HOST
+            value: wordpress-mysql
+          - name: WORDPRESS_DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mysql-pass
+                key: password
+          ports:
+          - containerPort: 80
+            name: wordpress
+          volumeMounts:
+          - name: wordpress-persistent-storage
+            mountPath: /var/www/html
+        volumes:
+        - name: wordpress-persistent-storage
+          persistentVolumeClaim:
+            claimName: wp-pv-claim
+
+</pre>
+
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Check to see if your application is working</h3>
+<p><b>Task 6: Run the commands necessary to find the IP address of your application.</b>,  you expect to see the following on your browser</p>
+<img src="/lab/static/images/wordpress.png" class="img-responsive img-shadow">
 {{ end_of_page(page_position,data) }}
 {% endblock %}
