@@ -279,7 +279,7 @@
       ls: True
       weburl: "head"
       file: None
-      title: "Challenge Labs"
+      title: "Challenge Lab"
     challenge:
       line: 'data'
       step: 1
@@ -287,20 +287,12 @@
       ls: True
       weburl: "challenge"
       file: "challenge1.html"
-      title: "Challenge Lab 1"
-    challenge2:
+      title: "Challenge Lab"
+    thankyou:
       line: 'data'
-      step: 1
+      step: 2
       pos: 95
       ls: True
-      weburl: "challenge2"
-      file: "challenge2.html"
-      title: "Challenge Lab 2"
-    finished:
-      line: 'data'
-      step: 1
-      pos: 96
-      ls: True
-      weburl: "finished"
+      weburl: "thankyou"
       file: "finished1.html"
-      title: "Finished"
+      title: "Thank You"
