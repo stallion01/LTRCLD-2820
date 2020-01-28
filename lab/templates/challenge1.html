@@ -55,22 +55,27 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Create a MySQL password</h3>
 <p>Since wordpress uses MySQL for backend database, let's setup a password for mysql to use.</p>
 In kubernetes, there is this idea of a 'Secret'. A Secret is an object that stores a piece of sensitive data like a password or key.
-Let's create a YAML file and deploy it.
+Let's create a YAML file and deploy it. (But first create a new folder and change directory into it)
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
   mkdir $HOME/clemea20/wp
   cd $HOME/clemea20/wp
-cat &lt;&lt; EOF &gt; mysqlpass.yaml
-secretGenerator:
-- name: mysql-pass
-literals:
-- password=C1sco123
-EOF
 </code>
 </pre>
 </div>
-<b>Task 2: Deploy this yaml file using kubectl command, check to see the results using <code>kubectl get secrets</code> command</b>
+<b>Task 2a: copy paste the following into your jumphost termninal. This should build a special yaml file (name must match)</b>
+<pre>
+cat &lt;&lt; EOF &gt; ./kustomization.yaml
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=C1sco123
+EOF
+
+<br>
+</pre>
+<b>Task 2b: Deploy this yaml file using the special kubectl command, "<code>kubectl apply -k .</code>" <br>Check to see the results using <code>kubectl get secrets</code> command</b>
 <pre>[ccpuser@{{data.apic_stdnt_uname}} wp]$ kubectl get secrets
 NAME                    TYPE                                  DATA   AGE
 default-token-sbpr5     kubernetes.io/service-account-token   3      8h
@@ -101,7 +106,7 @@ Step {% set step = step +  1 %}
 -->
 <h3>Step {{ step }} - Create and deploy two storage pvc mainfests</h3>
 <p>Using nano, create two yaml files (use your imagination to name them) using the information below. These will create two PVCs. Using nano is easy, just type 'nano yourfilename.yaml'</p>
-<p><b>Task 3: There is a key missing peice of information with regards to 'storage class' here. Add it to the bottom of both yaml files.</b></p>
+<p><b>Task 3: There is a key missing piece of information with regards to 'storage class' here. Add it to the bottom of both yaml files. Deploy using <code>kubectl apply -f "filename.yaml"</code> command</b></p>
 <p><code>Hint 1. You have already deployed an application using persistent storage with HX! What you need is in there.</code></p>
 Raw file for these manifests are available at: <br>
 <a target="_blank" href="https://raw.githubusercontent.com/stallione/wordpress/master/mysql-db.yaml"> https://raw.githubusercontent.com/stallione/wordpress/master/mysql-db.yaml</a><br>
@@ -110,35 +115,42 @@ and
 <a target="_blank" href="https://raw.githubusercontent.com/stallione/wordpress/master/wordpress-db.yaml"> https://raw.githubusercontent.com/stallione/wordpress/master/wordpress-db.yaml</a><br>
 <br>
 <pre>
-  apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
-    name: mysql-pv-claim
-    labels:
-      app: wordpress
-  spec:
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 20Gi
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
 </pre>
 <b>and another one</b> <pre>
-  apiVersion: v1
-  kind: PersistentVolumeClaim
-  metadata:
-    name: wp-pv-claim
-    labels:
-      app: wordpress
-  spec:
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 20Gi
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: wp-pv-claim
+  labels:
+    app: wordpress
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 20Gi
 </pre>
-<b>Once you have made the changes, go ahead and deploy the two yaml files using <code>kubectl</code></b>
-To test, run '<code>kubectl get pvc</code>' and see if these are ready to be bound.
+<b>Once you have made the changes, go ahead and deploy the two yaml files using <code>kubectl</code>.</b><br>
+<br>To test, run '<code>kubectl get pvc</code>' and see if these are ready. Pay attention to the <b>STORAGECLASS</b> section!
+<pre>
+[ccpuser@{{data.apic_stdnt_uname}} wp]$ kubectl get pvc
+NAME             STATUS   VOLUME                                     CAPACITY   ACCESS MODES   <b>STORAGECLASS</b>    AGE
+mboard-pvc       Bound    pvc-b7ba068f-40f6-11ea-8385-0050568f7012   100Gi      RWO            <b>hyperflex-csi</b>   29h
+mysql-pv-claim   Bound    pvc-c3ea87dd-41eb-11ea-8385-0050568f7012   20Gi       RWO            <b>hyperflex-csi</b>   2m36s
+wp-pv-claim      Bound    pvc-1b1e628e-41ec-11ea-8385-0050568f7012   20Gi       RWO            <b>hyperflex-csi</b>   9s
+</pre>
 
 
 <!--
