@@ -104,7 +104,7 @@
       ls: True
       weburl: "head"
       file: None
-      title: "Configuring ACI"
+      title: "Exploring ACI"
     aci:
       line: 'data'
       step: 1
