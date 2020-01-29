@@ -115,7 +115,7 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Turn off Swap</h3>
-<p>swap is inefficient way of handling memory, kubernetes does a great job and we don't need swap</p>
+<p>Swap is an inefficient way of handling memory, kubernetes does a great job and so we don't need swap.</p>
 <div class="fancy-terminal">
   <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">
@@ -166,7 +166,7 @@ yum install -y kubelet kubeadm kubectl
 </code>
 </pre>
 </div>
-<p>enable kubelet service; kubelet is the 'agent' that watches for pod specs from kuberetes API server</p>
+<p>Enable kubelet service; kubelet is the 'agent' that watches for pod specs from kuberetes API server.</p>
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt_docker}}" data-output="2-4">
 <code class="language-bash">

@@ -11,8 +11,8 @@
 </div>
 <p>
     In the previous section we started with an Ubuntu image. This is a pretty big docker image to start with and using such an image for
-    a micro-service in an application can lead to inefficiency and other problems. You always want to think as containers
-    starting from the bare-minimum requirements, in other words. It is best to start from the ground up.
+    a micro-service in an application can lead to inefficiency and other problems. You always want to think of containers
+    as starting from the bare-minimum requirements, in other words. It is best to start from the ground up.
 </p>
 <p>
     For this reason there are various container distributions that are very small and contain just the bare requirements to
@@ -300,7 +300,7 @@ busybox             latest              6d5fcfe5ff17        3 weeks ago         
     Now you have created a new container image that contains busybox and the webserver
     that you built. You will notice that the image size has increased to
     a size of 8MB. That was just a simple additon of a binary. Now imagine basing that
-    in an image that is bigger. If you aren't paying attention container images can grow
+    on an image that is bigger. If you aren't paying attention container images can grow
     to a point that they are no different than virtual machines, bloated with things
     that are not necessary for the proper execution of your micro-service application.
 </p>

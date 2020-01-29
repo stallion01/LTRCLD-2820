@@ -151,12 +151,12 @@
 <h2>How Overlays play a role in container networks</h2>
 <p>
     If you observe the network above, we see that this application that is running
-    APACHE/PHP has also a database that it needs. In this overly simplistic application
+    APACHE/PHP has a database that it needs. In this overly simplistic application
     each of the APACHE/PHP service containers need to be able to establish
     a connection to the database to retrieve data for the application.
 </p>
 <p>
-    In a single node, this network that is created makes possible for the communications
+    In a single node, this network that is created makes it possible for the communications
     to exist between these containers. Now think if you would need for these containers
     to talk to each other over a network of hosts where each container is on a separate
     host. To be able to keep the relationship between the different networks across
