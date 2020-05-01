@@ -179,13 +179,13 @@
       weburl: "vcenter"
       file: "ccp/vcenter.html"
       title: "Monitor Cluster Creation"
-    lwapp:
+    hipsterapp:
       line: 'data'
       step: 3
       pos: 43
       ls: True
-      weburl: "lwapp"
-      file: "ccp/lwall.html"
+      weburl: "hipsterapp"
+      file: "ccp/hipsterapp.html"
       title: "Connect to K8s Cluster"
 - app:
     head:
@@ -196,14 +196,14 @@
       weburl: "head"
       file: None
       title: "Deploy Hybrid Application"
-    lwall:
+    hipster:
       line: 'data'
       step: 1
       pos: 51
       ls: True
-      weburl: "lwall"
+      weburl: "hipster"
       file: "ccp/apic.html"
-      title: "Deploy livewall Application"
+      title: "Deploy Hipster Application"
     mysql:
       line: 'data'
       step: 2
