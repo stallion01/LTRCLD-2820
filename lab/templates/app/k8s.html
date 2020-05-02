@@ -63,7 +63,7 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Let's go back to ACI and re-add the contract</h3>
-<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'hipster' then 'cart' <br>
+<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'hipster' then 'cart', select Contracts<br>
 Select 'Add Consumed Contract from the menu on top right</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/16" class="img-responsive">
 <!--
@@ -79,7 +79,7 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Check if the hipster App is functional again</h3>
+<h3>Step {{ step }} - Check if the hipster App is functional again (It may take upto 5 mins)</h3>
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}
