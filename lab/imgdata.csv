@@ -6,7 +6,7 @@ Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,B
 3,PNG,TXT,/vpn/vpn3.png,137,115,0,14,blue,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.vmware_cred_password}}
 3,PNG,TXT,/vpn/vpn3.png,80,161,0,14,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,right,Click OK
 4,PNG,PDOWN,/aci1/step3.png,141,30,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
-4,PNG,PDOWN,/aci1/step3.png,169,60,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
+4,PNG,PDOWN,/aci1/step3.png,604,60,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 5,PNG,TXT,/aci1/aci123.png,176,45,0,14,blue,#696969,white,/roboto-condensed/roboto-condensed-v18-latin-700.woff,left,{{data.vmware_cred_username}}
 5,PNG,PDOWN,/aci1/aci123.png,847,679,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 6,PNG,PDOWN,/aci1/step5.png,318,22,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click

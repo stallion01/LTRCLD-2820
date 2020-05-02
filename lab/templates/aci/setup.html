@@ -13,9 +13,9 @@
 
 <h1>Lab Toplogy</h1>
 <p>
-    For this lab you will have admin access to the ACI control plane. ACI uses APIC
-     (Applicaton Policy Infrastructure Controller) as the controller for building and managing the Fabric. <b>Exercise caution</b>
-    as you navigate and make changes in APIC. Each pod has access to the common CCP control plane
+    For this lab you will not have admin access to the ACI control plane. ACI uses APIC
+     (Applicaton Policy Infrastructure Controller) as the controller for building and managing the Fabric. <b>Always Exercise caution</b>
+    when you navigate and make changes in APIC. Each pod has access to the common CCP control plane
     cluster which will be used to deploy the tenant clusters. Each pod also has ssh access
     to a linux jumpbox. Each pod also has a dedicated mySQL server running on centos7.
 </p>
@@ -28,8 +28,7 @@
 <h1>Creating ACI Tenant manually</h1>
 <p>
     Cisco Cloud Platform  <code>(CCP)</code> using the CNI (Container Network Interface) plugin is able to automatically build
-    a tenant and configure the Kubernetes application profile in ACI. In this section, we'll manually build a
-    tenant and expore the Kubernetes integration components. We'll in a later step remove
+    a tenant and configure the Kubernetes application profile in ACI. In this section, we'll explore ACI the Kubernetes integration components. We'll in a later step remove
     this configuration and monitor how CCP automates this process. <b>The purpose of this section is to highlight that you are starting from a clean ACI fabric for your pod. This is a live fabric!</b>
 </p>
 
@@ -49,7 +48,7 @@ Step {% set step = step +  1 %}
 <h3>Step {{ step }} - Connect to ACI fabric</h3>
 <p>
     You will need to point the browser on your lab laptop  to the APIC in this lab. Using the same
-    Chrome browser that you are using to read this guide, go to the URL: <a target="_blank" href="http://{{data.apic4pod}}">Your POD APIC at
+    Chrome browser that you are using to read this guide, go to the URL: <a target="_blank" href="https://{{data.apic4pod}}">Your POD APIC at
         {{data.apic4pod}}</a>.
 </p>
 <p>The credentials for this APIC are:</p>
@@ -60,7 +59,7 @@ Step {% set step = step +  1 %}
     <li>
         Password: {{data.apic_stdnt_pass}}
     </li>
-    <li>Domain: acs</li>
+    <li>Domain: isePlus</li>
 </ul>
 <br>
 <!--
