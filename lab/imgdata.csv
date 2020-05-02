@@ -19,7 +19,7 @@ Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,B
 9,PNG,TXT,/ccp/ccp4.png,52,350,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,ccpuser
 9,PNG,TXT,/ccp/ccp4.png,52,525,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.pod_cidr}} (Click to copy from above)
 9,PNG,TXT,/ccp/ccp4.png,178,948,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Add 10.101.128.101
-9,PNG,TXT,/ccp/ccp4.png,178,1130,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Add 10.139.12.210
+9,PNG,TXT,/ccp/ccp4.png,178,1130,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Add 10.139.11.128
 9,PNG,TXT,/ccp/ccp4.png,52,436,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Use SSH key from Step 1
 10,PNG,TXT,/ccp/vmw1.png,132,122,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}
 10,PNG,TXT,/ccp/vmw1.png,132,169,0,16,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,C1sco123
