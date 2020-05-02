@@ -125,7 +125,7 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-  cd $HOME/clemea20/messageboard
+  cd $HOME/ccpLab/messageboard
   kubectl apply -f 01-message-board-pvc.yaml
 </code>
 </pre>
@@ -162,7 +162,7 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-  cd $HOME/clemea20/messageboard
+  cd $HOME/ccpLab/messageboard
   clear
   cat 02-message-board-app.yaml
   kubectl apply -f 02-message-board-app.yaml
@@ -281,7 +281,7 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-  cd $HOME/clemea20/messageboard
+  cd $HOME/ccpLab/messageboard
   kubectl set image pod/message-board message-board=10.139.12.210/mb/message_board:version2
 </code>
 </pre>
