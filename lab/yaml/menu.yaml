@@ -121,14 +121,6 @@
       weburl: "apic"
       file: "aci/setup.html"
       title: "Explore ACI"
-    clean:
-      line: 'data'
-      step: 3
-      pos: 23
-      ls: True
-      weburl: "clean"
-      file: "aci/clean.html"
-      title: "Cleanup ACI"
 - ccm:
     head:
       line: 'head'
