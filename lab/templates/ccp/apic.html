@@ -162,7 +162,21 @@ kubectl get deployments
 </div>
 
       Notice that there are five deployments for this micro-service app <br>
-  <img src="/lab/static/images/ccp/lwall5.png" class="img-responsive img-shadow">
+<pre>
+  NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+adservice               1/1     1            1           11m
+cartservice             1/1     1            1           11m
+checkoutservice         1/1     1            1           11m
+currencyservice         1/1     1            1           11m
+emailservice            1/1     1            1           11m
+frontend                1/1     1            1           11m
+loadgenerator           1/1     1            1           11m
+paymentservice          1/1     1            1           11m
+productcatalogservice   1/1     1            1           11m
+recommendationservice   1/1     1            1           11m
+redis-cart              1/1     1            1           11m
+shippingservice         1/1     1            1           11m
+</pre>
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
@@ -184,8 +198,22 @@ kubectl get svc
 </code>
 </pre>
 </div>
-  <img src="/lab/static/images/ccp/lwall6.png" class="img-responsive img-shadow"><br>
-  <br>
+<pre>
+NAME                    TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)        AGE
+adservice               ClusterIP      10.111.72.21     <none>           9555/TCP       19m
+cartservice             ClusterIP      10.104.220.119   <none>           7070/TCP       19m
+checkoutservice         ClusterIP      10.108.132.25    <none>           5050/TCP       19m
+currencyservice         ClusterIP      10.110.216.230   <none>           7000/TCP       19m
+emailservice            ClusterIP      10.107.90.205    <none>           5000/TCP       19m
+frontend                ClusterIP      10.110.73.48     <none>           80/TCP         19m
+frontend-external       LoadBalancer   10.108.110.230   <b>10.139.161.242</b>   80:30512/TCP   19m
+kubernetes              ClusterIP      10.96.0.1        <none>           443/TCP        64m
+paymentservice          ClusterIP      10.101.44.155    <none>           50051/TCP      19m
+productcatalogservice   ClusterIP      10.97.52.17      <none>           3550/TCP       19m
+recommendationservice   ClusterIP      10.110.109.59    <none>           8080/TCP       19m
+redis-cart              ClusterIP      10.110.104.164   <none>           6379/TCP       19m
+shippingservice         ClusterIP      10.111.88.155    <none>           50051/TCP      19m
+</pre>
   <!--
   ##############################################################################################################################
   Step {% set step = step +  1 %}
