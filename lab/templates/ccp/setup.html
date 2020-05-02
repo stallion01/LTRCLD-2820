@@ -150,7 +150,7 @@ CCP control plane comes with this built-in if you chose to install it on your CC
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/9" class="img-responsive">
 <p>Input NTP and Registry as shown below (At least one entry for NTP)</p>
 <img src="/lab/static/images/ccp/ccp7.png" class="img-responsive img-shadow">
-<p>Double-check the settings and then, Click <b>'NEXT'</b>, and <b>'FINISH'</b></p>
+<p>Double-check the settings and then, Click <b>'NEXT'</b></p>
 
 <!--
 ##############################################################################################################################
@@ -162,6 +162,12 @@ Step {% set step = step +  1 %}
 Please ignore this section, as we are not setting up AWS authentication integration.
 </p>
 <b>Click 'NEXT'</b>
+<!--
+##############################################################################################################################
+Step {% set step = step +  1 %}
+##############################################################################################################################
+-->
+<h3>Step {{ step }} - Summary of deployment</h3>
 <p>On the Summary page, examine everything and Click <b>'FINISH'</b> </p>
 {{ end_of_page(page_position,data) }}
 {% endblock %}
