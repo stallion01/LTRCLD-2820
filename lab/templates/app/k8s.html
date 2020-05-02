@@ -20,13 +20,13 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Let's break the application connection to the backend Database</h3>
-<p>Keep in mind that this database is running in a 'VM' outside of Kubernetes. We chose to use a VM to run
-  the SQL database, but this could very well be a bare-metal installation.<br>
+<p>Keep in mind that although this database is running as a container of Kubernetes, you would be able to apply same security policy if this were a physical or VM based database.
+<br>
 ACI is able to enforce security between all tiers of the application including Bare Metal and VMs</p>
 <p></p>
-<p>Log back into ACI, go to {{data.vmware_cred_username}}, select livewall App Profile and Click on Topology </p>
-<p>Click on 'mysql(database)' EPG once <br>
-  Notice the {{data.vmware_cred_username}}-mysql(common) contract between Kubernetes and Baremetal workload in the green bubble?</p>
+<p>Log back into ACI, go to {{data.vmware_cred_username}}, select hipster App Profile and Click on Topology </p>
+<p>Click on 'redis(hipster)' EPG once <br>
+  Notice the redis({{data.vmware_cred_username}}) contract between the cart and redis database workload in the green bubble?</p>
 <img src="/lab/static/images/ccp/hipster-con-0.png" class="img-responsive img-shadow">
 
 <!--
@@ -39,7 +39,7 @@ Step {% set step = step +  1 %}
   traffic flow within the ACI fabric between endpoint groups. These contracts are built using a
   provider-consumer model where one endpoint group provides the services it wants to offer and
   another endpoint group consumes them.<br>
-<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'livewall' then 'api' <br>
+<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'hipster' then 'api' <br>
 Select the {{data.vmware_cred_username}}-mysql contract and delete from the menu on top right
 <br>Click Delete on the pop-up window</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/15" class="img-responsive">
@@ -49,7 +49,7 @@ Select the {{data.vmware_cred_username}}-mysql contract and delete from the menu
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Examine if the App broke by visiting the LiveWall Webpage from Step 7</h3>
+<h3>Step {{ step }} - Examine if the App broke by visiting the hipster Webpage from Step 7</h3>
 <p>
 Within a few seconds, you will notice that the application is now broken</p>
 
@@ -60,7 +60,7 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Let's go back to ACI and re-add the contract</h3>
-<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'livewall' then 'api' <br>
+<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'hipster' then 'api' <br>
 Select 'Add Consumed Contract from the menu on top right</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/16" class="img-responsive">
 <!--
@@ -76,7 +76,7 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Check if the Livewall App is functional again</h3>
+<h3>Step {{ step }} - Check if the hipster App is functional again</h3>
 
 {{ end_of_page(page_position,data) }}
 {% endblock %}
