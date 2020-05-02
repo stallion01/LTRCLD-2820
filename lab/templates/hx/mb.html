@@ -45,6 +45,11 @@ kubectl get sc
 </code>
 </pre>
 </div>
+<pre>
+  NAME                 PROVISIONER                    AGE
+  hyperflex-csi        csi-hxcsi                      114m
+  standard (default)   kubernetes.io/vsphere-volume   153m
+</pre>
 <h3>Get an error? You probably logged out!</h3>
 <b>If you logged out from the SSH session,you might have to re-add the enviroment variable again.</b>
 <div class="fancy-terminal">
@@ -81,7 +86,7 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-  cd $HOME/clemea20
+  cd $HOME/ccpLab
   clear
   git clone https://github.com/stallione/messageboard.git
   ls -l messageboard
