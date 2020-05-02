@@ -33,7 +33,7 @@ Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,B
 14,PNG,PLEFT,/ccp/vmw2.png,150,148,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Expand
 15,PNG,PLEFT,/ccp/hipster8.png,430,346,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Select
 15,PNG,PLEFT,/ccp/hipster8.png,1581,385,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
-16,PNG,PLEFT,/ccp/hipster-con-1.png,1377,223,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
+16,PNG,PLEFT,/ccp/hipster-con-1.png,1669,278,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 17,PNG,TXT,/ccp/hipster-con-2.png,173,48,0,14,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}-redis
 18,PNG,TXT,/hx/hx4.png,256,762,0,20,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}
 18,PNG,TXT,/hx/hx4.png,256,910,0,20,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,C1sco123
