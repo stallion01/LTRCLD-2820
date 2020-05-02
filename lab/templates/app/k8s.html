@@ -44,7 +44,7 @@ Select the {{data.vmware_cred_username}}-redis contract and delete from the menu
 
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/15" class="img-responsive">
 <br>
-<br><b>Click YES on the pop-up window</b></p>
+<br><b>Click YES on the pop-up window</p>
 <img src="/lab/static/images/ccp/hipster8-1.png" class="img-responsive img-shadow">
 <!--
 ##############################################################################################################################
@@ -62,19 +62,17 @@ Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
 <h3>Step {{ step }} - Let's go back to ACI and re-add the contract</h3>
-<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'hipster' then 'cart' <br>
+<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'hipster' then 'api' <br>
 Select 'Add Consumed Contract from the menu on top right</p>
-<img src="/lab/static/images/ccp/hipster-con-1.png" class="img-responsive img-shadow">
-
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/16" class="img-responsive">
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Select 'redis/tn-{{data.vmware_cred_username}' from the drop down menu</h3>
+<h3>Step {{ step }} - Select '{{data.vmware_cred_username}}-mysql' from the drop down menu</h3>
 <p>Click Submit</p>
-<img src="/lab/static/images/ccp/hipster-con-2.png" class="img-responsive img-shadow">
-
+<img src="/lab/imgman/pod/{{ data.pod_id }}/id/17" class="img-responsive">
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
