@@ -34,15 +34,18 @@ ACI is able to enforce security between all tiers of the application including B
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Delete the {{data.vmware_cred_username}}-mysql consumed contract from the 'api' EPG</h3>
+<h3>Step {{ step }} - Delete the {{data.vmware_cred_username}}-redis consumed contract from the 'cart' EPG</h3>
 <p>Contracts provide a way for the Cisco Application Centric Infrastructure (ACI) administrator to control
   traffic flow within the ACI fabric between endpoint groups. These contracts are built using a
   provider-consumer model where one endpoint group provides the services it wants to offer and
   another endpoint group consumes them.<br>
-<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'hipster' then 'api' <br>
-Select the {{data.vmware_cred_username}}-mysql contract and delete from the menu on top right
-<br>Click Delete on the pop-up window</p>
+<p>Under Tenant {{data.vmware_cred_username}}, expand 'Application Profiles' then 'hipster' then 'cart' <br>
+Select the {{data.vmware_cred_username}}-redis contract and delete from the menu on top right
+
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/15" class="img-responsive">
+<br>
+
+<br>Click YES on the pop-up window</p>
 <img src="/lab/static/images/ccp/hipster8-1.png" class="img-responsive img-shadow">
 <!--
 ##############################################################################################################################
