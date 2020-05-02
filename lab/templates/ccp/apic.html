@@ -6,13 +6,13 @@
 
 
 <div class="section_header">
-    <div class="title">Cisco Livewall App</div>
+    <div class="title">Cisco Hipster App</div>
     <div class="title_section">Deployment</div>
 </div>
 {{ html_for_step_status|safe }}
 
 <h1>CCP Lab Toplogy</h1>
-<p>In this section, you will be configuring an Application Proflie in ACI for a new application called 'Livewall' and then deploying
+<p>In this section, you will be configuring an Application Proflie in ACI for a new application called 'Hipster' and then deploying
  the application to your CCP cluster.</p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/991" class="img-responsive">
 
@@ -22,7 +22,7 @@
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Deploy "LiveWall" Application profile from CLI</h3>
+<h3>Step {{ step }} - Deploy "Hipster" Application profile from CLI</h3>
 <p>SSH using putty to your jumphost at IP address -{{data.pod_master_ip}}
 
 </p>
@@ -34,9 +34,8 @@ various automation tools like ansible, puppet etc. or python and other programmi
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-  cd $HOME/clemea20
-  git pull
-  ./lwAppProfile
+  cd $HOME/ccpLab
+  ./hipsterProfile
 </code>
 </pre>
 </div>
@@ -53,7 +52,7 @@ Click on Tenant and expand your pod to the Application Profiles section and then
 Take notice that we have deployed three new EPGs (collector, api, and frontend) and contracts between them. We have not yet
 deployed the application, this is just the ACI configuration.
 </p>
-<img src="/lab/static/images/ccp/lwall2.png" class="img-responsive img-shadow">
+<img src="/lab/static/images/ccp/lwall211.png" class="img-responsive img-shadow">
 <!--
 ##############################################################################################################################
 Step {% set step = step +  1 %}
