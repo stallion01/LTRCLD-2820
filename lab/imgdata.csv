@@ -31,8 +31,8 @@ Index,TYPE,ACTION(POINT/TXT),ImageFilename,X,Y,TextRotation,FontSize,TextColor,B
 12,PNG,PDOWN,/ccp/aci01.png,552,542,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 13,PNG,TXT,/ccp/ccp3.png,67,462,0,14,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}
 14,PNG,PLEFT,/ccp/vmw2.png,150,148,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Expand
-15,PNG,PLEFT,/ccp/lwall9.png,481,270,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Select
-15,PNG,PLEFT,/ccp/lwall9.png,1288,335,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
+15,PNG,PLEFT,/ccp/hipster8.png,481,270,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Select
+15,PNG,PLEFT,/ccp/hipster8.png,1288,335,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 16,PNG,PLEFT,/ccp/lwall9.png,1377,223,0,14,white,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,Click
 17,PNG,TXT,/ccp/lwall11.png,173,48,0,14,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}-mysql
 18,PNG,TXT,/hx/hx4.png,256,762,0,20,red,red,red,/CiscoSans/CiscoSansTTRegular.woff,left,{{data.vmware_cred_username}}
