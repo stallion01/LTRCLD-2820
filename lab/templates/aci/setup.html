@@ -80,11 +80,11 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Adding a new tenant</h3>
+<h3>Step {{ step }} - Exploring the Tenants Section</h3>
 <p>
     Take note of the existing Tenants
     </p>
-    <p>Click on 'Tenants', and then 'Add Tenant'
+    <p>Click on 'Tenants', and then 'skunkworks'
 </p>
 <img src="/lab/imgman/pod/{{ data.pod_id }}/id/4" class="img-responsive img-shadow ">
 
@@ -93,10 +93,11 @@ Step {% set step = step +  1 %}
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Create a new '{{data.apic_stdnt_uname}}' tenant</h3>
-{{copythis(data.vmware_cred_username)}}<br>
-<p><b>Only enter '{{data.apic_stdnt_uname}}' for tenant name; leave all other fields empty</b></p>
-<img src="/lab/imgman/pod/{{ data.pod_id }}/id/5" class="img-responsive img-shadow">
+<h3>Step {{ step }} - Explore Application Profiles</h3>
+<p><b>Expand Application Profiles and Click on 'ccp' then Click on 'Topology' on the right</b></p>
+<p>Take note of how the EPGs and Contracts can be used between physical and virtual elements using ACI
+</p>
+<img src="/lab/static/images/aci1/step31.png" class="img-responsive img-shadow">
 
 <p>
 
