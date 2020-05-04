@@ -80,17 +80,13 @@ kubectl get pvc
 Step {% set step = step +  1 %}
 ##############################################################################################################################
 -->
-<h3>Step {{ step }} - Download & Examine the messageboard application files from github</h3>
+<h3>Step {{ step }} - Examine the messageboard application files</h3>
 <p>Examine the content of the folder and open the persistent volume claim YAML<br><b>Notice that we will be requesting 100Gig for our application</b></p>
 
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-  cd $HOME/ccpLab
-  clear
-  git clone https://github.com/stallione/messageboard.git
-  ls -l messageboard
-  cd messageboard
+  cd ~/ccpLab/messageboard
   cat 01-message-board-pvc.yaml
 </code>
 </pre>
