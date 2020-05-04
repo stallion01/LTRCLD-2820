@@ -182,7 +182,7 @@ Step {% set step = step +  1 %}
   spec:
       containers:
       - name: message-board
-        image: 10.139.12.210/mb/message_board:version1
+        image: 10.139.11.128/mb/message_board:version1
         volumeMounts:
         - name: mb-volume
           mountPath: /sqldb
@@ -282,7 +282,7 @@ Step {% set step = step +  1 %}
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
   cd $HOME/ccpLab/messageboard
-  kubectl set image pod/message-board message-board=10.139.12.210/mb/message_board:version2
+  kubectl set image pod/message-board message-board=10.139.11.128/mb/message_board:version2
 </code>
 </pre>
 </div>
