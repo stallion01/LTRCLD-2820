@@ -1,5 +1,4 @@
 {% block doc -%}
-<!DOCTYPE html>
 <html {% block html_attribs %}class="cui" {% endblock html_attribs %}>
     {%- block html %}
 
@@ -44,7 +43,7 @@
         style="margin:0; padding:0; background-color: #00263A;" {% endif %}>
         {% block body -%}
         {% if pod !=0 %}
-        <div id="wrapper">
+        <div id="wrapper" class="toggled">
             <header class="header">
                 <div class="header_inside_image">
                     <div class="header-bar container">
@@ -85,7 +84,7 @@
             <div id="sidebar-wrapper">
                 <ul class="sidebar-nav">
                     <div class="sidebar-header">
-                        <div class="sidebar-header__toolbar" style="padding-left:10px;">
+                        <div class="sidebar-header-toolbar" style="padding-left:10px;">
                             <button class="btn btn--icon btn--primary">
                                 <a href="/"><i class="fa fa-home"></i></span></a>
                             </button>
@@ -100,7 +99,7 @@
                                 </a>
                             </button>
                             <button class="btn btn--icon btn--primary">
-                                <a style="color:white;" target="blank" data-toggle="modal" data-target="#ABOUT" href="#">
+                                <a style="color:white;" target="blank" data-toggle="modal" data-target="#about1234" href="#">
                                     <i class="fas fa-info-circle"></i>
                                 </a>
                             </button>
@@ -108,7 +107,7 @@
                                 <i class="fas fa-times-circle menu-toggle-icon"></i>
                             </button>
                         </div>
-                        <div class="sidebar-header__divisor"></div>
+                        <div class="sidebar-header-divisor"></div>
                     </div>
                     <!--
                     Start loop for menu. Read from the Python routefunc.py to actually build everythign here. The
@@ -186,17 +185,16 @@
 
         </div>
 
-
-        <div class="modal fade" id="ABOUT" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal__dialog">
-                <div class="modal__content">
-                    <div class="modal__header">
-                        <button type="button" class="close" style="z-index: 9999;" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+        <div class="modal fade" id="about1234" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel">{{lab_data.cl_id}} - {{lab_data.cl_title}}</h4>
+                        <button type="button btn-large" class="close float-right" style="z-index: 9999;" data-dismiss="modal" data-target="#about1234" aria-label="Close">
+                            <span aria-hidden="true">&times</span>
                         </button>
-                        <h4 class="modal__title" id="myModalLabel">{{lab_data.cl_id}} - {{lab_data.cl_title}}</h3>
                     </div>
-                    <div class="modal__body">
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-xs-12">
                                 <p style="text-align:left;">
@@ -222,8 +220,8 @@
 
                         </div>
                     </div>
-                    <div class="modal__footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal" style="margin-top:20px;">Close</button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" data-target="#about1234" style="margin-top:20px;">Close</button>
                     </div>
                 </div>
             </div>
