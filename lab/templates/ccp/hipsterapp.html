@@ -32,7 +32,7 @@ Step {% set step = step +  1 %}
 <div class="fancy-terminal">
 <pre class="command-line language-bash" data-prompt="{{ data.master_prompt}}">
 <code class="language-bash">
-export TOKEN=$(curl -v -k -X POST -H "Content-Type:application/x-www-form-urlencoded" -d "username=admin&password=admin" https://ccp-aci/v3/system/login  2> >(grep e) | grep e | awk -F ":" '{print $2}' | tr -d '\n\r')
+export TOKEN=$(curl -v -k -X POST -H "Content-Type:application/x-www-form-urlencoded" -d "username=admin&password=admin" https://ccp-aci/v3/system/login  2> >(grep X-Auth-Token) | grep X-Auth-Token | awk -F ":" '{print $2}' | tr -d '\n\r')
 export {{data.apic_stdnt_uname}}id=$(curl -ksSL --request GET -H "X-Auth-Token":"$TOKEN" https://ccp-aci/v3/clusters/ | jq '.[] | {id: .id, name: .name}' | grep -B1 "{{data.apic_stdnt_uname}}" | awk '/id/{print $2}' | tr -d '\"\,')
 curl -ksSL --request GET -H "X-Auth-Token":"$TOKEN" https://ccp-aci/v3/clusters/${{data.apic_stdnt_uname}}id | jq -r '.kubeconfig' | sed 's/\n/\n/g' > ~/KUBECONFIG.env
 export KUBECONFIG=~/KUBECONFIG.env
